@@ -10,7 +10,7 @@ const io = socketIO(server);
 
 const peerServer = ExpressPeerServer(server, { debug: true });
 app.use('/peerjs', peerServer);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '.')));
 
 let waitingUsers = [];
 let onlineCount = 0;
