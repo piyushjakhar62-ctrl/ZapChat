@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZapChat ⚡ - Friends</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="friends-page">
+
+  <!-- Header -->
+  <div class="friends-header">
+    <button class="back-icon-btn" onclick="window.location.href='index.html'">←</button>
+    <span class="friends-title">Friends</span>
+    <button class="close-icon-btn" onclick="window.location.href='index.html'">✕</button>
+  </div>
+
+  <!-- Friends List -->
+  <div id="friendsList" class="friends-list">
+    <!-- Friends yahan aayenge -->
+  </div>
+
+  <!-- Empty State -->
+  <div id="emptyFriends" class="empty-friends" style="display:none;">
+    <div class="empty-icon">👫</div>
+    <h3>Koi Friend Nahi Hai!</h3>
+    <p>Chat karo aur "Add Friend" karke dosto ko add karo</p>
+    <button class="creator-register-btn" style="max-width:300px;margin:0 auto;"
+      onclick="window.location.href='index.html'">
+      🎥 Chat Karo — Friends Banao!
+    </button>
+  </div>
+
+</div>
+
+<script>
+  // Friends load karo
+  function loadFriends() {
+    const friends = JSON.parse(localStorage.getItem('zapFriends') || '[]');
+    // Agar koi friend nahi hai to dummy add karo
+if (friends.length === 0) {
+  const dummyFriends = [
+    { name: 'Rahul Sharma', gender: 'male', addedAt: '24/5/2026' },
+    { name: 'Priya Singh', gender: 'female', addedAt: '24/5/2026' },
+    { name: 'Arjun Verma', gender: 'male', addedAt: '23/5/2026' }
+  ];
+  localStorage.setItem('zapFriends', JSON.stringify(dummyFriends));
+  location.reload();
+}
+    const list = document.getElementById('friendsList');
+    const empty = document.getElementById('emptyFriends');
+
+    if (friends.length === 0) {
+      list.style.display = 'none';
+      empty.style.display = 'flex';
+      return;
+    }
+
+    list.style.display = 'block';
+    empty.style.display = 'none';
+
+    list.innerHTML = friends.map((f, i) => `
+    <div class="friend-item" onclick="window.msgFriend(${i})" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+        <div class="friend-avatar">
+            ${f.gender === 'female' ? '👩‍🦰' : '👨‍🦱'}
+        </div>
+        <div class="friend-info">
+            <h3 class="friend-name">${f.name || 'ZapChat User'}</h3>
+            <div class="friend-loc">📍 India</div>
+        </div>
+        <div class="friend-actions">
+            <button class="friend-remove-btn" onclick="event.stopPropagation(); window.removeFriend(${i})">❌</button>
+        </div>
+    </div>
+`).join('');
+  }
+
+  loadFriends();
+
+  window.callFriend = (index) => {
+  localStorage.setItem('openFriendIndex', index);
+  window.location.href = 'friend-chat.html';
+};
+
+window.msgFriend = (index) => {
+  localStorage.setItem('openFriendIndex', index);
+  window.location.href = 'friend-chat.html';
+};
+
+  window.removeFriend = (index) => {
+    const friends = JSON.parse(localStorage.getItem('zapFriends') || '[]');
+    const name = friends[index].name || 'User';
+    if (confirm(name + ' ko remove karein?')) {
+      friends.splice(index, 1);
+      localStorage.setItem('zapFriends', JSON.stringify(friends));
+      loadFriends();
+    }
+  };
+</script>
+
+</body>
+</html>

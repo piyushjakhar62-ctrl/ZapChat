@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZapChat ⚡ - Creator Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="creator-page">
+
+  <!-- Header -->
+  <div class="creator-header">
+    <a href="index.html" class="back-btn">← Back</a>
+    <h1>⚡ ZapChat</h1>
+    <div></div>
+  </div>
+
+  <!-- Profile Box -->
+  <div class="creator-profile-box">
+    <div class="cp-avatar" id="cpAvatar">🎭</div>
+    <div class="cp-info">
+      <div class="cp-name" id="cpName">Loading...</div>
+      <div class="cp-id" id="cpId">ID: ...</div>
+      <div class="cp-badge">✅ Verified Creator</div>
+    </div>
+  </div>
+
+  <!-- Earnings Overview -->
+  <div class="creator-stats">
+    <div class="stat-box gold-box">
+      <div class="stat-num" id="totalCoins">0</div>
+      <div class="stat-label">🪙 Total Coins</div>
+    </div>
+    <div class="stat-box green-box">
+      <div class="stat-num" id="totalEarned">₹0</div>
+      <div class="stat-label">💰 Total Earned</div>
+    </div>
+    <div class="stat-box blue-box">
+      <div class="stat-num" id="withdrawable">₹0</div>
+      <div class="stat-label">⬆️ Withdrawable</div>
+    </div>
+  </div>
+
+  <!-- Withdraw Button -->
+  <div class="withdraw-section">
+    <div class="withdraw-info">
+      <span class="wi-label">UPI ID:</span>
+      <span class="wi-val" id="dashUPI">Not set</span>
+    </div>
+    <button class="withdraw-btn" onclick="withdrawMoney()">
+      💸 Paise Withdraw Karo
+    </button>
+    <p class="withdraw-note">Min ₹100 chahiye withdraw ke liye</p>
+  </div>
+
+  <!-- Transaction History -->
+  <div class="creator-transactions">
+    <h3>📋 Gift History</h3>
+    <div id="giftHistory" class="gift-history-list">
+      <div class="no-gifts">Abhi koi gift nahi mila 😢<br>Chat karo aur gifts receive karo!</div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="creator-tips">
+    <h3>💡 Zyada Gifts Kaise Milein?</h3>
+    <div class="tip-item">🎤 <span>Energetic aur friendly raho</span></div>
+    <div class="tip-item">😊 <span>Hamesha smile karo</span></div>
+    <div class="tip-item">🎵 <span>Music ya talent dikhao</span></div>
+    <div class="tip-item">📱 <span>App ko promote karo social media par</span></div>
+    <div class="tip-item">⏰ <span>Regular online raho</span></div>
+  </div>
+
+  <!-- Start Chat Button -->
+  <div style="padding: 0 20px 40px;">
+    <button class="creator-register-btn" onclick="window.location.href='index.html'">
+      🎥 Chat Shuru Karo — Gifts Kamao!
+    </button>
+  </div>
+
+</div>
+
+<!-- Withdraw Modal -->
+<div class="modal-overlay" id="withdrawModal">
+  <div class="modal">
+    <h3>💸 Withdraw Request</h3>
+    <p id="withdrawAmount">Amount: ₹0</p>
+    <div class="form-group">
+      <label style="color:#888;font-size:0.85rem;">UPI ID confirm karo:</label>
+      <input type="text" id="withdrawUPI" style="
+        width:100%;background:#1e1e2e;border:1px solid #333;
+        border-radius:8px;padding:10px;color:white;margin-top:8px;
+        font-size:0.9rem;outline:none;
+      "/>
+    </div>
+    <div class="modal-btns" style="margin-top:16px;">
+      <button class="btn-confirm-block" onclick="confirmWithdraw()">✅ Confirm</button>
+      <button class="btn-cancel" onclick="closeWithdraw()">❌ Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Creator data load karo
+const creatorData = JSON.parse(localStorage.getItem('creatorData') || '{}');
+
+if (!localStorage.getItem('isCreator')) {
+  window.location.href = 'creator.html';
+}
+
+// Profile load
+document.getElementById('cpName').textContent = creatorData.name || 'Creator';
+document.getElementById('cpId').textContent = 'ID: ' + (creatorData.id || '');
+document.getElementById('dashUPI').textContent = creatorData.upi || 'Not set';
+
+// Coins load — live update
+function loadDashboard() {
+  const creatorCoins = parseInt(localStorage.getItem('creatorCoins') || '0');
+  const totalEarned = (creatorCoins * 0.7).toFixed(0);
+
+  document.getElementById('totalCoins').textContent = creatorCoins;
+  document.getElementById('totalEarned').textContent = '₹' + totalEarned;
+  document.getElementById('withdrawable').textContent = '₹' + totalEarned;
+
+  // Gift history
+  const giftHistory = JSON.parse(localStorage.getItem('creatorGiftHistory') || '[]');
+  const list = document.getElementById('giftHistory');
+
+  if (giftHistory.length > 0) {
+    list.innerHTML = giftHistory.map(g => `
+      <div class="gift-history-item">
+        <span class="gh-emoji">${g.emoji}</span>
+        <div class="gh-info">
+          <div class="gh-name">${g.emoji} ${g.name} Gift</div>
+          <div class="gh-date">${g.date} ${g.time}</div>
+        </div>
+        <div class="gh-coins">+${g.cost} 🪙 = ₹${(g.cost * 0.7).toFixed(0)}</div>
+      </div>
+    `).join('');
+  } else {
+    list.innerHTML = '<div class="no-gifts">Abhi koi gift nahi mila 😢<br>Chat karo aur gifts receive karo!</div>';
+  }
+}
+
+loadDashboard();
+
+// Live update — har 3 second mein
+setInterval(loadDashboard, 3000);
+
+// Withdraw
+window.withdrawMoney = () => {
+  const creatorCoins = parseInt(localStorage.getItem('creatorCoins') || '0');
+  const withdrawable = (creatorCoins * 0.7).toFixed(0);
+
+  if (parseInt(withdrawable) < 100) {
+    alert('❌ Min ₹100 chahiye withdraw ke liye!\n\nAbhi aapke paas ₹' + withdrawable + ' hai.\n\nZyada gifts receive karo! 🎁');
+    return;
+  }
+  document.getElementById('withdrawAmount').textContent = 'Amount: ₹' + withdrawable;
+  document.getElementById('withdrawUPI').value = creatorData.upi || '';
+  document.getElementById('withdrawModal').classList.add('show');
+};
+
+window.confirmWithdraw = () => {
+  const upi = document.getElementById('withdrawUPI').value.trim();
+  if (!upi) { alert('UPI ID likho!'); return; }
+
+  const creatorCoins = parseInt(localStorage.getItem('creatorCoins') || '0');
+  const withdrawable = (creatorCoins * 0.7).toFixed(0);
+
+  // Transaction save karo
+  const txHistory = JSON.parse(localStorage.getItem('withdrawHistory') || '[]');
+  txHistory.unshift({
+    amount: withdrawable,
+    upi: upi,
+    date: new Date().toLocaleDateString('hi-IN'),
+    time: new Date().toLocaleTimeString('hi-IN'),
+    status: 'Pending'
+  });
+  localStorage.setItem('withdrawHistory', JSON.stringify(txHistory));
+
+  // Coins reset
+  localStorage.setItem('creatorCoins', '0');
+
+  alert('✅ Withdraw Request Submit!\n\nAmount: ₹' + withdrawable + '\nUPI: ' + upi + '\n\n2-3 working days mein bank mein aayega! 💰');
+
+  document.getElementById('withdrawModal').classList.remove('show');
+  loadDashboard();
+};
+
+window.closeWithdraw = () => {
+  document.getElementById('withdrawModal').classList.remove('show');
+};
+</script>
+
+</body>
+</html>

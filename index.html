@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZapChat ⚡ - Duniya Se Milo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Gender Filter Popup — Monkey Style -->
+<div class="gender-popup-overlay" id="genderPopup">
+  <div class="gender-popup">
+    <button class="popup-close" onclick="closeGenderPopup()">✕</button>
+
+    <!-- Premium Banner -->
+    <div class="popup-premium-bar">
+      <span>👑</span>
+      <div>
+        <div class="pp-title">ZapChat Premium</div>
+        <div class="pp-sub">Get More Gender Filters</div>
+      </div>
+      <a href="premium.html" class="pp-join">Join</a>
+    </div>
+
+    <!-- Gender Selection -->
+    <div class="popup-section">
+      <p class="popup-section-title">📍 Gender</p>
+      <div class="popup-gender-grid">
+        <div class="pgender-card" id="pg-girls" onclick="selectPopupGender('female')">
+          <div class="pgender-emoji">👧</div>
+          <div class="pgender-label">Girls Only</div>
+        </div>
+        <div class="pgender-card" id="pg-guys" onclick="selectPopupGender('male')">
+          <div class="pgender-emoji">👦</div>
+          <div class="pgender-label">Guys Only</div>
+        </div>
+        <div class="pgender-card active" id="pg-both" onclick="selectPopupGender('any')">
+          <div class="pgender-emoji">👫</div>
+          <div class="pgender-label">Both</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save + Earth Button -->
+    <div class="popup-footer">
+      <button class="popup-save-btn" onclick="saveGenderPopup()">Save</button>
+      <button class="popup-earth-btn" onclick="openMatchPref()">🌍</button>
+    </div>
+  </div>
+</div>
+
+<!-- Match Preference Popup -->
+<!-- Premium Gender Popup -->
+<div class="match-pref-overlay" id="premiumGenderPopup">
+  <div class="match-pref-popup">
+    <div class="mp-header">
+      <span class="mp-title">👑 ZapChat Premium</span>
+      <button class="popup-close" onclick="closePremiumGenderPopup()">✕</button>
+    </div>
+
+    <div class="premium-gender-tabs">
+      <button class="pg-tab" id="tab-plus" onclick="switchPremiumTab('plus')">ZapChat Plus</button>
+      <button class="pg-tab active" id="tab-plusplus" onclick="switchPremiumTab('plusplus')">ZapChat Plus+</button>
+    </div>
+
+    <div class="premium-compare-box">
+      <div class="pc-col gray-col">
+        <div class="pc-crown">👑</div>
+        <div class="pc-plan">Plus</div>
+        <div class="pc-row">Filter-Both <span>Unlimited</span></div>
+        <div class="pc-row">Filter-Gender <span>150</span></div>
+        <div class="pc-row">Match Preference <span>➖</span></div>
+        <div class="pc-row">No Ads <span>✅</span></div>
+      </div>
+      <div class="pc-col orange-col">
+        <div class="pc-crown">💎</div>
+        <div class="pc-plan">Plus+</div>
+        <div class="pc-row">Filter-Both <span>Unlimited</span></div>
+        <div class="pc-row">Filter-Gender <span>Unlimited</span></div>
+        <div class="pc-row">Match Preference <span>✅</span></div>
+        <div class="pc-row">No Ads <span>✅</span></div>
+      </div>
+    </div>
+
+    <div class="premium-price-options">
+      <div class="price-option active" onclick="selectPrice(this)">
+        <span class="price-radio">🔵</span>
+        <span>7 days</span>
+        <span class="price-amt">₹99</span>
+      </div>
+      <div class="price-option" onclick="selectPrice(this)">
+        <span class="price-radio">⚪</span>
+        <span>30 days</span>
+        <span class="price-amt">₹199</span>
+      </div>
+    </div>
+
+    <p class="price-note">then ₹99 every 7 days until canceled</p>
+
+    <button class="premium-continue-btn" onclick="goPremium()">Continue</button>
+    <p class="price-note">Recurring billing, cancel anytime.</p>
+  </div>
+</div>
+<!-- Match Preference Popup -->
+<div class="match-pref-overlay" id="matchPrefPopup">
+  <div class="match-pref-popup">
+    <div class="mp-header">
+      <span class="mp-title">Match Preference ℹ️</span>
+      <button class="popup-close" onclick="closeMatchPref()">✕</button>
+    </div>
+
+    <!-- Premium Banner -->
+    <div class="popup-premium-bar" style="background:#e8eaf6;">
+      <span>💎</span>
+      <div>
+        <div class="pp-title">ZapChat Premium+</div>
+        <div class="pp-sub">Set your preferences, meet someone who's right for you.</div>
+      </div>
+      <a href="premium.html" class="pp-join dark-join">Join</a>
+    </div>
+
+    <!-- Age Filter -->
+    <div class="mp-section">
+      <p class="mp-section-title">🎂 Age</p>
+      <div class="age-range-box">
+        <span class="age-val" id="ageMinVal">18</span>
+        <div class="age-track">
+          <input type="range" min="18" max="50" value="18" class="age-slider" id="ageMin"
+            oninput="document.getElementById('ageMinVal').textContent=this.value"/>
+          <input type="range" min="18" max="50" value="50" class="age-slider" id="ageMax"
+            oninput="document.getElementById('ageMaxVal').textContent=(this.value>=50?'35+':this.value)"/>
+        </div>
+        <span class="age-val" id="ageMaxVal">35+</span>
+      </div>
+    </div>
+
+    <!-- Language -->
+    <div class="mp-section">
+      <p class="mp-section-title">🔤 Language</p>
+      <div class="mp-row-select">
+        <span>Language</span>
+        <select class="mp-inline-select" onchange="checkPremiumPref(this)">
+          <option>Unlimited</option>
+          <option>Hindi</option>
+          <option>English</option>
+          <option>Punjabi</option>
+          <option>Tamil</option>
+          <option>Telugu</option>
+          <option>Bengali</option>
+          <option>Marathi</option>
+          <option>Gujarati</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Region -->
+    <div class="mp-section">
+      <p class="mp-section-title">🌍 Region</p>
+
+      <div class="mp-row-select">
+        <span>South Asia</span>
+        <select class="mp-inline-select" onchange="checkPremiumPref(this)">
+          <option>Default</option>
+          <option>Less</option>
+          <option>Prefer</option>
+        </select>
+      </div>
+
+      <div class="mp-row-select">
+        <span>North America</span>
+        <select class="mp-inline-select" onchange="checkPremiumPref(this)">
+          <option>Default</option>
+          <option>Less</option>
+          <option>Prefer</option>
+        </select>
+      </div>
+
+      <div class="mp-row-select">
+        <span>Latin America</span>
+        <select class="mp-inline-select" onchange="checkPremiumPref(this)">
+          <option>Default</option>
+          <option>Less</option>
+          <option>Prefer</option>
+        </select>
+      </div>
+
+      <div class="mp-row-select">
+        <span>North Africa</span>
+        <select class="mp-inline-select" onchange="checkPremiumPref(this)">
+          <option>Default</option>
+          <option>Less</option>
+          <option>Prefer</option>
+        </select>
+      </div>
+
+      <div class="mp-row-select">
+        <span>Middle East</span>
+        <select class="mp-inline-select" onchange="checkPremiumPref(this)">
+          <option>Default</option>
+          <option>Less</option>
+          <option>Prefer</option>
+        </select>
+      </div>
+
+      <div class="mp-row-select">
+        <span>Southeast Asia</span>
+        <select class="mp-inline-select" onchange="checkPremiumPref(this)">
+          <option>Default</option>
+          <option>Less</option>
+          <option>Prefer</option>
+        </select>
+      </div>
+
+      <div class="mp-row-select">
+        <span>Europe</span>
+        <select class="mp-inline-select" onchange="checkPremiumPref(this)">
+          <option>Default</option>
+          <option>Less</option>
+          <option>Prefer</option>
+        </select>
+      </div>
+
+      <div class="mp-row-select">
+        <span>East Asia</span>
+        <select class="mp-inline-select" onchange="checkPremiumPref(this)">
+          <option>Default</option>
+          <option>Less</option>
+          <option>Prefer</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="popup-footer">
+      <button class="popup-save-btn" onclick="saveMatchPref()">Save</button>
+      <button class="popup-earth-btn" onclick="closeMatchPref()">👫</button>
+    </div>
+  </div>
+</div>
+
+<div class="home-page">
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen">
+    <div class="header">
+      <h1>⚡ ZapChat</h1>
+      <p class="tagline">Duniya se milo, ek zap mein!</p>
+    </div>
+    <div class="online-box">
+      <span class="green-dot"></span>
+      <span id="onlineCount">0</span> log abhi online hain
+    </div>
+    <div class="login-box">
+      <p class="login-title">Login karo shuru karne ke liye</p>
+      <button class="btn-google" onclick="loginWithGoogle()">
+        🔑 Google se Login Karo
+      </button>
+    </div>
+    <div class="rules">
+      <p>⚠️ 18+ only — Be respectful — No spam</p>
+    </div>
+  </div>
+
+  <!-- MAIN SCREEN -->
+  <div id="mainScreen" style="display:none;">
+
+    <div class="header">
+      <h1>⚡ ZapChat</h1>
+      <p class="tagline">Duniya se milo, ek zap mein!</p>
+    </div>
+
+    <!-- User Profile -->
+    <div class="user-profile">
+      <img id="userPhoto" src="" alt="profile"/>
+      <span id="userName">Loading...</span>
+      <span id="userGenderBadge" class="gender-badge"></span>
+      <button class="btn-logout" onclick="logoutUser()">Logout</button>
+    </div>
+
+    <!-- Online Counter -->
+    <div class="online-box">
+      <span class="green-dot"></span>
+      <span id="onlineCount2">0</span> log abhi online hain
+    </div>
+
+    <!-- Quick Links -->
+    <div class="quick-links">
+      <a href="wallet.html" class="quick-link wallet-link">
+        🪙 Wallet — <span id="coinsBadge">0</span> coins
+      </a>
+      <a href="premium.html" class="quick-link premium-link">
+        👑 Premium Lo
+      </a>
+    </div>
+
+    <!-- Creator Banner -->
+    <div class="creator-banner" id="creatorBanner">
+  <div class="creator-banner-text">
+    <span class="creator-icon">🎁</span>
+    <div>
+      <div class="creator-title">Creator Ban Jao!</div>
+      <div class="creator-sub">Gifts receive karo aur real paise kamao</div>
+    </div>
+  </div>
+  <a href="creator.html" class="creator-btn">Join →</a>
+</div>
+
+    <!-- Gender Filter — Premium Feature -->
+    <div class="filter-btn-box">
+  <button class="filter-main-btn" onclick="openGenderFilter()">
+    👫 Both &nbsp; <span class="filter-change">Change →</span>
+  </button>
+</div>
+
+    <!-- Interest Tags -->
+    <div class="interests-box">
+      <p class="interests-title">🏷️ Apni Interests Chunno <span id="tagCount">(0 selected)</span></p>
+
+      <div class="tag-search-box">
+        <input type="text" id="tagSearch" placeholder="🔍 Interest search karo..." oninput="filterTags()"/>
+      </div>
+
+      <div id="selectedTags" class="selected-tags"></div>
+
+      <div id="allTags" class="all-tags">
+
+        <div class="tag-category">
+          <div class="cat-title">🎵 Music & Entertainment</div>
+          <div class="tag-list">
+            <span class="tag" onclick="toggleTag(this)">🎵 Music</span>
+            <span class="tag" onclick="toggleTag(this)">🎸 Guitar</span>
+            <span class="tag" onclick="toggleTag(this)">🎹 Piano</span>
+            <span class="tag" onclick="toggleTag(this)">🎤 Singing</span>
+            <span class="tag" onclick="toggleTag(this)">🎧 DJ</span>
+            <span class="tag" onclick="toggleTag(this)">🎬 Movies</span>
+            <span class="tag" onclick="toggleTag(this)">📺 Web Series</span>
+            <span class="tag" onclick="toggleTag(this)">🎭 Theatre</span>
+            <span class="tag" onclick="toggleTag(this)">🎪 Comedy</span>
+            <span class="tag" onclick="toggleTag(this)">📻 Podcast</span>
+            <span class="tag" onclick="toggleTag(this)">🎶 Bollywood</span>
+            <span class="tag" onclick="toggleTag(this)">🎵 Hip Hop</span>
+            <span class="tag" onclick="toggleTag(this)">🎸 Rock Music</span>
+            <span class="tag" onclick="toggleTag(this)">🎻 Classical Music</span>
+            <span class="tag" onclick="toggleTag(this)">🎺 Jazz</span>
+          </div>
+        </div>
+
+        <div class="tag-category">
+          <div class="cat-title">🎮 Gaming & Sports</div>
+          <div class="tag-list">
+            <span class="tag" onclick="toggleTag(this)">🎮 Gaming</span>
+            <span class="tag" onclick="toggleTag(this)">🏏 Cricket</span>
+            <span class="tag" onclick="toggleTag(this)">⚽ Football</span>
+            <span class="tag" onclick="toggleTag(this)">🏀 Basketball</span>
+            <span class="tag" onclick="toggleTag(this)">🎾 Tennis</span>
+            <span class="tag" onclick="toggleTag(this)">🏊 Swimming</span>
+            <span class="tag" onclick="toggleTag(this)">🥊 Boxing</span>
+            <span class="tag" onclick="toggleTag(this)">🏋️ Gym</span>
+            <span class="tag" onclick="toggleTag(this)">🧘 Yoga</span>
+            <span class="tag" onclick="toggleTag(this)">🚴 Cycling</span>
+            <span class="tag" onclick="toggleTag(this)">🏃 Running</span>
+            <span class="tag" onclick="toggleTag(this)">🎯 PUBG</span>
+            <span class="tag" onclick="toggleTag(this)">🎮 Free Fire</span>
+            <span class="tag" onclick="toggleTag(this)">⚔️ BGMI</span>
+            <span class="tag" onclick="toggleTag(this)">🎮 Esports</span>
+          </div>
+        </div>
+
+        <div class="tag-category">
+          <div class="cat-title">📚 Education & Career</div>
+          <div class="tag-list">
+            <span class="tag" onclick="toggleTag(this)">📚 Study</span>
+            <span class="tag" onclick="toggleTag(this)">💻 Coding</span>
+            <span class="tag" onclick="toggleTag(this)">🔬 Science</span>
+            <span class="tag" onclick="toggleTag(this)">📐 Maths</span>
+            <span class="tag" onclick="toggleTag(this)">⚖️ Law</span>
+            <span class="tag" onclick="toggleTag(this)">🏥 Medical</span>
+            <span class="tag" onclick="toggleTag(this)">📈 Business</span>
+            <span class="tag" onclick="toggleTag(this)">💰 Finance</span>
+            <span class="tag" onclick="toggleTag(this)">🎨 Design</span>
+            <span class="tag" onclick="toggleTag(this)">📷 Photography</span>
+            <span class="tag" onclick="toggleTag(this)">✍️ Writing</span>
+            <span class="tag" onclick="toggleTag(this)">🗣️ Public Speaking</span>
+            <span class="tag" onclick="toggleTag(this)">🤖 AI & Tech</span>
+            <span class="tag" onclick="toggleTag(this)">📊 Marketing</span>
+            <span class="tag" onclick="toggleTag(this)">🚀 Startup</span>
+          </div>
+        </div>
+
+        <div class="tag-category">
+          <div class="cat-title">🍕 Food & Travel</div>
+          <div class="tag-list">
+            <span class="tag" onclick="toggleTag(this)">🍕 Pizza</span>
+            <span class="tag" onclick="toggleTag(this)">🍜 Noodles</span>
+            <span class="tag" onclick="toggleTag(this)">🍛 Biryani</span>
+            <span class="tag" onclick="toggleTag(this)">🍰 Baking</span>
+            <span class="tag" onclick="toggleTag(this)">☕ Coffee</span>
+            <span class="tag" onclick="toggleTag(this)">🍵 Tea</span>
+            <span class="tag" onclick="toggleTag(this)">✈️ Travel</span>
+            <span class="tag" onclick="toggleTag(this)">🏔️ Trekking</span>
+            <span class="tag" onclick="toggleTag(this)">🏖️ Beach</span>
+            <span class="tag" onclick="toggleTag(this)">🗺️ Backpacking</span>
+            <span class="tag" onclick="toggleTag(this)">🍽️ Cooking</span>
+            <span class="tag" onclick="toggleTag(this)">🥗 Healthy Food</span>
+            <span class="tag" onclick="toggleTag(this)">🍦 Street Food</span>
+            <span class="tag" onclick="toggleTag(this)">🍷 Fine Dining</span>
+            <span class="tag" onclick="toggleTag(this)">🌮 World Cuisine</span>
+          </div>
+        </div>
+
+        <div class="tag-category">
+          <div class="cat-title">💄 Fashion & Beauty</div>
+          <div class="tag-list">
+            <span class="tag" onclick="toggleTag(this)">👗 Fashion</span>
+            <span class="tag" onclick="toggleTag(this)">💄 Makeup</span>
+            <span class="tag" onclick="toggleTag(this)">💅 Nails</span>
+            <span class="tag" onclick="toggleTag(this)">👟 Sneakers</span>
+            <span class="tag" onclick="toggleTag(this)">👜 Accessories</span>
+            <span class="tag" onclick="toggleTag(this)">🧴 Skincare</span>
+            <span class="tag" onclick="toggleTag(this)">💇 Haircare</span>
+            <span class="tag" onclick="toggleTag(this)">🕶️ Streetwear</span>
+            <span class="tag" onclick="toggleTag(this)">👔 Formal Wear</span>
+            <span class="tag" onclick="toggleTag(this)">🎀 Styling</span>
+            <span class="tag" onclick="toggleTag(this)">🌸 K-Beauty</span>
+            <span class="tag" onclick="toggleTag(this)">✨ Aesthetic</span>
+            <span class="tag" onclick="toggleTag(this)">🪞 Grooming</span>
+            <span class="tag" onclick="toggleTag(this)">💍 Jewelry</span>
+            <span class="tag" onclick="toggleTag(this)">🛍️ Shopping</span>
+          </div>
+        </div>
+
+        <div class="tag-category">
+          <div class="cat-title">🎨 Art & Creativity</div>
+          <div class="tag-list">
+            <span class="tag" onclick="toggleTag(this)">🎨 Drawing</span>
+            <span class="tag" onclick="toggleTag(this)">🖌️ Painting</span>
+            <span class="tag" onclick="toggleTag(this)">✏️ Sketching</span>
+            <span class="tag" onclick="toggleTag(this)">📸 Photography</span>
+            <span class="tag" onclick="toggleTag(this)">🎥 Videography</span>
+            <span class="tag" onclick="toggleTag(this)">✍️ Poetry</span>
+            <span class="tag" onclick="toggleTag(this)">📖 Reading</span>
+            <span class="tag" onclick="toggleTag(this)">🖊️ Blogging</span>
+            <span class="tag" onclick="toggleTag(this)">🎭 Acting</span>
+            <span class="tag" onclick="toggleTag(this)">💃 Dancing</span>
+            <span class="tag" onclick="toggleTag(this)">🎬 Filmmaking</span>
+            <span class="tag" onclick="toggleTag(this)">🖼️ Digital Art</span>
+            <span class="tag" onclick="toggleTag(this)">🎪 Animation</span>
+            <span class="tag" onclick="toggleTag(this)">📝 Storytelling</span>
+            <span class="tag" onclick="toggleTag(this)">🎠 Craft</span>
+          </div>
+        </div>
+
+        <div class="tag-category">
+          <div class="cat-title">💻 Technology</div>
+          <div class="tag-list">
+            <span class="tag" onclick="toggleTag(this)">💻 Programming</span>
+            <span class="tag" onclick="toggleTag(this)">🤖 Artificial Intelligence</span>
+            <span class="tag" onclick="toggleTag(this)">📱 Mobile Apps</span>
+            <span class="tag" onclick="toggleTag(this)">🌐 Web Development</span>
+            <span class="tag" onclick="toggleTag(this)">🔐 Cybersecurity</span>
+            <span class="tag" onclick="toggleTag(this)">☁️ Cloud Computing</span>
+            <span class="tag" onclick="toggleTag(this)">🎮 Game Development</span>
+            <span class="tag" onclick="toggleTag(this)">📊 Data Science</span>
+            <span class="tag" onclick="toggleTag(this)">🔗 Blockchain</span>
+            <span class="tag" onclick="toggleTag(this)">🤖 Robotics</span>
+            <span class="tag" onclick="toggleTag(this)">📡 Networking</span>
+            <span class="tag" onclick="toggleTag(this)">🖥️ Hardware</span>
+            <span class="tag" onclick="toggleTag(this)">🎯 UI/UX Design</span>
+            <span class="tag" onclick="toggleTag(this)">🚀 DevOps</span>
+            <span class="tag" onclick="toggleTag(this)">💡 IoT</span>
+          </div>
+        </div>
+
+        <div class="tag-category">
+          <div class="cat-title">❤️ Relationships & Lifestyle</div>
+          <div class="tag-list">
+            <span class="tag" onclick="toggleTag(this)">❤️ Dating</span>
+            <span class="tag" onclick="toggleTag(this)">👫 Friendship</span>
+            <span class="tag" onclick="toggleTag(this)">💑 Relationships</span>
+            <span class="tag" onclick="toggleTag(this)">🧠 Mental Health</span>
+            <span class="tag" onclick="toggleTag(this)">😊 Positivity</span>
+            <span class="tag" onclick="toggleTag(this)">🌙 Night Owl</span>
+            <span class="tag" onclick="toggleTag(this)">🌅 Early Bird</span>
+            <span class="tag" onclick="toggleTag(this)">🐾 Pet Lover</span>
+            <span class="tag" onclick="toggleTag(this)">🌿 Nature</span>
+            <span class="tag" onclick="toggleTag(this)">♻️ Environment</span>
+            <span class="tag" onclick="toggleTag(this)">🧘 Meditation</span>
+            <span class="tag" onclick="toggleTag(this)">📱 Social Media</span>
+            <span class="tag" onclick="toggleTag(this)">🎉 Party</span>
+            <span class="tag" onclick="toggleTag(this)">🏠 Homebody</span>
+            <span class="tag" onclick="toggleTag(this)">✌️ Chill Vibes</span>
+          </div>
+        </div>
+
+        <div class="tag-category">
+          <div class="cat-title">🙏 Religion & Culture</div>
+          <div class="tag-list">
+            <span class="tag" onclick="toggleTag(this)">🙏 Hinduism</span>
+            <span class="tag" onclick="toggleTag(this)">☪️ Islam</span>
+            <span class="tag" onclick="toggleTag(this)">✝️ Christianity</span>
+            <span class="tag" onclick="toggleTag(this)">☸️ Buddhism</span>
+            <span class="tag" onclick="toggleTag(this)">🕍 Sikhism</span>
+            <span class="tag" onclick="toggleTag(this)">🌍 Culture</span>
+            <span class="tag" onclick="toggleTag(this)">🗣️ Hindi</span>
+            <span class="tag" onclick="toggleTag(this)">🗣️ English</span>
+            <span class="tag" onclick="toggleTag(this)">🗣️ Punjabi</span>
+            <span class="tag" onclick="toggleTag(this)">🗣️ Tamil</span>
+            <span class="tag" onclick="toggleTag(this)">🗣️ Telugu</span>
+            <span class="tag" onclick="toggleTag(this)">🗣️ Bengali</span>
+            <span class="tag" onclick="toggleTag(this)">🌏 Desi</span>
+            <span class="tag" onclick="toggleTag(this)">🎊 Festivals</span>
+            <span class="tag" onclick="toggleTag(this)">🍛 Indian Food</span>
+          </div>
+        </div>
+
+        <div class="tag-category">
+          <div class="cat-title">💪 Health & Fitness</div>
+          <div class="tag-list">
+            <span class="tag" onclick="toggleTag(this)">💪 Fitness</span>
+            <span class="tag" onclick="toggleTag(this)">🏋️ Weightlifting</span>
+            <span class="tag" onclick="toggleTag(this)">🧘 Meditation</span>
+            <span class="tag" onclick="toggleTag(this)">🥗 Nutrition</span>
+            <span class="tag" onclick="toggleTag(this)">🏃 Cardio</span>
+            <span class="tag" onclick="toggleTag(this)">🤸 Flexibility</span>
+            <span class="tag" onclick="toggleTag(this)">🥊 MMA</span>
+            <span class="tag" onclick="toggleTag(this)">🧗 Rock Climbing</span>
+            <span class="tag" onclick="toggleTag(this)">🏄 Surfing</span>
+            <span class="tag" onclick="toggleTag(this)">⛷️ Skiing</span>
+            <span class="tag" onclick="toggleTag(this)">🎽 Athletics</span>
+            <span class="tag" onclick="toggleTag(this)">🌿 Veganism</span>
+            <span class="tag" onclick="toggleTag(this)">💊 Supplements</span>
+            <span class="tag" onclick="toggleTag(this)">😴 Sleep</span>
+            <span class="tag" onclick="toggleTag(this)">🧬 Biohacking</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Chat Buttons -->
+     <!-- Message Button -->
+<button class="msg-main-btn" onclick="openMessages()">
+  💬 Messages
+</button>
+
+<!-- Messages Popup -->
+<div class="modal-overlay" id="messagesPopup">
+  <div class="modal messages-modal">
+    <div class="messages-header">
+      <span class="mp-title">Message</span>
+      <button class="popup-close" onclick="closeMessages()">✕</button>
+    </div>
+    <div class="messages-list">
+      <div class="msg-item" onclick="window.location.href='friends.html'">
+        <div class="msg-avatar friends-avatar">👫</div>
+        <div class="msg-info">
+          <div class="msg-name">Friends</div>
+          <div class="msg-sub">Gather your friends and chat! 💬</div>
+        </div>
+        <div class="msg-arrow">›</div>
+      </div>
+      <div class="msg-item">
+        <div class="msg-avatar team-avatar">⚡</div>
+        <div class="msg-info">
+          <div class="msg-name">ZapChat Team</div>
+          <div class="msg-sub">Be nice, be respectful, have fun!</div>
+        </div>
+        <div class="msg-arrow">›</div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="btn-box">
+      <button class="btn-video" onclick="startChat('video')">
+        🎥 Video Chat Shuru Karo
+      </button>
+      <button class="btn-text" onclick="startChat('text')">
+        💬 Text Chat Shuru Karo
+      </button>
+    </div>
+
+    <div class="rules">
+      <p>⚠️ 18+ only — Be respectful — No spam</p>
+    </div>
+
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut }
+    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAY4u494HoeSUq_Enayrzt_7qHvd2uEPY0",
+    authDomain: "zapchat-fda4b.firebaseapp.com",
+    projectId: "zapchat-fda4b",
+    storageBucket: "zapchat-fda4b.firebasestorage.app",
+    messagingSenderId: "694989076666",
+    appId: "1:694989076666:web:25d8b778cecd2ccb112a83"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('mainScreen').style.display = 'block';
+        document.getElementById('userName').textContent = user.displayName;
+        document.getElementById('userPhoto').src = user.photoURL;
+        localStorage.setItem('userName', user.displayName);
+        localStorage.setItem('userPhoto', user.photoURL);
+        updateGenderBadge(localStorage.getItem('gender') || 'any');
+    } else {
+        document.getElementById('loginScreen').style.display = 'block';
+        document.getElementById('mainScreen').style.display = 'none';
+    }
+});
+
+  window.loginWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (err) {
+      alert('Login failed: ' + err.message);
+    }
+  };
+
+  window.logoutUser = async () => {
+    localStorage.removeItem('gender');
+    await signOut(auth);
+  };
+</script>
+
+<script>
+  const socket = io();
+  let selectedInterests = [];
+  let selectedWantGender = 'any';
+
+  const myCoins = parseInt(localStorage.getItem('zapCoins') || '0');
+  const isPremium = localStorage.getItem('zapPremium') === 'true';
+  const el = document.getElementById('coinsBadge');
+  if (el) el.textContent = myCoins;
+
+  socket.on('onlineCount', (count) => {
+    const el1 = document.getElementById('onlineCount');
+    const el2 = document.getElementById('onlineCount2');
+    if (el1) el1.textContent = count;
+    if (el2) el2.textContent = count;
+  });
+
+  // Gender Popup
+  window.setGenderPopup = (gender) => {
+    localStorage.setItem('gender', gender);
+    document.getElementById('genderPopup').classList.remove('show');
+    updateGenderBadge(gender);
+  };
+
+  function updateGenderBadge(gender) {
+    const badge = document.getElementById('userGenderBadge');
+    if (!badge) return;
+    if (gender === 'male') badge.textContent = '👨 Male';
+    else if (gender === 'female') badge.textContent = '👩 Female';
+    else badge.textContent = '🧑 Other';
+  }
+
+  window.selectWantGender = (btn, gender) => {
+    if (gender !== 'any' && !isPremium) {
+      alert('🪙 Gender filter ke liye coins ya premium chahiye!\n\nWallet mein jao aur coins kharido!');
+      return;
+    }
+    document.querySelectorAll('.want-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedWantGender = gender;
+
+    const note = document.getElementById('genderNote');
+    if (gender === 'any') {
+      note.textContent = '💡 Female/Male filter ke liye coins ya premium chahiye';
+      note.style.color = '#666';
+    } else {
+      note.textContent = '✅ Gender filter active hai!';
+      note.style.color = '#00f5d4';
+    }
+  };
+
+  window.toggleTag = (el) => {
+    const tag = el.textContent;
+    if (el.classList.contains('active')) {
+      el.classList.remove('active');
+      selectedInterests = selectedInterests.filter(t => t !== tag);
+    } else {
+      if (selectedInterests.length >= 10) {
+        alert('Maximum 10 interests select kar sakte ho!');
+        return;
+      }
+      el.classList.add('active');
+      selectedInterests.push(tag);
+    }
+    updateSelectedTags();
+  };
+
+  function updateSelectedTags() {
+    const box = document.getElementById('selectedTags');
+    const count = document.getElementById('tagCount');
+    count.textContent = '(' + selectedInterests.length + ' selected)';
+    if (selectedInterests.length === 0) { box.innerHTML = ''; return; }
+    box.innerHTML = '<p class="selected-label">✅ Selected:</p>' +
+      selectedInterests.map(t => `<span class="tag active">${t}</span>`).join('');
+  }
+
+  window.filterTags = () => {
+    const search = document.getElementById('tagSearch').value.toLowerCase();
+    document.querySelectorAll('.tag').forEach(tag => {
+      tag.style.display = tag.textContent.toLowerCase().includes(search) ? 'inline-block' : 'none';
+    });
+    document.querySelectorAll('.tag-category').forEach(cat => {
+      cat.style.display = [...cat.querySelectorAll('.tag')].some(t => t.style.display !== 'none') ? 'block' : 'none';
+    });
+  };
+
+  window.startChat = (mode) => {
+    localStorage.setItem('mode', mode);
+    localStorage.setItem('interests', JSON.stringify(selectedInterests));
+    localStorage.setItem('wantGender', selectedWantGender);
+    window.location.href = 'chat.html';
+  };
+  // Gender Popup
+let selectedPopupGender = 'any';
+
+window.selectPopupGender = (gender) => {
+    const isPremium = localStorage.getItem('zapPremium') === 'true';
+
+    if (gender !== 'any' && !isPremium) {
+        document.getElementById('genderPopup').classList.remove('show');
+        document.getElementById('premiumGenderPopup').classList.add('show');
+        return;
+    }
+
+    selectedPopupGender = gender;
+    document.querySelectorAll('.pgender-card').forEach(c => c.classList.remove('active'));
+    if (gender === 'female') document.getElementById('pg-girls').classList.add('active');
+    else if (gender === 'male') document.getElementById('pg-guys').classList.add('active');
+    else document.getElementById('pg-both').classList.add('active');
+};
+
+
+window.saveGenderPopup = () => {
+  localStorage.setItem('wantGender', selectedPopupGender);
+  document.getElementById('genderPopup').classList.remove('show');
+};
+
+window.closeGenderPopup = () => {
+  document.getElementById('genderPopup').classList.remove('show');
+};
+
+window.openMatchPref = () => {
+  document.getElementById('genderPopup').classList.remove('show');
+  document.getElementById('matchPrefPopup').classList.add('show');
+};
+
+window.closeMatchPref = () => {
+  document.getElementById('matchPrefPopup').classList.remove('show');
+};
+
+window.saveMatchPref = () => {
+  const isPremium = localStorage.getItem('zapPremium') === 'true';
+  if (!isPremium) {
+    document.getElementById('matchPrefPopup').classList.remove('show');
+    document.getElementById('premiumGenderPopup').classList.add('show');
+    return;
+  }
+  document.getElementById('matchPrefPopup').classList.remove('show');
+};
+
+window.checkPremiumPref = (el) => {
+  const isPremium = localStorage.getItem('zapPremium') === 'true';
+  if (!isPremium && el.value !== 'Default' && el.value !== 'Unlimited') {
+    el.value = el.options[0].value;
+    document.getElementById('matchPrefPopup').classList.remove('show');
+    document.getElementById('premiumGenderPopup').classList.add('show');
+  }
+};
+
+// Home page par filter button
+window.openGenderFilter = () => {
+  document.getElementById('genderPopup').classList.add('show');
+};
+window.closePremiumGenderPopup = () => {
+  document.getElementById('premiumGenderPopup').classList.remove('show');
+  document.getElementById('genderPopup').classList.add('show');
+};
+
+window.switchPremiumTab = (tab) => {
+  document.querySelectorAll('.pg-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+};
+
+window.selectPrice = (el) => {
+  document.querySelectorAll('.price-option').forEach(o => {
+    o.classList.remove('active');
+    o.querySelector('.price-radio').textContent = '⚪';
+  });
+  el.classList.add('active');
+  el.querySelector('.price-radio').textContent = '🔵';
+};
+
+window.goPremium = () => {
+  document.getElementById('premiumGenderPopup').classList.remove('show');
+  window.location.href = 'premium.html';
+};
+// Creator banner — sirf non-creators ko dikhao
+const isCreator = localStorage.getItem('isCreator') === 'true';
+const creatorBanner = document.getElementById('creatorBanner');
+if (creatorBanner) {
+  if (isCreator) {
+    creatorBanner.style.display = 'none';
+  }
+}
+window.openMessages = () => {
+  document.getElementById('messagesPopup').classList.add('show');
+};
+
+window.closeMessages = () => {
+  document.getElementById('messagesPopup').classList.remove('show');
+};
+</script>
+
+</body>
+</html>

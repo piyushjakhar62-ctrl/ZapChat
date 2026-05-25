@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZapChat ⚡ - Wallet</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wallet-page">
+
+  <!-- Header -->
+  <div class="wallet-header">
+    <a href="index.html" class="back-btn">← Back</a>
+    <h1>⚡ ZapChat</h1>
+    <div></div>
+  </div>
+
+  <!-- Wallet Balance -->
+  <div class="wallet-balance-box">
+    <div class="wallet-icon">💰</div>
+    <div class="balance-label">Aapke Coins</div>
+    <div class="balance-amount" id="coinBalance">0</div>
+    <div class="balance-sub">ZapChat Coins</div>
+  </div>
+
+  <!-- Buy Coins -->
+  <div class="buy-section">
+    <h3>🪙 Coins Kharido</h3>
+    <p class="buy-subtitle">Jitne zyada coins, utna zyada bonus!</p>
+
+    <div class="coin-packages">
+
+      <div class="coin-pkg" onclick="buyCoin(49, 50, 0)">
+        <div class="pkg-coins">🪙 50</div>
+        <div class="pkg-label">Coins</div>
+        <div class="pkg-bonus"></div>
+        <div class="pkg-price">₹49</div>
+        <button class="pkg-btn">Buy</button>
+      </div>
+
+      <div class="coin-pkg popular-pkg" onclick="buyCoin(99, 100, 10)">
+        <div class="pkg-popular">⭐ Popular</div>
+        <div class="pkg-coins">🪙 100</div>
+        <div class="pkg-label">Coins</div>
+        <div class="pkg-bonus">+10 Bonus!</div>
+        <div class="pkg-price">₹99</div>
+        <button class="pkg-btn popular-pkg-btn">Buy</button>
+      </div>
+
+      <div class="coin-pkg best-pkg" onclick="buyCoin(199, 200, 50)">
+        <div class="pkg-popular best-badge">💎 Best Value</div>
+        <div class="pkg-coins">🪙 200</div>
+        <div class="pkg-label">Coins</div>
+        <div class="pkg-bonus">+50 Bonus!</div>
+        <div class="pkg-price">₹199</div>
+        <button class="pkg-btn best-pkg-btn">Buy</button>
+      </div>
+
+      <div class="coin-pkg" onclick="buyCoin(499, 600, 100)">
+        <div class="pkg-popular vip-badge-pkg">👑 VIP</div>
+        <div class="pkg-coins">🪙 600</div>
+        <div class="pkg-label">Coins</div>
+        <div class="pkg-bonus">+100 Bonus!</div>
+        <div class="pkg-price">₹499</div>
+        <button class="pkg-btn vip-pkg-btn">Buy</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Transaction History -->
+  <div class="transaction-section">
+    <h3>📋 Transaction History</h3>
+    <div id="transactionList" class="transaction-list">
+      <div class="no-transactions">Abhi koi transaction nahi hai</div>
+    </div>
+  </div>
+
+  <!-- Gifts Info -->
+  <div class="gifts-info-section">
+    <h3>🎁 Gifts Ki Kimat</h3>
+    <div class="gifts-price-grid">
+      <div class="gift-price-item">
+        <span class="gift-emoji">❤️</span>
+        <span class="gift-name">Heart</span>
+        <span class="gift-cost">5 coins</span>
+      </div>
+      <div class="gift-price-item">
+        <span class="gift-emoji">🌹</span>
+        <span class="gift-name">Rose</span>
+        <span class="gift-cost">10 coins</span>
+      </div>
+      <div class="gift-price-item">
+        <span class="gift-emoji">🚀</span>
+        <span class="gift-name">Rocket</span>
+        <span class="gift-cost">25 coins</span>
+      </div>
+      <div class="gift-price-item">
+        <span class="gift-emoji">💎</span>
+        <span class="gift-name">Diamond</span>
+        <span class="gift-cost">50 coins</span>
+      </div>
+      <div class="gift-price-item">
+        <span class="gift-emoji">👑</span>
+        <span class="gift-name">Crown</span>
+        <span class="gift-cost">100 coins</span>
+      </div>
+      <div class="gift-price-item">
+        <span class="gift-emoji">🎆</span>
+        <span class="gift-name">Fireworks</span>
+        <span class="gift-cost">75 coins</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Coins load karo
+  let coins = parseInt(localStorage.getItem('zapCoins') || '0');
+  document.getElementById('coinBalance').textContent = coins;
+
+  // Transactions load karo
+  let transactions = JSON.parse(localStorage.getItem('zapTransactions') || '[]');
+  renderTransactions();
+
+  function buyCoin(amount, baseCoins, bonus) {
+    const totalCoins = baseCoins + bonus;
+    // Razorpay approve hone ke baad real payment hogi
+    // Abhi test mode mein coins add ho rahe hain
+    alert('💳 Payment Gateway\n\nAmount: ₹' + amount + '\nCoins: ' + baseCoins + (bonus > 0 ? ' + ' + bonus + ' Bonus' : '') + '\nTotal: ' + totalCoins + ' coins\n\n⚠️ Razorpay approval pending!\nTest mode mein coins add ho rahe hain.');
+
+    // Test mode — coins add karo
+    coins += totalCoins;
+    localStorage.setItem('zapCoins', coins);
+    document.getElementById('coinBalance').textContent = coins;
+
+    // Transaction add karo
+    const tx = {
+      type: 'credit',
+      amount: amount,
+      coins: totalCoins,
+      date: new Date().toLocaleDateString('hi-IN'),
+      time: new Date().toLocaleTimeString('hi-IN')
+    };
+    transactions.unshift(tx);
+    localStorage.setItem('zapTransactions', JSON.stringify(transactions));
+    renderTransactions();
+  }
+
+  function renderTransactions() {
+    const list = document.getElementById('transactionList');
+    if (transactions.length === 0) {
+      list.innerHTML = '<div class="no-transactions">Abhi koi transaction nahi hai</div>';
+      return;
+    }
+    list.innerHTML = transactions.slice(0, 10).map(tx => `
+      <div class="tx-item">
+        <div class="tx-icon">${tx.type === 'credit' ? '⬆️' : '⬇️'}</div>
+        <div class="tx-info">
+          <div class="tx-title">${tx.type === 'credit' ? 'Coins Purchase' : 'Gift Sent'}</div>
+          <div class="tx-date">${tx.date} ${tx.time}</div>
+        </div>
+        <div class="tx-amount ${tx.type}">
+          ${tx.type === 'credit' ? '+' : '-'}${tx.coins} 🪙
+        </div>
+      </div>
+    `).join('');
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZapChat ⚡ - Premium</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="premium-page">
+
+  <!-- Header -->
+  <div class="premium-header">
+    <a href="index.html" class="back-btn">← Back</a>
+    <h1>⚡ ZapChat</h1>
+    <div></div>
+  </div>
+
+  <!-- Hero -->
+  <div class="premium-hero">
+    <div class="crown">👑</div>
+    <h2>ZapChat Premium</h2>
+    <p>Aur behtar experience ke liye upgrade karo!</p>
+  </div>
+
+  <!-- Plans -->
+  <div class="plans-grid">
+
+    <!-- Basic Plan -->
+    <div class="plan-card">
+      <div class="plan-badge free-badge">FREE</div>
+      <div class="plan-icon">🌟</div>
+      <div class="plan-name">Basic</div>
+      <div class="plan-price">₹0<span>/month</span></div>
+      <ul class="plan-features">
+        <li>✅ Text Chat</li>
+        <li>✅ Video Chat</li>
+        <li>✅ Interest Tags</li>
+        <li>✅ Random Matching</li>
+        <li>❌ Ads dikhenge</li>
+        <li>❌ Country Filter nahi</li>
+        <li>❌ Priority Match nahi</li>
+        <li>❌ Virtual Gifts nahi</li>
+      </ul>
+      <button class="plan-btn free-btn" disabled>
+        Current Plan
+      </button>
+    </div>
+
+    <!-- Pro Plan -->
+    <div class="plan-card popular-card">
+      <div class="plan-badge popular-badge">⭐ POPULAR</div>
+      <div class="plan-icon">🚀</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">₹99<span>/month</span></div>
+      <ul class="plan-features">
+        <li>✅ Text Chat</li>
+        <li>✅ Video Chat</li>
+        <li>✅ Interest Tags</li>
+        <li>✅ Smart Matching</li>
+        <li>✅ Ad-Free Experience</li>
+        <li>✅ Country Filter</li>
+        <li>✅ Priority Match</li>
+        <li>❌ Virtual Gifts nahi</li>
+      </ul>
+      <button class="plan-btn pro-btn" onclick="buyPlan('pro', 99)">
+        🚀 Pro Lo — ₹99/month
+      </button>
+    </div>
+
+    <!-- VIP Plan -->
+    <div class="plan-card vip-card">
+      <div class="plan-badge vip-badge">💎 VIP</div>
+      <div class="plan-icon">💎</div>
+      <div class="plan-name">VIP</div>
+      <div class="plan-price">₹199<span>/month</span></div>
+      <ul class="plan-features">
+        <li>✅ Text Chat</li>
+        <li>✅ Video Chat</li>
+        <li>✅ Interest Tags</li>
+        <li>✅ Best Matching</li>
+        <li>✅ Ad-Free Experience</li>
+        <li>✅ Country Filter</li>
+        <li>✅ Priority Match</li>
+        <li>✅ Virtual Gifts</li>
+      </ul>
+      <button class="plan-btn vip-btn" onclick="buyPlan('vip', 199)">
+        💎 VIP Lo — ₹199/month
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Features Comparison -->
+  <div class="features-section">
+    <h3>🎯 Premium Ke Fayde</h3>
+    <div class="features-grid-premium">
+      <div class="feature-item">
+        <div class="feature-icon">📵</div>
+        <div class="feature-title">Ad-Free</div>
+        <div class="feature-desc">Koi bhi ad nahi dikhega</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🌍</div>
+        <div class="feature-title">Country Filter</div>
+        <div class="feature-desc">Kisi bhi desh se baat karo</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Priority Match</div>
+        <div class="feature-desc">Jaldi connect ho</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🎁</div>
+        <div class="feature-title">Virtual Gifts</div>
+        <div class="feature-desc">Doston ko gifts bhejo</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">⭐</div>
+        <div class="feature-title">Gold Badge</div>
+        <div class="feature-desc">Profile par gold badge</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Extra Safety</div>
+        <div class="feature-desc">Better moderation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <h3>❓ Aksar Pooche Jane Wale Sawaal</h3>
+    <div class="faq-item">
+      <div class="faq-q">💳 Kaunse payment methods accept hain?</div>
+      <div class="faq-a">UPI, Credit Card, Debit Card, NetBanking — sab kuch!</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">🔄 Cancel kar sakte hain?</div>
+      <div class="faq-a">Haan! Kabhi bhi cancel kar sakte ho — koi charges nahi!</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">⚡ Kitne time mein activate hoga?</div>
+      <div class="faq-a">Payment ke turant baad — 2 minute mein active!</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">💰 Refund milega?</div>
+      <div class="faq-a">7 din ke andar refund request kar sakte ho!</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="premium-footer">
+    <p>🔒 Secure payment by Razorpay</p>
+    <p>support@zapchat.com</p>
+  </div>
+
+</div>
+
+<script>
+function buyPlan(plan, amount) {
+  // Razorpay approve hone ke baad yahan payment code aayega
+  alert('⚡ ZapChat Premium!\n\nRazorpay approval pending hai.\n\nJald hi payment live hogi!\n\nPlan: ' + plan.toUpperCase() + '\nAmount: ₹' + amount + '/month');
+}
+</script>
+
+</body>
+</html>

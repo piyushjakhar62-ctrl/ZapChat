@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZapChat ⚡ - Chat</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="chat-page">
+
+  <!-- Header -->
+  <div class="chat-header">
+    <h2>⚡ ZapChat</h2>
+    <div class="header-right">
+      <span class="coin-display" onclick="window.location.href='wallet.html'">
+        🪙 <span id="headerCoins">0</span>
+      </span>
+      <span id="onlineCount">0</span> online
+      <button class="btn-report-header" onclick="openReport()">🚨 Report</button>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div id="status" class="status waiting">
+    🔍 Stranger dhundh rahe hain...
+  </div>
+
+  <!-- Common Interests Banner -->
+  <div class="common-interests" id="commonInterests"></div>
+
+  <!-- Warning Box -->
+  <div class="warning-box" id="warningBox"></div>
+
+  <!-- Video Container -->
+  <div class="video-container" id="videoContainer">
+    <video id="strangerVideo" autoplay playsinline></video>
+    <video id="myVideo" autoplay playsinline muted></video>
+  </div>
+
+  <!-- Video Controls -->
+  <div class="video-controls" id="videoControls">
+    <button class="btn-cam" id="camBtn" onclick="toggleCamera()">
+      📷 Camera Off
+    </button>
+    <button class="btn-cam" id="micBtn" onclick="toggleMic()">
+      🎤 Mic Off
+    </button>
+  </div>
+
+  <!-- Chat Box -->
+  <div id="chatBox" class="chat-box"></div>
+
+  <!-- Emoji Picker -->
+  <div class="emoji-picker" id="emojiPicker">
+    <span onclick="addEmoji('😀')">😀</span>
+    <span onclick="addEmoji('😂')">😂</span>
+    <span onclick="addEmoji('😍')">😍</span>
+    <span onclick="addEmoji('🔥')">🔥</span>
+    <span onclick="addEmoji('👍')">👍</span>
+    <span onclick="addEmoji('❤️')">❤️</span>
+    <span onclick="addEmoji('😎')">😎</span>
+    <span onclick="addEmoji('🙏')">🙏</span>
+    <span onclick="addEmoji('😭')">😭</span>
+    <span onclick="addEmoji('⚡')">⚡</span>
+    <span onclick="addEmoji('🎉')">🎉</span>
+    <span onclick="addEmoji('💯')">💯</span>
+    <span onclick="addEmoji('🤣')">🤣</span>
+    <span onclick="addEmoji('😊')">😊</span>
+    <span onclick="addEmoji('👋')">👋</span>
+    <span onclick="addEmoji('🥰')">🥰</span>
+  </div>
+
+  <!-- Gift Picker -->
+  <div class="gift-picker" id="giftPicker">
+    <div class="gift-picker-header">
+      <span>🎁 Gift Bhejo</span>
+      <span class="gift-coins-display">🪙 <span id="giftCoins">0</span></span>
+    </div>
+    <div class="gift-grid">
+      <div class="gift-item" onclick="sendGift('❤️', 'Heart', 5)">
+        <div class="gift-emoji">❤️</div>
+        <div class="gift-name">Heart</div>
+        <div class="gift-cost">5 🪙</div>
+      </div>
+      <div class="gift-item" onclick="sendGift('🌹', 'Rose', 10)">
+        <div class="gift-emoji">🌹</div>
+        <div class="gift-name">Rose</div>
+        <div class="gift-cost">10 🪙</div>
+      </div>
+      <div class="gift-item" onclick="sendGift('🚀', 'Rocket', 25)">
+        <div class="gift-emoji">🚀</div>
+        <div class="gift-name">Rocket</div>
+        <div class="gift-cost">25 🪙</div>
+      </div>
+      <div class="gift-item" onclick="sendGift('💎', 'Diamond', 50)">
+        <div class="gift-emoji">💎</div>
+        <div class="gift-name">Diamond</div>
+        <div class="gift-cost">50 🪙</div>
+      </div>
+      <div class="gift-item" onclick="sendGift('👑', 'Crown', 100)">
+        <div class="gift-emoji">👑</div>
+        <div class="gift-name">Crown</div>
+        <div class="gift-cost">100 🪙</div>
+      </div>
+      <div class="gift-item" onclick="sendGift('🎆', 'Fireworks', 75)">
+        <div class="gift-emoji">🎆</div>
+        <div class="gift-name">Fireworks</div>
+        <div class="gift-cost">75 🪙</div>
+      </div>
+    </div>
+    <button class="buy-more-coins" onclick="window.location.href='wallet.html'">
+      🪙 Aur Coins Kharido
+    </button>
+  </div>
+
+  <!-- Input Area -->
+  <div class="input-area">
+    <button class="emoji-btn" onclick="toggleEmoji()">😊</button>
+    <button class="gift-btn" onclick="toggleGifts()">🎁</button>
+    <input
+      type="text"
+      id="msgInput"
+      placeholder="Message likho..."
+      onkeypress="checkEnter(event)"
+      oninput="typingStart()"
+      disabled
+    />
+    <button id="sendBtn" onclick="sendMessage()" disabled>
+      Send
+    </button>
+  </div>
+
+  <!-- Control Buttons -->
+  <!-- Mode Tabs -->
+<div class="chat-mode-tabs">
+  <button class="mode-tab active" id="tab-text" onclick="switchMode('text')">
+    💬 Text
+  </button>
+  <button class="mode-tab" id="tab-video" onclick="switchMode('video')">
+    🎥 Video
+  </button>
+  <button class="mode-tab" id="tab-audio" onclick="switchMode('audio')">
+    🎤 Audio
+  </button>
+</div>
+
+<!-- Control Buttons -->
+<div class="control-btns">
+  <button class="btn-next" onclick="nextStranger()">
+    ⏭ Next
+  </button>
+  <button class="btn-add-friend" onclick="addFriend()" id="addFriendBtn">
+  👫 Add
+</button>
+  <button class="btn-block" onclick="openBlock()">
+    🚫 Block
+  </button>
+  <button class="btn-stop" onclick="stopChat()">
+    ⬛ Stop
+  </button>
+</div>
+
+<!-- Coins Call Popup -->
+<div class="modal-overlay" id="callCoinPopup">
+  <div class="modal">
+    <div class="call-popup-icon" id="callPopupIcon">🎥</div>
+    <h3 id="callPopupTitle">Video Call</h3>
+    <p id="callPopupDesc">Video call ke liye 10 coins/minute lagenge</p>
+    <div class="call-coin-box">
+      <span>🪙 Aapke Coins:</span>
+      <span id="callPopupCoins" class="call-coins-val">0</span>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-confirm-block" onclick="confirmCall()">
+        ✅ Start Karo
+      </button>
+      <button class="btn-cancel" onclick="closeCallPopup()">
+        ❌ Cancel
+      </button>
+    </div>
+    <p class="call-note">💡 Coins automatic katenge har minute</p>
+  </div>
+</div>
+
+</div>
+
+<!-- Gift Animation Overlay -->
+<div class="gift-animation" id="giftAnimation"></div>
+
+<!-- Report Modal -->
+<div class="modal-overlay" id="reportModal">
+  <div class="modal">
+    <h3>🚨 Report Karo</h3>
+    <p>Kya problem hai?</p>
+    <div class="report-reasons">
+      <button class="reason-btn" onclick="submitReport('Harassment')">😡 Harassment</button>
+      <button class="reason-btn" onclick="submitReport('Spam')">📢 Spam</button>
+      <button class="reason-btn" onclick="submitReport('Abusive Language')">🤬 Abusive Language</button>
+      <button class="reason-btn" onclick="submitReport('Inappropriate Video')">🔞 Inappropriate Video</button>
+      <button class="reason-btn" onclick="submitReport('Fake Profile')">🎭 Fake Profile</button>
+      <button class="reason-btn" onclick="submitReport('Underage')">👦 Underage</button>
+      <button class="reason-btn" onclick="submitReport('Other')">❓ Other</button>
+    </div>
+    <button class="btn-cancel" onclick="closeReport()">❌ Cancel</button>
+  </div>
+</div>
+
+<!-- Block Modal -->
+<div class="modal-overlay" id="blockModal">
+  <div class="modal">
+    <h3>🚫 Block Karo?</h3>
+    <p>Yeh stranger aapko dobara nahi milega!</p>
+    <div class="modal-btns">
+      <button class="btn-confirm-block" onclick="confirmBlock()">✅ Haan Block Karo</button>
+      <button class="btn-cancel" onclick="closeBlock()">❌ Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Ban Screen -->
+<div class="ban-screen" id="banScreen">
+  <div class="ban-box">
+    <div class="ban-icon">🚫</div>
+    <h2>Aap Ban Ho Gaye!</h2>
+    <p id="banReason"></p>
+    <p class="ban-sub">Agar galti se hua hai toh support@zapchat.com par mail karo.</p>
+    <button class="btn-home" onclick="window.location.href='index.html'">🏠 Home Par Jao</button>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

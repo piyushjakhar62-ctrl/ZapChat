@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZapChat ⚡ - Creator Program</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="creator-page">
+
+  <!-- Header -->
+  <div class="creator-header">
+    <a href="index.html" class="back-btn">← Back</a>
+    <h1>⚡ ZapChat</h1>
+    <div></div>
+  </div>
+
+  <!-- Hero -->
+  <div class="creator-hero">
+    <div class="creator-hero-icon">🎁</div>
+    <h2>Creator Ban Jao!</h2>
+    <p>Gifts receive karo aur real paise kamao</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="creator-stats">
+    <div class="stat-box">
+      <div class="stat-num">50,000+</div>
+      <div class="stat-label">Active Creators</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">₹2Cr+</div>
+      <div class="stat-label">Total Payouts</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">70%</div>
+      <div class="stat-label">Creator Share</div>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <div class="creator-how">
+    <h3>🎯 Kaise Kaam Karta Hai?</h3>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <div class="step-title">Register Karo</div>
+          <div class="step-desc">Apna creator account banao — bilkul free!</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <div class="step-title">Video Chat Karo</div>
+          <div class="step-desc">Users se baat karo — gifts receive karo</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <div class="step-title">Coins Collect Karo</div>
+          <div class="step-desc">Har gift = coins. Zyada gifts = zyada coins!</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <div class="step-title">Paise Withdraw Karo</div>
+          <div class="step-desc">Coins → Real paise — UPI ya Bank mein!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Earning Table -->
+  <div class="creator-earning">
+    <h3>💰 Kitna Milta Hai?</h3>
+    <div class="earning-table">
+      <div class="earn-row header-row">
+        <span>Gift</span>
+        <span>Coins</span>
+        <span>Aapko Milega</span>
+      </div>
+      <div class="earn-row">
+        <span>❤️ Heart</span>
+        <span>5 coins</span>
+        <span class="earn-amt">₹3.50</span>
+      </div>
+      <div class="earn-row">
+        <span>🌹 Rose</span>
+        <span>10 coins</span>
+        <span class="earn-amt">₹7</span>
+      </div>
+      <div class="earn-row">
+        <span>🚀 Rocket</span>
+        <span>25 coins</span>
+        <span class="earn-amt">₹17.50</span>
+      </div>
+      <div class="earn-row">
+        <span>💎 Diamond</span>
+        <span>50 coins</span>
+        <span class="earn-amt">₹35</span>
+      </div>
+      <div class="earn-row">
+        <span>👑 Crown</span>
+        <span>100 coins</span>
+        <span class="earn-amt">₹70</span>
+      </div>
+      <div class="earn-row">
+        <span>🎆 Fireworks</span>
+        <span>75 coins</span>
+        <span class="earn-amt">₹52.50</span>
+      </div>
+    </div>
+    <p class="earn-note">💡 1 coin = ₹0.70 | ZapChat 30% commission rakhta hai</p>
+  </div>
+
+  <!-- Register Form -->
+  <div class="creator-form" id="creatorForm">
+    <h3>🚀 Abhi Register Karo!</h3>
+
+    <div id="formScreen">
+      <div class="form-group">
+        <label>📛 Aapka Naam</label>
+        <input type="text" id="creatorName" placeholder="Apna naam likho..."/>
+      </div>
+      <div class="form-group">
+        <label>📱 UPI ID (Paise Yahan Aayenge)</label>
+        <input type="text" id="creatorUPI" placeholder="yourname@upi"/>
+      </div>
+      <div class="form-group">
+        <label>👤 Aap Kaun Hain?</label>
+        <div class="creator-gender-btns">
+          <button class="cgender-btn active" onclick="setCGender(this,'female')">👩 Female</button>
+          <button class="cgender-btn" onclick="setCGender(this,'male')">👨 Male</button>
+          <button class="cgender-btn" onclick="setCGender(this,'other')">🧑 Other</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>📋 Terms & Conditions</label>
+        <div class="terms-box">
+          <input type="checkbox" id="termsCheck"/>
+          <span>Main agree karta/karti hoon ki main 18+ hoon aur ZapChat ke rules follow karunga/karungi</span>
+        </div>
+      </div>
+      <button class="creator-register-btn" onclick="registerCreator()">
+        🎁 Creator Ban Jao — Free!
+      </button>
+    </div>
+
+    <div id="successScreen" style="display:none;">
+      <div class="success-box">
+        <div class="success-icon">🎉</div>
+        <h3>Congratulations!</h3>
+        <p>Aap ZapChat Creator ban gaye!</p>
+        <div class="creator-id-box">
+          <span>Creator ID:</span>
+          <span id="creatorIdDisplay" class="creator-id-val"></span>
+        </div>
+        <button class="creator-register-btn" onclick="window.location.href='creator-dashboard.html'">
+          📊 Dashboard Dekhein
+        </button>
+        <button class="creator-register-btn" style="background:#12121e;margin-top:10px;" onclick="window.location.href='index.html'">
+          🏠 Home Par Jao
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let creatorGender = 'female';
+
+  window.setCGender = (btn, gender) => {
+    creatorGender = gender;
+    document.querySelectorAll('.cgender-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  };
+
+  window.registerCreator = () => {
+    const name = document.getElementById('creatorName').value.trim();
+    const upi = document.getElementById('creatorUPI').value.trim();
+    const terms = document.getElementById('termsCheck').checked;
+
+    if (!name) { alert('Apna naam likho!'); return; }
+    if (!upi) { alert('UPI ID likho!'); return; }
+    if (!terms) { alert('Terms accept karo!'); return; }
+
+    // Creator data save karo
+    const creatorId = 'ZC' + Date.now().toString().slice(-6);
+    const creatorData = {
+      id: creatorId,
+      name: name,
+      upi: upi,
+      gender: creatorGender,
+      coins: 0,
+      totalEarned: 0,
+      joinDate: new Date().toLocaleDateString('hi-IN')
+    };
+
+    localStorage.setItem('isCreator', 'true');
+    localStorage.setItem('creatorData', JSON.stringify(creatorData));
+    localStorage.setItem('creatorId', creatorId);
+
+    document.getElementById('creatorIdDisplay').textContent = creatorId;
+    document.getElementById('formScreen').style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+    setTimeout(() => {
+  window.location.href = 'index.html';
+}, 2000);
+  };
+
+  // Check if already creator
+  if (localStorage.getItem('isCreator') === 'true') {
+    document.getElementById('formScreen').style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+    const data = JSON.parse(localStorage.getItem('creatorData') || '{}');
+    document.getElementById('creatorIdDisplay').textContent = data.id || '';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZapChat ⚡ - Chat</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="friend-chat-page">
+
+  <!-- Header -->
+  <div class="fc-header">
+    <button class="back-icon-btn" onclick="window.location.href='friends.html'">←</button>
+    <div class="fc-user">
+      <div class="fc-avatar" id="fcAvatar">👤</div>
+      <span class="fc-name" id="fcName">Loading...</span>
+    </div>
+    <div class="fc-header-actions">
+     <button class="fc-icon-btn police-btn" onclick="openReportModal()">👮</button>
+                
+                <div class="menu-container" style="position: relative; display: inline-block;">
+                    <button class="three-dots-btn" onclick="toggleMenu(event)" style="background: none; border: none; color: white; font-size: 1.4rem; cursor: pointer; padding: 0 8px; vertical-align: middle;">•••</button>
+                    
+                    <div id="myDropdown" class="dropdown-content" style="display: none; position: absolute; right: 0; top: 35px; background-color: #ffffff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3); z-index: 100; border-radius: 8px; padding: 5px 0;">
+                        <a href="#" onclick="handleUnfriend(event)" style="color: #333; padding: 10px 15px; text-decoration: none; display: block; font-size: 0.95rem; font-weight: 600; text-align: left;">👱‍♂️ Unfriend</a>
+                        <a href="#" onclick="handleBlock(event)" style="color: #ff4d4d; padding: 10px 15px; text-decoration: none; display: block; font-size: 0.95rem; font-weight: 600; text-align: left; border-top: 1px solid #eee;">🚫 Block</a>
+                    </div>
+                </div>
+
+                <button class="fc-icon-btn" onclick="window.location.href='friends.html'">❌</button>
+    </div>
+  </div>
+  <div id="reportModal" style="display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.6); z-index: 200; align-items: center; justify-content: center;">
+    <div style="background-color: #ffffff; width: 90%; max-width: 360px; border-radius: 20px; padding: 20px; position: relative; text-align: center; font-family: sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+        
+        <button onclick="closeReportModal()" style="position: absolute; right: 15px; top: 15px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #666;">❌</button>
+        
+        <div style="font-size: 3rem; margin-bottom: 10px;">⚠️</div>
+        <h3 id="reportTitle" style="color: #222; margin: 0 0 15px 0; font-size: 1.15rem; font-weight: bold;">Why are you reporting this user?</h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button onclick="submitReport('Sexual Content')" style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px 15px; border-radius: 30px; text-align: left; font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #333;">🔞 Sexual Content</button>
+            <button onclick="submitReport('Violent/Graphic Content')" style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px 15px; border-radius: 30px; text-align: left; font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #333;">🔫 Violent/Graphic Content</button>
+            <button onclick="submitReport('Minors')" style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px 15px; border-radius: 30px; text-align: left; font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #333;">👶 Minors</button>
+            <button onclick="submitReport('Ads/Scams')" style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px 15px; border-radius: 30px; text-align: left; font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #333;">🚫 Ads/Scams</button>
+            <button onclick="submitReport('Inappropriate Content')" style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px 15px; border-radius: 30px; text-align: left; font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #333;">🗣️ Inappropriate Content</button>
+        </div>
+    </div>
+</div>
+
+  <!-- Chat Box -->
+  <div class="fc-chatbox" id="fcChatbox">
+    <div class="fc-system-msg">Say hi to your new friend! 👋</div>
+  </div>
+
+  <!-- Input Area -->
+  <div class="fc-input-area">
+    <button class="fc-video-btn" onclick="openVideoCall()">🎥</button>
+    <input type="text" id="fcInput" placeholder="Type a message..." onkeypress="checkFCEnter(event)"/>
+    <button class="fc-send-btn" onclick="sendFCMsg()">↑</button>
+    <button class="fc-gift-btn" onclick="openGiftPopup()">🎁</button>
+  </div>
+
+</div>
+
+<!-- Video Call Popup -->
+<div class="modal-overlay" id="fcVideoPopup">
+  <div class="modal">
+    <div class="call-popup-icon">🎥</div>
+    <h3>Video Call</h3>
+    <p id="fcCallName">Loading...</p>
+    <div class="call-coin-box">
+      <span>🪙 Aapke Coins:</span>
+      <span id="fcCallCoins" class="call-coins-val">0</span>
+    </div>
+    <p style="color:#888;font-size:0.82rem;margin-bottom:16px;">10 coins/minute lagenge</p>
+    <div class="modal-btns">
+      <button class="btn-confirm-block" onclick="startFriendCall()">✅ Call Karo</button>
+      <button class="btn-cancel" onclick="closeVideoPopup()">❌ Cancel</button>
+    </div>
+    <p class="call-note">💡 Coins automatic katenge har minute</p>
+  </div>
+</div>
+
+<!-- Gift Popup -->
+<div class="modal-overlay" id="fcGiftPopup">
+  <div class="modal">
+    <h3>🎁 Gift Bhejo</h3>
+    <p style="color:#888;margin-bottom:16px;">Friend ko gift bhejo!</p>
+    <div class="gift-grid">
+      <div class="gift-item" onclick="sendFriendGift('❤️','Heart',5)">
+        <div class="gift-emoji">❤️</div>
+        <div class="gift-name">Heart</div>
+        <div class="gift-cost">5 🪙</div>
+      </div>
+      <div class="gift-item" onclick="sendFriendGift('🌹','Rose',10)">
+        <div class="gift-emoji">🌹</div>
+        <div class="gift-name">Rose</div>
+        <div class="gift-cost">10 🪙</div>
+      </div>
+      <div class="gift-item" onclick="sendFriendGift('🚀','Rocket',25)">
+        <div class="gift-emoji">🚀</div>
+        <div class="gift-name">Rocket</div>
+        <div class="gift-cost">25 🪙</div>
+      </div>
+      <div class="gift-item" onclick="sendFriendGift('💎','Diamond',50)">
+        <div class="gift-emoji">💎</div>
+        <div class="gift-name">Diamond</div>
+        <div class="gift-cost">50 🪙</div>
+      </div>
+      <div class="gift-item" onclick="sendFriendGift('👑','Crown',100)">
+        <div class="gift-emoji">👑</div>
+        <div class="gift-name">Crown</div>
+        <div class="gift-cost">100 🪙</div>
+      </div>
+      <div class="gift-item" onclick="sendFriendGift('🎆','Fireworks',75)">
+        <div class="gift-emoji">🎆</div>
+        <div class="gift-name">Fireworks</div>
+        <div class="gift-cost">75 🪙</div>
+      </div>
+    </div>
+    <button class="btn-cancel" style="width:100%;margin-top:12px;" onclick="closeGiftPopup()">
+      ❌ Cancel
+    </button>
+  </div>
+</div>
+
+<script>
+  // Friend data load
+  const friendIndex = parseInt(localStorage.getItem('openFriendIndex') || '0');
+  const friends = JSON.parse(localStorage.getItem('zapFriends') || '[]');
+  const friend = friends[friendIndex] || { name: 'Friend', gender: 'other' };
+  const myCoins = parseInt(localStorage.getItem('zapCoins') || '0');
+
+  // Header set
+  document.getElementById('fcName').textContent = friend.name;
+  document.getElementById('fcAvatar').textContent =
+    friend.gender === 'female' ? '👩' :
+    friend.gender === 'male' ? '👨' : '🧑';
+
+  // Chat history load
+  const chatKey = 'friendChat_' + friendIndex;
+  let messages = JSON.parse(localStorage.getItem(chatKey) || '[]');
+
+  function renderMessages() {
+    const box = document.getElementById('fcChatbox');
+    if (messages.length === 0) {
+      box.innerHTML = '<div class="fc-system-msg">Say hi to your new friend! 👋</div>';
+      return;
+    }
+    box.innerHTML = messages.map(m => `
+      <div class="fc-msg ${m.type}">
+        ${m.text}
+      </div>
+    `).join('');
+    box.scrollTop = box.scrollHeight;
+  }
+
+  renderMessages();
+
+  // Send message
+  window.sendFCMsg = () => {
+    const input = document.getElementById('fcInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    messages.push({ type: 'me', text: text });
+    localStorage.setItem(chatKey, JSON.stringify(messages));
+    input.value = '';
+    renderMessages();
+
+    // Auto reply after 1 second
+    setTimeout(() => {
+      const replies = [
+        'Haha! 😂',
+        'Sahi keh rahe ho! 👍',
+        'Kya haal hai? 😊',
+        'Acha lag raha hai baat karke! ❤️',
+        'Kab milenge? 😄',
+        'ZapChat bahut accha hai! ⚡'
+      ];
+      const reply = replies[Math.floor(Math.random() * replies.length)];
+      messages.push({ type: 'them', text: reply });
+      localStorage.setItem(chatKey, JSON.stringify(messages));
+      renderMessages();
+    }, 1000);
+  };
+
+  window.checkFCEnter = (e) => {
+    if (e.key === 'Enter') sendFCMsg();
+  };
+
+  // Video Call
+  window.openVideoCall = () => {
+    const coins = parseInt(localStorage.getItem('zapCoins') || '0');
+    document.getElementById('fcCallName').textContent = friend.name + ' ke saath Video Call';
+    document.getElementById('fcCallCoins').textContent = coins;
+    document.getElementById('fcVideoPopup').classList.add('show');
+  };
+
+  window.closeVideoPopup = () => {
+    document.getElementById('fcVideoPopup').classList.remove('show');
+  };
+
+  let callTimer = null;
+
+  window.startFriendCall = () => {
+    const coins = parseInt(localStorage.getItem('zapCoins') || '0');
+    if (coins < 10) {
+      alert('🪙 Coins kam hain! Wallet mein jao.');
+      closeVideoPopup();
+      return;
+    }
+    closeVideoPopup();
+    alert('🎥 ' + friend.name + ' ko call kar rahe hain!\n\n10 coins/minute katenge.\n\n(Real call feature coming soon — internet par live hone ke baad!)');
+  };
+
+  // Gift
+  window.openGiftPopup = () => {
+    document.getElementById('fcGiftPopup').classList.add('show');
+  };
+
+  window.closeGiftPopup = () => {
+    document.getElementById('fcGiftPopup').classList.remove('show');
+  };
+
+  window.sendFriendGift = (emoji, name, cost) => {
+    let coins = parseInt(localStorage.getItem('zapCoins') || '0');
+    if (coins < cost) {
+      alert('🪙 Coins kam hain!\n\n' + cost + ' coins chahiye.\nAbhi aapke paas ' + coins + ' coins hain.');
+      closeGiftPopup();
+      return;
+    }
+    coins -= cost;
+    localStorage.setItem('zapCoins', coins);
+    closeGiftPopup();
+
+    messages.push({ type: 'me', text: emoji + ' ' + name + ' gift bheja! 🎁' });
+    messages.push({ type: 'them', text: 'Wow! Thank you so much! ' + emoji + ' 😍' });
+    localStorage.setItem(chatKey, JSON.stringify(messages));
+    renderMessages();
+  };
+  // ==========================================
+// 1. 👮 POLICE BUTTON & REPORT MODAL LOGIC
+// ==========================================
+window.openReportModal = () => {
+    const modal = document.getElementById("reportModal");
+    if (modal) modal.style.display = "flex";
+};
+
+window.closeReportModal = () => {
+    const modal = document.getElementById("reportModal");
+    if (modal) modal.style.display = "none";
+};
+
+window.submitReport = (reason) => {
+    const currentFriendIndex = localStorage.getItem('openFriendIndex');
+    let friends = JSON.parse(localStorage.getItem('zapFriends')) || [];
+
+    if (currentFriendIndex !== null && friends[currentFriendIndex]) {
+        const friendName = friends[currentFriendIndex].name || 'User';
+        alert(`Success! "${friendName}" ko "${reason}" ke liye report kar diya gaya hai.`);
+        
+        friends.splice(currentFriendIndex, 1);
+        localStorage.setItem('zapFriends', JSON.stringify(friends));
+        window.location.href = 'friends.html';
+    } else {
+        alert("Report submitted successfully!");
+        window.location.href = 'friends.html';
+    }
+};
+
+// ==========================================
+// 2. ➔ 3-DOT MENU (UNFRIEND & BLOCK) LOGIC
+// ==========================================
+window.sendGift = (giftName, price, emoji) => {
+    let currentCoins = parseInt(localStorage.getItem('zapCoins')) || 0;
+
+    // 🪙 सिक्के कम होने पर एरर
+    if (currentCoins < price) {
+        alert(`Coins kam hain! Yeh gift bhejne ke liye aapko ${price} coins chahiye.`);
+        return;
+    }
+
+    // 💰 सिक्के काटना
+    localStorage.setItem('zapCoins', currentCoins - price);
+
+    // 🗣️ दोस्त का असली नाम निकालने का सबसे सेफ तरीका (ताकि एरर न आए)
+    let friendName = "Friend";
+    const nameElement = document.getElementById("fcName") || document.querySelector(".fc-name");
+    if (nameElement) {
+        friendName = nameElement.innerText.replace("Loading...", "").trim() || "Friend";
+    }
+
+    // 🚨 स्क्रीन पर नाम के साथ सक्सेस अलर्ट
+    alert(`Success! ${emoji} ${giftName} gift "${friendName}" ko bhej diya gaya hai! 🎁`);
+
+    // 💬 चैट स्क्रीन पर मैसेज जोड़ना
+    if (window.appendFCSystemMsg) {
+        window.appendFCSystemMsg(`${emoji} ${giftName} gift bheja! 🎁`, true);
+        
+        // 🤖 ऑटो-थैंक्यू रिप्लाई
+        setTimeout(() => {
+            window.appendFCSystemMsg(`Wow! Thank you so much! ${emoji} 😍`, false);
+        }, 1000);
+    }
+
+    // गिफ्ट बॉक्स बंद करना
+    const giftPopup = document.getElementById("giftPopup");
+    if (giftPopup) giftPopup.style.display = "none";
+};
+window.toggleMenu = (event) => {
+    event.stopPropagation();
+    const dropdown = document.getElementById("myDropdown");
+    if (dropdown) {
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+};
+
+document.addEventListener("click", () => {
+    const dropdown = document.getElementById("myDropdown");
+    if (dropdown) dropdown.style.display = "none";
+});
+
+window.handleUnfriend = (event) => {
+    event.preventDefault();
+    const currentFriendIndex = localStorage.getItem('openFriendIndex');
+    let friends = JSON.parse(localStorage.getItem('zapFriends')) || [];
+
+    if (currentFriendIndex !== null && friends[currentFriendIndex]) {
+        const friendName = friends[currentFriendIndex].name || 'User';
+        if (confirm(`Kya aap sach me "${friendName}" ko unfriend karna chahte hain?`)) {
+            friends.splice(currentFriendIndex, 1);
+            localStorage.setItem('zapFriends', JSON.stringify(friends));
+            window.location.href = 'friends.html';
+        }
+    }
+};
+
+window.handleBlock = (event) => {
+    event.preventDefault();
+    const currentFriendIndex = localStorage.getItem('openFriendIndex');
+    let friends = JSON.parse(localStorage.getItem('zapFriends')) || [];
+
+    if (currentFriendIndex !== null && friends[currentFriendIndex]) {
+        const friendName = friends[currentFriendIndex].name || 'User';
+        if (confirm(`Kya aap sach me "${friendName}" ko block karna chahte hain?`)) {
+            friends.splice(currentFriendIndex, 1);
+            localStorage.setItem('zapFriends', JSON.stringify(friends));
+            window.location.href = 'friends.html';
+        }
+    }
+};
+</script>
+
+</body>
+</html>
