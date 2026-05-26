@@ -10,159 +10,168 @@
 
 <div class="premium-page">
 
-  <!-- Header -->
   <div class="premium-header">
     <a href="index.html" class="back-btn">← Back</a>
     <h1>⚡ ZapChat</h1>
     <div></div>
   </div>
 
-  <!-- Hero -->
   <div class="premium-hero">
     <div class="crown">👑</div>
     <h2>ZapChat Premium</h2>
-    <p>Aur behtar experience ke liye upgrade karo!</p>
+    <p>Unlock karo sabse powerful features!</p>
   </div>
 
-  <!-- Plans -->
   <div class="plans-grid">
 
-    <!-- Basic Plan -->
+    <!-- Free Plan -->
     <div class="plan-card">
-      <div class="plan-badge free-badge">FREE</div>
-      <div class="plan-icon">🌟</div>
+      <div class="plan-badge free-badge">Current Plan</div>
+      <div class="plan-icon">🆓</div>
       <div class="plan-name">Basic</div>
-      <div class="plan-price">₹0<span>/month</span></div>
+      <div class="plan-price">₹0 <span>/month</span></div>
       <ul class="plan-features">
-        <li>✅ Text Chat</li>
-        <li>✅ Video Chat</li>
-        <li>✅ Interest Tags</li>
-        <li>✅ Random Matching</li>
-        <li>❌ Ads dikhenge</li>
-        <li>❌ Country Filter nahi</li>
-        <li>❌ Priority Match nahi</li>
-        <li>❌ Virtual Gifts nahi</li>
+        <li>✅ Random Text Chat</li>
+        <li>✅ Interest Matching</li>
+        <li>✅ Basic Gifts</li>
+        <li>❌ Gender Filter</li>
+        <li>❌ Video Call</li>
+        <li>❌ Match Preference</li>
       </ul>
-      <button class="plan-btn free-btn" disabled>
-        Current Plan
-      </button>
+      <button class="plan-btn free-btn">Current Plan</button>
     </div>
 
     <!-- Pro Plan -->
     <div class="plan-card popular-card">
-      <div class="plan-badge popular-badge">⭐ POPULAR</div>
-      <div class="plan-icon">🚀</div>
+      <div class="plan-badge popular-badge">🔥 Most Popular</div>
+      <div class="plan-icon">⭐</div>
       <div class="plan-name">Pro</div>
-      <div class="plan-price">₹99<span>/month</span></div>
+      <div class="plan-price">₹99 <span>/month</span></div>
       <ul class="plan-features">
-        <li>✅ Text Chat</li>
-        <li>✅ Video Chat</li>
-        <li>✅ Interest Tags</li>
-        <li>✅ Smart Matching</li>
-        <li>✅ Ad-Free Experience</li>
-        <li>✅ Country Filter</li>
-        <li>✅ Priority Match</li>
-        <li>❌ Virtual Gifts nahi</li>
+        <li>✅ Sab Basic features</li>
+        <li>✅ Gender Filter</li>
+        <li>✅ Video + Audio Call</li>
+        <li>✅ 150 Gender Filters</li>
+        <li>✅ No Ads</li>
+        <li>❌ Match Preference</li>
       </ul>
-      <button class="plan-btn pro-btn" onclick="buyPlan('pro', 99)">
-        🚀 Pro Lo — ₹99/month
+      <button class="plan-btn pro-btn" onclick="buyPremium('Pro', 99)">
+        🚀 Pro Lo
       </button>
     </div>
 
     <!-- VIP Plan -->
     <div class="plan-card vip-card">
-      <div class="plan-badge vip-badge">💎 VIP</div>
-      <div class="plan-icon">💎</div>
+      <div class="plan-badge vip-badge">💎 Best Value</div>
+      <div class="plan-icon">👑</div>
       <div class="plan-name">VIP</div>
-      <div class="plan-price">₹199<span>/month</span></div>
+      <div class="plan-price">₹199 <span>/month</span></div>
       <ul class="plan-features">
-        <li>✅ Text Chat</li>
-        <li>✅ Video Chat</li>
-        <li>✅ Interest Tags</li>
-        <li>✅ Best Matching</li>
-        <li>✅ Ad-Free Experience</li>
-        <li>✅ Country Filter</li>
-        <li>✅ Priority Match</li>
-        <li>✅ Virtual Gifts</li>
+        <li>✅ Sab Pro features</li>
+        <li>✅ Unlimited Gender Filter</li>
+        <li>✅ Match Preference</li>
+        <li>✅ Priority Matching</li>
+        <li>✅ VIP Badge</li>
+        <li>✅ 24/7 Support</li>
       </ul>
-      <button class="plan-btn vip-btn" onclick="buyPlan('vip', 199)">
-        💎 VIP Lo — ₹199/month
+      <button class="plan-btn vip-btn" onclick="buyPremium('VIP', 199)">
+        👑 VIP Lo
       </button>
     </div>
 
   </div>
 
-  <!-- Features Comparison -->
+  <!-- Features Section -->
   <div class="features-section">
-    <h3>🎯 Premium Ke Fayde</h3>
+    <h3>🎯 Premium Features</h3>
     <div class="features-grid-premium">
       <div class="feature-item">
-        <div class="feature-icon">📵</div>
-        <div class="feature-title">Ad-Free</div>
-        <div class="feature-desc">Koi bhi ad nahi dikhega</div>
+        <div class="feature-icon">👫</div>
+        <div class="feature-title">Gender Filter</div>
+        <div class="feature-desc">Sirf apni pasand se milo</div>
       </div>
       <div class="feature-item">
-        <div class="feature-icon">🌍</div>
-        <div class="feature-title">Country Filter</div>
-        <div class="feature-desc">Kisi bhi desh se baat karo</div>
+        <div class="feature-icon">🎥</div>
+        <div class="feature-title">Video Call</div>
+        <div class="feature-desc">HD video chat karo</div>
       </div>
       <div class="feature-item">
-        <div class="feature-icon">⚡</div>
-        <div class="feature-title">Priority Match</div>
-        <div class="feature-desc">Jaldi connect ho</div>
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Match Pref</div>
+        <div class="feature-desc">Age, language filter</div>
       </div>
       <div class="feature-item">
-        <div class="feature-icon">🎁</div>
-        <div class="feature-title">Virtual Gifts</div>
-        <div class="feature-desc">Doston ko gifts bhejo</div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">⭐</div>
-        <div class="feature-title">Gold Badge</div>
-        <div class="feature-desc">Profile par gold badge</div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">🔒</div>
-        <div class="feature-title">Extra Safety</div>
-        <div class="feature-desc">Better moderation</div>
+        <div class="feature-icon">❌</div>
+        <div class="feature-title">No Ads</div>
+        <div class="feature-desc">Ad-free experience</div>
       </div>
     </div>
-  </div>
-
-  <!-- FAQ -->
-  <div class="faq-section">
-    <h3>❓ Aksar Pooche Jane Wale Sawaal</h3>
-    <div class="faq-item">
-      <div class="faq-q">💳 Kaunse payment methods accept hain?</div>
-      <div class="faq-a">UPI, Credit Card, Debit Card, NetBanking — sab kuch!</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">🔄 Cancel kar sakte hain?</div>
-      <div class="faq-a">Haan! Kabhi bhi cancel kar sakte ho — koi charges nahi!</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">⚡ Kitne time mein activate hoga?</div>
-      <div class="faq-a">Payment ke turant baad — 2 minute mein active!</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">💰 Refund milega?</div>
-      <div class="faq-a">7 din ke andar refund request kar sakte ho!</div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div class="premium-footer">
-    <p>🔒 Secure payment by Razorpay</p>
-    <p>support@zapchat.com</p>
   </div>
 
 </div>
 
+<!-- UPI Payment Modal -->
+<div class="modal-overlay" id="upiModal">
+  <div class="modal">
+    <h3>💳 UPI Payment</h3>
+    <p style="color:#888;margin-bottom:8px;" id="upiAmount">Amount: ₹0</p>
+
+    <div class="upi-qr-box">
+      <img id="upiQRImg" width="200" height="200" style="border-radius:12px;"/>
+    </div>
+
+    <div class="upi-id-box">
+      <span>UPI ID:</span>
+      <strong>6376975455@airtel</strong>
+      <button onclick="copyUPI()" class="copy-btn">📋 Copy</button>
+    </div>
+
+    <p style="color:#888;font-size:0.82rem;margin:12px 0;text-align:center;">
+      👆 QR scan karo ya UPI ID copy karo — phir pay karo!
+    </p>
+
+    <button class="btn-confirm-block" style="width:100%;margin-bottom:10px;"
+      onclick="confirmPremiumPayment()">
+      ✅ Maine Pay Kar Diya!
+    </button>
+    <button class="btn-cancel" style="width:100%;" onclick="closeUPI()">
+      ❌ Cancel
+    </button>
+  </div>
+</div>
+
 <script>
-function buyPlan(plan, amount) {
-  // Razorpay approve hone ke baad yahan payment code aayega
-  alert('⚡ ZapChat Premium!\n\nRazorpay approval pending hai.\n\nJald hi payment live hogi!\n\nPlan: ' + plan.toUpperCase() + '\nAmount: ₹' + amount + '/month');
-}
+  let currentPlan = null;
+
+  window.buyPremium = (plan, price) => {
+    currentPlan = { plan, price };
+    document.getElementById('upiAmount').textContent =
+      plan + ' Plan — ₹' + price + '/month';
+    document.getElementById('upiQRImg').src =
+      `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=6376975455@airtel%26pn=ZapChat%26am=${price}%26cu=INR`;
+    document.getElementById('upiModal').classList.add('show');
+  };
+
+  window.copyUPI = () => {
+    navigator.clipboard.writeText('6376975455@airtel');
+    alert('✅ UPI ID copy ho gayi!');
+  };
+
+  window.closeUPI = () => {
+    document.getElementById('upiModal').classList.remove('show');
+    currentPlan = null;
+  };
+
+  window.confirmPremiumPayment = () => {
+    if (!currentPlan) return;
+    localStorage.setItem('zapPremium', 'true');
+    localStorage.setItem('zapPremiumPlan', currentPlan.plan);
+    localStorage.setItem('zapPremiumDate', new Date().toLocaleDateString('hi-IN'));
+
+    closeUPI();
+    alert('🎉 ' + currentPlan.plan + ' Premium Active!\n\nAb aap gender filter aur saari premium features use kar sakte ho!');
+    window.location.href = 'index.html';
+  };
 </script>
 
 </body>
