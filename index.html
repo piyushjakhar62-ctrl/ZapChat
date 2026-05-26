@@ -560,7 +560,7 @@
         </div>
         <div class="msg-arrow">›</div>
       </div>
-      <div class="msg-item">
+      <div class="msg-item" onclick="openTeamSupport()" style="cursor: pointer;">
         <div class="msg-avatar team-avatar">⚡</div>
         <div class="msg-info">
           <div class="msg-name">ZapChat Team</div>
@@ -570,6 +570,43 @@
       </div>
     </div>
   </div>
+</div>
+<div id="teamSupportModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f12; z-index: 10000; font-family: sans-serif; color: #fff;">
+    
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px; border-bottom: 1px solid #1a1a24; background: #13131a; height: 60px; box-sizing: border-box;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span onclick="closeTeamSupport()" style="cursor: pointer; font-size: 22px; padding: 5px;">❮</span>
+            <div style="width: 36px; height: 36px; background: #1e75ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold;">
+                ⚡
+            </div>
+            <span style="font-size: 18px; font-weight: bold; letter-spacing: 0.5px;">ZapChat Team</span>
+        </div>
+        <span onclick="closeTeamSupport()" style="cursor: pointer; font-size: 24px; padding: 5px;">&times;</span>
+    </div>
+
+    <div style="padding: 15px; display: flex; flex-direction: column; gap: 12px; height: calc(100% - 120px); overflow-y: auto; background: #0f0f12; box-sizing: border-box;">
+        
+        <div style="background: #1e1e28; padding: 12px 16px; border-radius: 8px; max-width: 85%; font-size: 14px; line-height: 1.5; color: #e1e1e6; align-self: flex-start;">
+            Yo, welcome to ZapChat!!! I am the ZapChat King. I'm also your first friend, you're welcome. Major announcements will drop here.
+        </div>
+        
+        <div style="background: #1e1e28; padding: 12px 16px; border-radius: 8px; max-width: 85%; font-size: 14px; line-height: 1.5; color: #e1e1e6; align-self: flex-start;">
+            Be nice, be respectful, have fun. Cya
+        </div>
+        
+        <div style="background: #1e1e28; padding: 12px 16px; border-radius: 8px; max-width: 85%; font-size: 14px; line-height: 1.5; color: #e1e1e6; align-self: flex-start;">
+            ZapChat is about making friends and having fun in a safe and positive environment. We do not allow any form of nudity, violence, weaponry, drug use, or cyberbullying on our platform. Anyone who violates these guidelines will have their ZapChat account permanently banned.
+        </div>
+
+        <div style="background: #1e1e28; padding: 12px 16px; border-radius: 8px; max-width: 85%; font-size: 14px; line-height: 1.5; color: #e1e1e6; align-self: flex-start;">
+            The avatar you uploaded has been approved.
+        </div>
+    </div>
+
+    <div onclick="alert('Contacting support... Email us at: support@zapchat.com')" style="position: absolute; bottom: 0; width: 100%; height: 60px; border-top: 1px solid #1a1a24; background: #13131a; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; color: #b5b5c3; font-size: 15px; font-weight: 500; box-sizing: border-box;">
+        <span>💬</span>
+        <span>Contact Us</span>
+    </div>
 </div>
     <div class="btn-box">
       <button class="btn-video" onclick="startChat('video')">
@@ -825,6 +862,14 @@ window.openMessages = () => {
 
 window.closeMessages = () => {
   document.getElementById('messagesPopup').classList.remove('show');
+};
+// ZapChat Team Chat Window Open/Close Logic
+window.openTeamSupport = () => {
+    document.getElementById('teamSupportModal').style.display = 'block';
+};
+
+window.closeTeamSupport = () => {
+    document.getElementById('teamSupportModal').style.display = 'none';
 };
 </script>
 
