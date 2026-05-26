@@ -10,7 +10,9 @@ const io = socketIO(server);
 
 const peerServer = ExpressPeerServer(server, { debug: true });
 app.use('/peerjs', peerServer);
-app.use(express.static(path.join(__dirname, '.')));
+app.use(express.static(__dirname));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 let waitingUsers = [];
 let onlineCount = 0;
@@ -215,6 +217,6 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(process.env.PORT || 3000, () => {
+server.listen(3000, () => {
   console.log('ZapChat chal raha hai! Port 3000');
 });
