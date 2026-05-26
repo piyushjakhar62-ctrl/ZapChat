@@ -544,6 +544,16 @@
   💬 Messages
 </button>
 
+<!-- Chat Buttons -->
+<div class="btn-box">
+  <button class="btn-video" onclick="startChat('video')">
+    🎥 Video Chat Shuru Karo
+  </button>
+  <button class="btn-text" onclick="startChat('text')">
+    💬 Text Chat Shuru Karo
+  </button>
+</div>
+
 <!-- Messages Popup -->
 <div class="modal-overlay" id="messagesPopup">
   <div class="modal messages-modal">
@@ -601,24 +611,6 @@
             <span>Contact Us</span>
         </div>
     </div>
-</div>
-
-<div class="btn-box">
-    <button class="btn-video" onclick="startChat('video')">
-        📹 Video Chat Shuru Karo
-    </button>
-    <button class="btn-text" onclick="startChat('text')">
-        💬 Text Chat Shuru Karo
-    </button>
-</div>
-
-</div>
-
-    <div class="rules">
-      <p>⚠️ 18+ only — Be respectful — No spam</p>
-    </div>
-
-  </div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
