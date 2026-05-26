@@ -10,165 +10,210 @@
 
 <div class="wallet-page">
 
-  <!-- Header -->
   <div class="wallet-header">
     <a href="index.html" class="back-btn">← Back</a>
     <h1>⚡ ZapChat</h1>
     <div></div>
   </div>
 
-  <!-- Wallet Balance -->
   <div class="wallet-balance-box">
-    <div class="wallet-icon">💰</div>
+    <div class="wallet-icon">🪙</div>
     <div class="balance-label">Aapke Coins</div>
-    <div class="balance-amount" id="coinBalance">0</div>
+    <div class="balance-amount" id="balanceAmount">0</div>
     <div class="balance-sub">ZapChat Coins</div>
   </div>
 
-  <!-- Buy Coins -->
   <div class="buy-section">
-    <h3>🪙 Coins Kharido</h3>
+    <h3>🛒 Coins Kharido</h3>
     <p class="buy-subtitle">Jitne zyada coins, utna zyada bonus!</p>
 
     <div class="coin-packages">
 
-      <div class="coin-pkg" onclick="buyCoin(49, 50, 0)">
-        <div class="pkg-coins">🪙 50</div>
+      <div class="coin-pkg">
+        <div class="pkg-label">🪙</div>
+        <div class="pkg-coins">50</div>
         <div class="pkg-label">Coins</div>
-        <div class="pkg-bonus"></div>
+        <div class="pkg-bonus"> </div>
         <div class="pkg-price">₹49</div>
-        <button class="pkg-btn">Buy</button>
+        <button class="pkg-btn" onclick="buyCoins(50, 0, 49)">Buy</button>
       </div>
 
-      <div class="coin-pkg popular-pkg" onclick="buyCoin(99, 100, 10)">
+      <div class="coin-pkg popular-pkg">
         <div class="pkg-popular">⭐ Popular</div>
-        <div class="pkg-coins">🪙 100</div>
+        <div class="pkg-label">🪙</div>
+        <div class="pkg-coins">100</div>
         <div class="pkg-label">Coins</div>
         <div class="pkg-bonus">+10 Bonus!</div>
         <div class="pkg-price">₹99</div>
-        <button class="pkg-btn popular-pkg-btn">Buy</button>
+        <button class="pkg-btn popular-pkg-btn" onclick="buyCoins(100, 10, 99)">Buy</button>
       </div>
 
-      <div class="coin-pkg best-pkg" onclick="buyCoin(199, 200, 50)">
+      <div class="coin-pkg best-pkg">
         <div class="pkg-popular best-badge">💎 Best Value</div>
-        <div class="pkg-coins">🪙 200</div>
+        <div class="pkg-label">🪙</div>
+        <div class="pkg-coins">200</div>
         <div class="pkg-label">Coins</div>
         <div class="pkg-bonus">+50 Bonus!</div>
         <div class="pkg-price">₹199</div>
-        <button class="pkg-btn best-pkg-btn">Buy</button>
+        <button class="pkg-btn best-pkg-btn" onclick="buyCoins(200, 50, 199)">Buy</button>
       </div>
 
-      <div class="coin-pkg" onclick="buyCoin(499, 600, 100)">
+      <div class="coin-pkg">
         <div class="pkg-popular vip-badge-pkg">👑 VIP</div>
-        <div class="pkg-coins">🪙 600</div>
+        <div class="pkg-label">🪙</div>
+        <div class="pkg-coins">600</div>
         <div class="pkg-label">Coins</div>
         <div class="pkg-bonus">+100 Bonus!</div>
         <div class="pkg-price">₹499</div>
-        <button class="pkg-btn vip-pkg-btn">Buy</button>
+        <button class="pkg-btn vip-pkg-btn" onclick="buyCoins(600, 100, 499)">Buy</button>
       </div>
 
     </div>
   </div>
 
-  <!-- Transaction History -->
   <div class="transaction-section">
     <h3>📋 Transaction History</h3>
-    <div id="transactionList" class="transaction-list">
+    <div class="transaction-list" id="transactionList">
       <div class="no-transactions">Abhi koi transaction nahi hai</div>
     </div>
   </div>
 
-  <!-- Gifts Info -->
   <div class="gifts-info-section">
-    <h3>🎁 Gifts Ki Kimat</h3>
+    <h3>🎁 Gift Prices</h3>
     <div class="gifts-price-grid">
       <div class="gift-price-item">
-        <span class="gift-emoji">❤️</span>
-        <span class="gift-name">Heart</span>
-        <span class="gift-cost">5 coins</span>
+        <div class="gift-emoji">❤️</div>
+        <div class="gift-name">Heart</div>
+        <div class="gift-cost">5 🪙</div>
       </div>
       <div class="gift-price-item">
-        <span class="gift-emoji">🌹</span>
-        <span class="gift-name">Rose</span>
-        <span class="gift-cost">10 coins</span>
+        <div class="gift-emoji">🌹</div>
+        <div class="gift-name">Rose</div>
+        <div class="gift-cost">10 🪙</div>
       </div>
       <div class="gift-price-item">
-        <span class="gift-emoji">🚀</span>
-        <span class="gift-name">Rocket</span>
-        <span class="gift-cost">25 coins</span>
+        <div class="gift-emoji">🚀</div>
+        <div class="gift-name">Rocket</div>
+        <div class="gift-cost">25 🪙</div>
       </div>
       <div class="gift-price-item">
-        <span class="gift-emoji">💎</span>
-        <span class="gift-name">Diamond</span>
-        <span class="gift-cost">50 coins</span>
+        <div class="gift-emoji">💎</div>
+        <div class="gift-name">Diamond</div>
+        <div class="gift-cost">50 🪙</div>
       </div>
       <div class="gift-price-item">
-        <span class="gift-emoji">👑</span>
-        <span class="gift-name">Crown</span>
-        <span class="gift-cost">100 coins</span>
+        <div class="gift-emoji">👑</div>
+        <div class="gift-name">Crown</div>
+        <div class="gift-cost">100 🪙</div>
       </div>
       <div class="gift-price-item">
-        <span class="gift-emoji">🎆</span>
-        <span class="gift-name">Fireworks</span>
-        <span class="gift-cost">75 coins</span>
+        <div class="gift-emoji">🎆</div>
+        <div class="gift-name">Fireworks</div>
+        <div class="gift-cost">75 🪙</div>
       </div>
     </div>
   </div>
 
 </div>
 
+<!-- UPI Payment Modal -->
+<div class="modal-overlay" id="upiModal">
+  <div class="modal">
+    <h3>💳 UPI Payment</h3>
+    <p style="color:#888;margin-bottom:8px;" id="upiAmount">Amount: ₹0</p>
+
+    <div class="upi-qr-box">
+      <img id="upiQRImg" width="200" height="200" style="border-radius:12px;"/>
+    </div>
+
+    <div class="upi-id-box">
+      <span>UPI ID:</span>
+      <strong>6376975455@airtel</strong>
+      <button onclick="copyUPI()" class="copy-btn">📋 Copy</button>
+    </div>
+
+    <p style="color:#888;font-size:0.82rem;margin:12px 0;text-align:center;">
+      👆 QR scan karo ya UPI ID copy karo — phir pay karo!
+    </p>
+
+    <button class="btn-confirm-block" style="width:100%;margin-bottom:10px;"
+      onclick="confirmUPIPayment()">
+      ✅ Maine Pay Kar Diya!
+    </button>
+    <button class="btn-cancel" style="width:100%;" onclick="closeUPI()">
+      ❌ Cancel
+    </button>
+  </div>
+</div>
+
 <script>
-  // Coins load karo
-  let coins = parseInt(localStorage.getItem('zapCoins') || '0');
-  document.getElementById('coinBalance').textContent = coins;
+  // Balance load
+  const coins = parseInt(localStorage.getItem('zapCoins') || '0');
+  document.getElementById('balanceAmount').textContent = coins;
 
-  // Transactions load karo
-  let transactions = JSON.parse(localStorage.getItem('zapTransactions') || '[]');
-  renderTransactions();
-
-  function buyCoin(amount, baseCoins, bonus) {
-    const totalCoins = baseCoins + bonus;
-    // Razorpay approve hone ke baad real payment hogi
-    // Abhi test mode mein coins add ho rahe hain
-    alert('💳 Payment Gateway\n\nAmount: ₹' + amount + '\nCoins: ' + baseCoins + (bonus > 0 ? ' + ' + bonus + ' Bonus' : '') + '\nTotal: ' + totalCoins + ' coins\n\n⚠️ Razorpay approval pending!\nTest mode mein coins add ho rahe hain.');
-
-    // Test mode — coins add karo
-    coins += totalCoins;
-    localStorage.setItem('zapCoins', coins);
-    document.getElementById('coinBalance').textContent = coins;
-
-    // Transaction add karo
-    const tx = {
-      type: 'credit',
-      amount: amount,
-      coins: totalCoins,
-      date: new Date().toLocaleDateString('hi-IN'),
-      time: new Date().toLocaleTimeString('hi-IN')
-    };
-    transactions.unshift(tx);
-    localStorage.setItem('zapTransactions', JSON.stringify(transactions));
-    renderTransactions();
-  }
-
-  function renderTransactions() {
-    const list = document.getElementById('transactionList');
-    if (transactions.length === 0) {
-      list.innerHTML = '<div class="no-transactions">Abhi koi transaction nahi hai</div>';
-      return;
-    }
-    list.innerHTML = transactions.slice(0, 10).map(tx => `
+  // Transactions load
+  const transactions = JSON.parse(localStorage.getItem('zapTransactions') || '[]');
+  const txList = document.getElementById('transactionList');
+  if (transactions.length > 0) {
+    txList.innerHTML = transactions.map(t => `
       <div class="tx-item">
-        <div class="tx-icon">${tx.type === 'credit' ? '⬆️' : '⬇️'}</div>
+        <span class="tx-icon">${t.type === 'credit' ? '💰' : '🎁'}</span>
         <div class="tx-info">
-          <div class="tx-title">${tx.type === 'credit' ? 'Coins Purchase' : 'Gift Sent'}</div>
-          <div class="tx-date">${tx.date} ${tx.time}</div>
+          <div class="tx-title">${t.desc || 'Transaction'}</div>
+          <div class="tx-date">${t.date} ${t.time || ''}</div>
         </div>
-        <div class="tx-amount ${tx.type}">
-          ${tx.type === 'credit' ? '+' : '-'}${tx.coins} 🪙
+        <div class="tx-amount ${t.type}">
+          ${t.type === 'credit' ? '+' : '-'}${t.coins} 🪙
         </div>
       </div>
     `).join('');
   }
+
+  // UPI Payment
+  let currentPkg = null;
+
+  window.buyCoins = (coins, bonus, price) => {
+    currentPkg = { coins, bonus, price };
+    const total = coins + bonus;
+    document.getElementById('upiAmount').textContent =
+      'Amount: ₹' + price + ' → ' + total + ' coins milenge!';
+    document.getElementById('upiQRImg').src =
+      `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=6376975455@airtel%26pn=ZapChat%26am=${price}%26cu=INR`;
+    document.getElementById('upiModal').classList.add('show');
+  };
+
+  window.copyUPI = () => {
+    navigator.clipboard.writeText('6376975455@airtel');
+    alert('✅ UPI ID copy ho gayi!');
+  };
+
+  window.closeUPI = () => {
+    document.getElementById('upiModal').classList.remove('show');
+    currentPkg = null;
+  };
+
+  window.confirmUPIPayment = () => {
+    if (!currentPkg) return;
+    const total = currentPkg.coins + currentPkg.bonus;
+    let balance = parseInt(localStorage.getItem('zapCoins') || '0');
+    balance += total;
+    localStorage.setItem('zapCoins', balance);
+
+    const transactions = JSON.parse(localStorage.getItem('zapTransactions') || '[]');
+    transactions.unshift({
+      type: 'credit',
+      coins: total,
+      date: new Date().toLocaleDateString('hi-IN'),
+      time: new Date().toLocaleTimeString('hi-IN'),
+      desc: 'UPI Payment — ₹' + currentPkg.price
+    });
+    localStorage.setItem('zapTransactions', JSON.stringify(transactions));
+
+    closeUPI();
+    document.getElementById('balanceAmount').textContent = balance;
+    alert('🎉 ' + total + ' coins add ho gaye!\n\nNaya balance: ' + balance + ' coins!');
+    location.reload();
+  };
 </script>
 
 </body>
