@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZapChat ⚡ - Chat</title>
+<title>ZapChat ⚡ - Friend Chat</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -12,43 +16,48 @@
 
   <!-- Header -->
   <div class="fc-header">
-    <button class="back-icon-btn" onclick="window.location.href='friends.html'">←</button>
+    <button class="back-icon-btn" onclick="goBack()">←</button>
     <div class="fc-user">
       <div class="fc-avatar" id="fcAvatar">👤</div>
-      <span class="fc-name" id="fcName">Loading...</span>
+      <div>
+        <span class="fc-name" id="fcName">Loading...</span>
+        <div class="fc-status" id="fcStatus">● Online</div>
+      </div>
     </div>
     <div class="fc-header-actions">
-     <button class="fc-icon-btn police-btn" onclick="openReportModal()">👮</button>
-                
-                <div class="menu-container" style="position: relative; display: inline-block;">
-                    <button class="three-dots-btn" onclick="toggleMenu(event)" style="background: none; border: none; color: white; font-size: 1.4rem; cursor: pointer; padding: 0 8px; vertical-align: middle;">•••</button>
-                    
-                    <div id="myDropdown" class="dropdown-content" style="display: none; position: absolute; right: 0; top: 35px; background-color: #ffffff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3); z-index: 100; border-radius: 8px; padding: 5px 0;">
-                        <a href="#" onclick="handleUnfriend(event)" style="color: #333; padding: 10px 15px; text-decoration: none; display: block; font-size: 0.95rem; font-weight: 600; text-align: left;">👱‍♂️ Unfriend</a>
-                        <a href="#" onclick="handleBlock(event)" style="color: #ff4d4d; padding: 10px 15px; text-decoration: none; display: block; font-size: 0.95rem; font-weight: 600; text-align: left; border-top: 1px solid #eee;">🚫 Block</a>
-                    </div>
-                </div>
-
-                <button class="fc-icon-btn" onclick="window.location.href='friends.html'">❌</button>
+      <button class="fc-icon-btn police-btn">👮</button>
+      <button class="fc-icon-btn">⋯</button>
+      <button class="fc-icon-btn" onclick="goBack()">✕</button>
     </div>
   </div>
-  <div id="reportModal" style="display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.6); z-index: 200; align-items: center; justify-content: center;">
-    <div style="background-color: #ffffff; width: 90%; max-width: 360px; border-radius: 20px; padding: 20px; position: relative; text-align: center; font-family: sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
-        
-        <button onclick="closeReportModal()" style="position: absolute; right: 15px; top: 15px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #666;">❌</button>
-        
-        <div style="font-size: 3rem; margin-bottom: 10px;">⚠️</div>
-        <h3 id="reportTitle" style="color: #222; margin: 0 0 15px 0; font-size: 1.15rem; font-weight: bold;">Why are you reporting this user?</h3>
-        
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-            <button onclick="submitReport('Sexual Content')" style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px 15px; border-radius: 30px; text-align: left; font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #333;">🔞 Sexual Content</button>
-            <button onclick="submitReport('Violent/Graphic Content')" style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px 15px; border-radius: 30px; text-align: left; font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #333;">🔫 Violent/Graphic Content</button>
-            <button onclick="submitReport('Minors')" style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px 15px; border-radius: 30px; text-align: left; font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #333;">👶 Minors</button>
-            <button onclick="submitReport('Ads/Scams')" style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px 15px; border-radius: 30px; text-align: left; font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #333;">🚫 Ads/Scams</button>
-            <button onclick="submitReport('Inappropriate Content')" style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px 15px; border-radius: 30px; text-align: left; font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #333;">🗣️ Inappropriate Content</button>
-        </div>
+
+  <!-- Incoming Call Screen -->
+  <div class="incoming-call-screen" id="incomingCallScreen" style="display:none;">
+    <div class="incoming-call-box">
+      <div class="ic-avatar" id="icAvatar">👤</div>
+      <div class="ic-name" id="icName">Calling...</div>
+      <div class="ic-subtitle">ZapChat Video Call</div>
+      <div class="ic-actions">
+        <button class="ic-reject-btn" onclick="rejectCall()">📵 Reject</button>
+        <button class="ic-accept-btn" onclick="acceptCall()">📞 Accept</button>
+      </div>
     </div>
-</div>
+  </div>
+
+  <!-- Active Call Screen -->
+  <div class="active-call-screen" id="activeCallScreen" style="display:none;">
+    <video id="remoteVideo" autoplay playsinline class="remote-video"></video>
+    <video id="localVideo" autoplay playsinline muted class="local-video"></video>
+    <div class="call-info-bar">
+      <span id="callTimerDisplay">00:00</span>
+      <span id="callCoinsDisplay">🪙 0 coins kate</span>
+    </div>
+    <div class="call-controls">
+      <button class="call-ctrl-btn" onclick="toggleMicCall()">🎤</button>
+      <button class="call-ctrl-btn" onclick="toggleCamCall()">📷</button>
+      <button class="call-ctrl-btn end-call-btn" onclick="endCall()">📵</button>
+    </div>
+  </div>
 
   <!-- Chat Box -->
   <div class="fc-chatbox" id="fcChatbox">
@@ -57,31 +66,13 @@
 
   <!-- Input Area -->
   <div class="fc-input-area">
-    <button class="fc-video-btn" onclick="openVideoCall()">🎥</button>
-    <input type="text" id="fcInput" placeholder="Type a message..." onkeypress="checkFCEnter(event)"/>
+    <button class="fc-video-btn" onclick="startVideoCall()" id="videoCallBtn">🎥</button>
+    <input type="text" id="fcInput" placeholder="Type a message..."
+      onkeypress="checkFCEnter(event)"/>
     <button class="fc-send-btn" onclick="sendFCMsg()">↑</button>
     <button class="fc-gift-btn" onclick="openGiftPopup()">🎁</button>
   </div>
 
-</div>
-
-<!-- Video Call Popup -->
-<div class="modal-overlay" id="fcVideoPopup">
-  <div class="modal">
-    <div class="call-popup-icon">🎥</div>
-    <h3>Video Call</h3>
-    <p id="fcCallName">Loading...</p>
-    <div class="call-coin-box">
-      <span>🪙 Aapke Coins:</span>
-      <span id="fcCallCoins" class="call-coins-val">0</span>
-    </div>
-    <p style="color:#888;font-size:0.82rem;margin-bottom:16px;">10 coins/minute lagenge</p>
-    <div class="modal-btns">
-      <button class="btn-confirm-block" onclick="startFriendCall()">✅ Call Karo</button>
-      <button class="btn-cancel" onclick="closeVideoPopup()">❌ Cancel</button>
-    </div>
-    <p class="call-note">💡 Coins automatic katenge har minute</p>
-  </div>
 </div>
 
 <!-- Gift Popup -->
@@ -121,239 +112,493 @@
         <div class="gift-cost">75 🪙</div>
       </div>
     </div>
-    <button class="btn-cancel" style="width:100%;margin-top:12px;" onclick="closeGiftPopup()">
-      ❌ Cancel
-    </button>
+    <button class="btn-cancel" style="width:100%;margin-top:12px;"
+      onclick="closeGiftPopup()">❌ Cancel</button>
   </div>
 </div>
 
+<!-- Ringtone -->
+<audio id="ringtone" loop>
+  <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-  // Friend data load
-  const friendIndex = parseInt(localStorage.getItem('openFriendIndex') || '0');
-  const friends = JSON.parse(localStorage.getItem('zapFriends') || '[]');
-  const friend = friends[friendIndex] || { name: 'Friend', gender: 'other' };
-  const myCoins = parseInt(localStorage.getItem('zapCoins') || '0');
+// ── Firebase Config ──
+const firebaseConfig = {
+  apiKey: "AIzaSyAY4u494HoeSUq_Enayrzt_7qHvd2uEPY0",
+  authDomain: "zapchat-fda4b.firebaseapp.com",
+  databaseURL: "https://zapchat-fda4b-default-rtdb.firebaseio.com",
+  projectId: "zapchat-fda4b",
+  storageBucket: "zapchat-fda4b.firebasestorage.app",
+  messagingSenderId: "694989076666",
+  appId: "1:694989076666:web:25d8b778cecd2ccb112a83"
+};
 
-  // Header set
-  document.getElementById('fcName').textContent = friend.name;
-  document.getElementById('fcAvatar').textContent =
-    friend.gender === 'female' ? '👩' :
-    friend.gender === 'male' ? '👨' : '🧑';
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-  // Chat history load
-  const chatKey = 'friendChat_' + friendIndex;
-  let messages = JSON.parse(localStorage.getItem(chatKey) || '[]');
+// ── User & Friend Data ──
+const myName = localStorage.getItem('userName') || 'User';
+const myId = localStorage.getItem('userId') || ('user_' + Date.now());
+localStorage.setItem('userId', myId);
 
-  function renderMessages() {
-    const box = document.getElementById('fcChatbox');
-    if (messages.length === 0) {
-      box.innerHTML = '<div class="fc-system-msg">Say hi to your new friend! 👋</div>';
-      return;
-    }
-    box.innerHTML = messages.map(m => `
-      <div class="fc-msg ${m.type}">
-        ${m.text}
-      </div>
-    `).join('');
-    box.scrollTop = box.scrollHeight;
+const friendIndex = parseInt(localStorage.getItem('openFriendIndex') || '0');
+const friends = JSON.parse(localStorage.getItem('zapFriends') || '[]');
+const friend = friends[friendIndex] || { name: 'Friend', gender: 'other' };
+const friendId = friend.id || ('friend_' + friendIndex);
+
+// ── Header Setup ──
+document.getElementById('fcName').textContent = friend.name;
+document.getElementById('fcAvatar').textContent =
+  friend.gender === 'female' ? '👩' :
+  friend.gender === 'male' ? '👨' : '🧑';
+
+// ── Chat ──
+const chatKey = 'friendChat_' + friendIndex;
+let messages = JSON.parse(localStorage.getItem(chatKey) || '[]');
+
+function renderMessages() {
+  const box = document.getElementById('fcChatbox');
+  if (messages.length === 0) {
+    box.innerHTML = '<div class="fc-system-msg">Say hi! 👋</div>';
+    return;
+  }
+  box.innerHTML = messages.map(m => `
+    <div class="fc-msg ${m.type}">${m.text}</div>
+  `).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
+renderMessages();
+
+window.sendFCMsg = () => {
+  const input = document.getElementById('fcInput');
+  const text = input.value.trim();
+  if (!text) return;
+  messages.push({ type: 'me', text });
+  localStorage.setItem(chatKey, JSON.stringify(messages));
+  input.value = '';
+  renderMessages();
+  setTimeout(() => {
+    const replies = ['Haha! 😂', 'Sahi hai! 👍', 'Kya haal hai? 😊',
+      'Nice! ❤️', 'ZapChat rocks! ⚡'];
+    messages.push({ type: 'them',
+      text: replies[Math.floor(Math.random() * replies.length)] });
+    localStorage.setItem(chatKey, JSON.stringify(messages));
+    renderMessages();
+  }, 1000);
+};
+
+window.checkFCEnter = (e) => { if (e.key === 'Enter') sendFCMsg(); };
+
+// ── WebRTC ──
+let localStream = null;
+let peerConnection = null;
+let callTimer = null;
+let callSeconds = 0;
+let currentCallId = null;
+let isCaller = false;
+
+const servers = {
+  iceServers: [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:stun1.l.google.com:19302' }
+  ]
+};
+
+// ── Start Call ──
+window.startVideoCall = async () => {
+  const coins = parseInt(localStorage.getItem('zapCoins') || '0');
+  if (coins < 10) {
+    alert('🪙 Coins kam hain! Wallet se coins kharido.');
+    return;
   }
 
-  renderMessages();
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia(
+      { video: true, audio: true });
+    document.getElementById('localVideo').srcObject = localStream;
 
-  // Send message
-  window.sendFCMsg = () => {
-    const input = document.getElementById('fcInput');
-    const text = input.value.trim();
-    if (!text) return;
+    isCaller = true;
+    currentCallId = myId + '_' + Date.now();
 
-    messages.push({ type: 'me', text: text });
-    localStorage.setItem(chatKey, JSON.stringify(messages));
-    input.value = '';
-    renderMessages();
+    // Firebase mein call request bhejo
+    await db.ref('calls/' + friendId).set({
+      callId: currentCallId,
+      callerId: myId,
+      callerName: myName,
+      type: 'video',
+      status: 'ringing',
+      timestamp: Date.now()
+    });
 
-    // Auto reply after 1 second
-    setTimeout(() => {
-      const replies = [
-        'Haha! 😂',
-        'Sahi keh rahe ho! 👍',
-        'Kya haal hai? 😊',
-        'Acha lag raha hai baat karke! ❤️',
-        'Kab milenge? 😄',
-        'ZapChat bahut accha hai! ⚡'
-      ];
-      const reply = replies[Math.floor(Math.random() * replies.length)];
-      messages.push({ type: 'them', text: reply });
-      localStorage.setItem(chatKey, JSON.stringify(messages));
-      renderMessages();
-    }, 1000);
-  };
+    // Active call screen dikhao
+    document.getElementById('activeCallScreen').style.display = 'flex';
+    document.getElementById('fcChatbox').style.display = 'none';
+    document.getElementById('fc-input-area');
 
-  window.checkFCEnter = (e) => {
-    if (e.key === 'Enter') sendFCMsg();
-  };
+    // WebRTC offer banao
+    peerConnection = new RTCPeerConnection(servers);
+    localStream.getTracks().forEach(track =>
+      peerConnection.addTrack(track, localStream));
 
-  // Video Call
-  window.openVideoCall = () => {
-    const coins = parseInt(localStorage.getItem('zapCoins') || '0');
-    document.getElementById('fcCallName').textContent = friend.name + ' ke saath Video Call';
-    document.getElementById('fcCallCoins').textContent = coins;
-    document.getElementById('fcVideoPopup').classList.add('show');
-  };
+    peerConnection.ontrack = (event) => {
+      document.getElementById('remoteVideo').srcObject = event.streams[0];
+    };
 
-  window.closeVideoPopup = () => {
-    document.getElementById('fcVideoPopup').classList.remove('show');
-  };
+    peerConnection.onicecandidate = (event) => {
+      if (event.candidate) {
+        db.ref('candidates/' + currentCallId + '/caller').push(
+          event.candidate.toJSON());
+      }
+    };
 
-  let callTimer = null;
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(offer);
 
-  window.startFriendCall = () => {
-    const coins = parseInt(localStorage.getItem('zapCoins') || '0');
-    if (coins < 10) {
-      alert('🪙 Coins kam hain! Wallet mein jao.');
-      closeVideoPopup();
-      return;
-    }
-    closeVideoPopup();
-    alert('🎥 ' + friend.name + ' ko call kar rahe hain!\n\n10 coins/minute katenge.\n\n(Real call feature coming soon — internet par live hone ke baad!)');
-  };
+    await db.ref('offers/' + currentCallId).set({
+      type: offer.type,
+      sdp: offer.sdp
+    });
 
-  // Gift
-  window.openGiftPopup = () => {
-    document.getElementById('fcGiftPopup').classList.add('show');
-  };
+    // Answer ka wait karo
+    db.ref('answers/' + currentCallId).on('value', async (snap) => {
+      if (snap.val() && peerConnection.signalingState !== 'stable') {
+        await peerConnection.setRemoteDescription(
+          new RTCSessionDescription(snap.val()));
+        startCallTimer();
+      }
+    });
 
-  window.closeGiftPopup = () => {
-    document.getElementById('fcGiftPopup').classList.remove('show');
-  };
+    // ICE candidates
+    db.ref('candidates/' + currentCallId + '/callee').on('child_added',
+      async (snap) => {
+        await peerConnection.addIceCandidate(
+          new RTCIceCandidate(snap.val()));
+      });
 
-  window.sendFriendGift = (emoji, name, cost) => {
-    let coins = parseInt(localStorage.getItem('zapCoins') || '0');
-    if (coins < cost) {
-      alert('🪙 Coins kam hain!\n\n' + cost + ' coins chahiye.\nAbhi aapke paas ' + coins + ' coins hain.');
-      closeGiftPopup();
-      return;
-    }
-    coins -= cost;
-    localStorage.setItem('zapCoins', coins);
-    closeGiftPopup();
+    addMessage('📞 Calling ' + friend.name + '...');
 
-    messages.push({ type: 'me', text: emoji + ' ' + name + ' gift bheja! 🎁' });
-    messages.push({ type: 'them', text: 'Wow! Thank you so much! ' + emoji + ' 😍' });
-    localStorage.setItem(chatKey, JSON.stringify(messages));
-    renderMessages();
-  };
-  // ==========================================
-// 1. 👮 POLICE BUTTON & REPORT MODAL LOGIC
-// ==========================================
-window.openReportModal = () => {
-    const modal = document.getElementById("reportModal");
-    if (modal) modal.style.display = "flex";
+  } catch (err) {
+    alert('❌ Camera/Mic allow karo!');
+  }
 };
 
-window.closeReportModal = () => {
-    const modal = document.getElementById("reportModal");
-    if (modal) modal.style.display = "none";
-};
+// ── Listen for Incoming Calls ──
+db.ref('calls/' + myId).on('value', async (snap) => {
+  const callData = snap.val();
+  if (!callData || callData.status !== 'ringing') return;
 
-window.submitReport = (reason) => {
-    const currentFriendIndex = localStorage.getItem('openFriendIndex');
-    let friends = JSON.parse(localStorage.getItem('zapFriends')) || [];
+  currentCallId = callData.callId;
+  isCaller = false;
 
-    if (currentFriendIndex !== null && friends[currentFriendIndex]) {
-        const friendName = friends[currentFriendIndex].name || 'User';
-        alert(`Success! "${friendName}" ko "${reason}" ke liye report kar diya gaya hai.`);
-        
-        friends.splice(currentFriendIndex, 1);
-        localStorage.setItem('zapFriends', JSON.stringify(friends));
-        window.location.href = 'friends.html';
-    } else {
-        alert("Report submitted successfully!");
-        window.location.href = 'friends.html';
-    }
-};
+  // Ringtone bajao
+  document.getElementById('ringtone').play();
 
-// ==========================================
-// 2. ➔ 3-DOT MENU (UNFRIEND & BLOCK) LOGIC
-// ==========================================
-window.sendGift = (giftName, price, emoji) => {
-    let currentCoins = parseInt(localStorage.getItem('zapCoins')) || 0;
-
-    // 🪙 सिक्के कम होने पर एरर
-    if (currentCoins < price) {
-        alert(`Coins kam hain! Yeh gift bhejne ke liye aapko ${price} coins chahiye.`);
-        return;
-    }
-
-    // 💰 सिक्के काटना
-    localStorage.setItem('zapCoins', currentCoins - price);
-
-    // 🗣️ दोस्त का असली नाम निकालने का सबसे सेफ तरीका (ताकि एरर न आए)
-    let friendName = "Friend";
-    const nameElement = document.getElementById("fcName") || document.querySelector(".fc-name");
-    if (nameElement) {
-        friendName = nameElement.innerText.replace("Loading...", "").trim() || "Friend";
-    }
-
-    // 🚨 स्क्रीन पर नाम के साथ सक्सेस अलर्ट
-    alert(`Success! ${emoji} ${giftName} gift "${friendName}" ko bhej diya gaya hai! 🎁`);
-
-    // 💬 चैट स्क्रीन पर मैसेज जोड़ना
-    if (window.appendFCSystemMsg) {
-        window.appendFCSystemMsg(`${emoji} ${giftName} gift bheja! 🎁`, true);
-        
-        // 🤖 ऑटो-थैंक्यू रिप्लाई
-        setTimeout(() => {
-            window.appendFCSystemMsg(`Wow! Thank you so much! ${emoji} 😍`, false);
-        }, 1000);
-    }
-
-    // गिफ्ट बॉक्स बंद करना
-    const giftPopup = document.getElementById("giftPopup");
-    if (giftPopup) giftPopup.style.display = "none";
-};
-window.toggleMenu = (event) => {
-    event.stopPropagation();
-    const dropdown = document.getElementById("myDropdown");
-    if (dropdown) {
-        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-    }
-};
-
-document.addEventListener("click", () => {
-    const dropdown = document.getElementById("myDropdown");
-    if (dropdown) dropdown.style.display = "none";
+  // Incoming call screen dikhao
+  document.getElementById('icAvatar').textContent = '👤';
+  document.getElementById('icName').textContent =
+    callData.callerName + ' ka call aa raha hai!';
+  document.getElementById('incomingCallScreen').style.display = 'flex';
 });
 
-window.handleUnfriend = (event) => {
-    event.preventDefault();
-    const currentFriendIndex = localStorage.getItem('openFriendIndex');
-    let friends = JSON.parse(localStorage.getItem('zapFriends')) || [];
+// ── Accept Call ──
+window.acceptCall = async () => {
+  document.getElementById('ringtone').pause();
+  document.getElementById('incomingCallScreen').style.display = 'none';
+  document.getElementById('activeCallScreen').style.display = 'flex';
 
-    if (currentFriendIndex !== null && friends[currentFriendIndex]) {
-        const friendName = friends[currentFriendIndex].name || 'User';
-        if (confirm(`Kya aap sach me "${friendName}" ko unfriend karna chahte hain?`)) {
-            friends.splice(currentFriendIndex, 1);
-            localStorage.setItem('zapFriends', JSON.stringify(friends));
-            window.location.href = 'friends.html';
-        }
-    }
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia(
+      { video: true, audio: true });
+    document.getElementById('localVideo').srcObject = localStream;
+
+    peerConnection = new RTCPeerConnection(servers);
+    localStream.getTracks().forEach(track =>
+      peerConnection.addTrack(track, localStream));
+
+    peerConnection.ontrack = (event) => {
+      document.getElementById('remoteVideo').srcObject = event.streams[0];
+    };
+
+    peerConnection.onicecandidate = (event) => {
+      if (event.candidate) {
+        db.ref('candidates/' + currentCallId + '/callee').push(
+          event.candidate.toJSON());
+      }
+    };
+
+    // Offer lo
+    const offerSnap = await db.ref('offers/' + currentCallId).get();
+    await peerConnection.setRemoteDescription(
+      new RTCSessionDescription(offerSnap.val()));
+
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setLocalDescription(answer);
+
+    await db.ref('answers/' + currentCallId).set({
+      type: answer.type,
+      sdp: answer.sdp
+    });
+
+    // ICE candidates
+    db.ref('candidates/' + currentCallId + '/caller').on('child_added',
+      async (snap) => {
+        await peerConnection.addIceCandidate(
+          new RTCIceCandidate(snap.val()));
+      });
+
+    // Status update
+    await db.ref('calls/' + myId).update({ status: 'accepted' });
+    startCallTimer();
+
+  } catch (err) {
+    alert('❌ Camera/Mic allow karo!');
+  }
 };
 
-window.handleBlock = (event) => {
-    event.preventDefault();
-    const currentFriendIndex = localStorage.getItem('openFriendIndex');
-    let friends = JSON.parse(localStorage.getItem('zapFriends')) || [];
+// ── Reject Call ──
+window.rejectCall = () => {
+  document.getElementById('ringtone').pause();
+  document.getElementById('incomingCallScreen').style.display = 'none';
+  db.ref('calls/' + myId).remove();
+  db.ref('offers/' + currentCallId).remove();
+};
 
-    if (currentFriendIndex !== null && friends[currentFriendIndex]) {
-        const friendName = friends[currentFriendIndex].name || 'User';
-        if (confirm(`Kya aap sach me "${friendName}" ko block karna chahte hain?`)) {
-            friends.splice(currentFriendIndex, 1);
-            localStorage.setItem('zapFriends', JSON.stringify(friends));
-            window.location.href = 'friends.html';
-        }
+// ── End Call ──
+window.endCall = () => {
+  if (peerConnection) peerConnection.close();
+  if (localStream) localStream.getTracks().forEach(t => t.stop());
+  if (callTimer) clearInterval(callTimer);
+
+  db.ref('calls/' + (isCaller ? friendId : myId)).remove();
+  if (currentCallId) {
+    db.ref('offers/' + currentCallId).remove();
+    db.ref('answers/' + currentCallId).remove();
+    db.ref('candidates/' + currentCallId).remove();
+  }
+
+  document.getElementById('activeCallScreen').style.display = 'none';
+  document.getElementById('fcChatbox').style.display = 'flex';
+
+  const totalCoins = Math.floor(callSeconds / 60) * 10;
+  addMessage('📵 Call end. ' + totalCoins + ' coins kate. ' +
+    Math.floor(callSeconds / 60) + ' minutes.');
+};
+
+// ── Call Timer + Coin Deduction ──
+function startCallTimer() {
+  callSeconds = 0;
+  callTimer = setInterval(() => {
+    callSeconds++;
+
+    // Timer display
+    const mins = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+    const secs = String(callSeconds % 60).padStart(2, '0');
+    document.getElementById('callTimerDisplay').textContent = mins + ':' + secs;
+
+    // Har 60 second mein 10 coins kato
+    if (callSeconds % 60 === 0) {
+      let coins = parseInt(localStorage.getItem('zapCoins') || '0');
+      if (coins < 10) {
+        addMessage('❌ Coins khatam! Call band ho gayi.');
+        endCall();
+        return;
+      }
+      coins -= 10;
+      localStorage.setItem('zapCoins', coins);
+      const totalKate = Math.floor(callSeconds / 60) * 10;
+      document.getElementById('callCoinsDisplay').textContent =
+        '🪙 ' + totalKate + ' coins kate';
     }
+  }, 1000);
+}
+
+// ── Toggle Controls ──
+window.toggleMicCall = () => {
+  if (!localStream) return;
+  const audio = localStream.getAudioTracks()[0];
+  audio.enabled = !audio.enabled;
+};
+
+window.toggleCamCall = () => {
+  if (!localStream) return;
+  const video = localStream.getVideoTracks()[0];
+  video.enabled = !video.enabled;
+};
+
+// ── Messages ──
+function addMessage(text) {
+  messages.push({ type: 'system', text });
+  localStorage.setItem(chatKey, JSON.stringify(messages));
+  renderMessages();
+}
+
+// ── Gift ──
+window.openGiftPopup = () => {
+  document.getElementById('fcGiftPopup').classList.add('show');
+};
+
+window.closeGiftPopup = () => {
+  document.getElementById('fcGiftPopup').classList.remove('show');
+};
+
+window.sendFriendGift = (emoji, name, cost) => {
+  let coins = parseInt(localStorage.getItem('zapCoins') || '0');
+  if (coins < cost) {
+    alert('🪙 Coins kam hain!');
+    closeGiftPopup();
+    return;
+  }
+  coins -= cost;
+  localStorage.setItem('zapCoins', coins);
+  closeGiftPopup();
+  messages.push({ type: 'me', text: emoji + ' ' + name + ' gift bheja! 🎁' });
+  messages.push({ type: 'them', text: 'Wow! Thank you! ' + emoji + ' 😍' });
+  localStorage.setItem(chatKey, JSON.stringify(messages));
+  renderMessages();
+};
+
+// ── Back ──
+window.goBack = () => {
+  if (peerConnection) endCall();
+  window.location.href = 'friends.html';
 };
 </script>
+
+<!-- Style -->
+<style>
+.incoming-call-screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.incoming-call-box {
+  text-align: center;
+  padding: 40px;
+}
+
+.ic-avatar {
+  font-size: 5rem;
+  margin-bottom: 16px;
+  animation: pulse 1s infinite;
+}
+
+.ic-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.ic-subtitle {
+  color: #888;
+  margin-bottom: 40px;
+}
+
+.ic-actions {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.ic-reject-btn {
+  background: #ff3c3c;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ic-accept-btn {
+  background: #00c853;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.active-call-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9998;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.remote-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.local-video {
+  position: absolute;
+  bottom: 100px;
+  right: 16px;
+  width: 120px;
+  border-radius: 12px;
+  border: 2px solid #ff3cac;
+  z-index: 1;
+}
+
+.call-info-bar {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  background: rgba(0,0,0,0.6);
+  padding: 8px 20px;
+  border-radius: 50px;
+  color: white;
+  font-size: 0.9rem;
+  z-index: 2;
+}
+
+.call-controls {
+  position: absolute;
+  bottom: 30px;
+  display: flex;
+  gap: 20px;
+  z-index: 2;
+}
+
+.call-ctrl-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.end-call-btn { background: #ff3c3c !important; }
+
+.fc-status {
+  font-size: 0.75rem;
+  color: #00f5d4;
+}
+</style>
 
 </body>
 </html>
