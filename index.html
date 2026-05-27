@@ -296,18 +296,63 @@
             <div>
                 <div style="display:flex; align-items:center; gap:10px;">
                     <h3 style="margin:0; font-size:24px; font-weight:bold;">Piyush Jakhar</h3>
-                    <button onclick="document.getElementById('editProfileModal').style.display='block'" style="background:#2a2a35; border:none; color:#aaa; padding:5px 12px; border-radius:20px; font-size:12px; cursor:pointer;">Edit</button>
+                    <button onclick="document.getElementById('editProfileModal').style.display='flex'" style="background:#2a2a35; border:none; color:#aaa; padding:5px 12px; border-radius:20px; font-size:12px; cursor:pointer;">Edit</button>
                 </div>
                 <p style="color:#aaa; font-size:16px; margin:5px 0 0;">ID: 300253152 📋</p>
             </div>
         </div>
+
+        <div style="background:linear-gradient(135deg, #2030a0, #101560); padding:20px; border-radius:15px; display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; border:1px solid #3040c0;">
+            <div style="display:flex; align-items:center; gap:15px;">
+                <span style="font-size:35px;">👑</span>
+                <div>
+                    <div style="font-weight:bold; font-size:18px;">ZapChat Premium</div>
+                    <div style="color:#aaa; font-size:14px;">Get More Gender Filters</div>
+                </div>
+            </div>
+            <button style="background:#ffc107; border:none; color:#101560; padding:12px 25px; border-radius:25px; font-weight:bold; font-size:16px; cursor:pointer;">Join</button>
         </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:25px;">
+            <div style="background:#151520; padding:25px; border-radius:15px; text-align:center; border:1px solid #252535;">
+                <div style="font-size:32px; font-weight:bold; color:#ffc107; margin-bottom:10px;">0</div>
+                <div style="display:flex; align-items:center; justify-content:center; gap:8px; color:#aaa; font-size:16px;">
+                    <span style="font-size:20px;">🪙</span> Coins
+                </div>
+            </div>
+            <div style="background:#151520; padding:25px; border-radius:15px; text-align:center; border:1px solid #252535;">
+                <div style="font-size:32px; font-weight:bold; color:#00e5ff; margin-bottom:10px;">50</div>
+                <div style="display:flex; align-items:center; justify-content:center; gap:8px; color:#aaa; font-size:16px;">
+                    <span style="font-size:20px;">💎</span> Gems
+                </div>
+            </div>
+        </div>
+
+        <div style="background:#151520; padding:10px; border-radius:15px; border:1px solid #252535; margin-bottom:25px; font-size:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #252535;">
+                <div style="display:flex; align-items:center; gap:10px; color:#aaa;"><span style="font-size:20px;">🎂</span> Birthday</div>
+                <div style="color:white;">Not set</div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #252535;">
+                <div style="display:flex; align-items:center; gap:10px; color:#aaa;"><span style="font-size:20px;">👤</span> Gender</div>
+                <div style="display:flex; align-items:center; gap:8px;">Other <span style="font-size:20px;">🧑</span></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:15px;">
+                <div style="display:flex; align-items:center; gap:10px; color:#aaa;"><span style="font-size:20px;">🌍</span> Location</div>
+                <div id="userLocation" style="color:white;">Jaipur, India</div>
+            </div>
+        </div>
+
+        <button onclick="logoutUser()" style="width:100%; padding:18px; background:linear-gradient(135deg, #ff1a6f, #e0005a); border:none; border-radius:15px; color:white; font-size:18px; font-weight:bold; cursor:pointer;">
+            🚪 Sign Out
+        </button>
+    </div>
 </div>
 
-<div id="editProfileModal" style="display:none; position:fixed; inset:0; z-index:99999999; background:rgba(0,0,0,0.8); padding:20px;">
-    <div style="max-width:400px; margin:auto; background:#fff; color:#333; padding:20px; border-radius:15px; text-align:center;">
+<div id="editProfileModal" style="display:none; position:fixed; inset:0; z-index:99999999; background:rgba(0,0,0,0.8); align-items:center; justify-content:center; padding:20px;">
+    <div style="width:100%; max-width:400px; background:#fff; color:#333; padding:20px; border-radius:15px; text-align:center;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2 style="margin:0; font-size:18px;">Edit Profile</h2>
+            <h2 style="margin:0; font-size:20px;">Edit Profile</h2>
             <button onclick="document.getElementById('editProfileModal').style.display='none'" style="border:none; background:none; font-size:24px; cursor:pointer;">&times;</button>
         </div>
         <div style="width:100px; height:100px; background:#b055ff; border-radius:50%; margin:auto; display:flex; align-items:center; justify-content:center; color:white; font-size:40px; margin-bottom:15px;">P</div>
@@ -316,7 +361,7 @@
         <button style="width:100%; padding:12px; background:#007bff; border:none; border-radius:10px; color:white; font-weight:bold; cursor:pointer;">Save</button>
     </div>
 </div>
-
+     
     <div class="online-box">
         <span class="green-dot"></span>
         <span id="onlineCount2">0</span> log abhi online hain
