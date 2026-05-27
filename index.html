@@ -710,6 +710,44 @@ window.copyProfileId = () => {
   navigator.clipboard.writeText('300253152');
   alert('✅ ID copied!');
 };
+window.openProfileModal = () => {
+  document.getElementById('profileModal').style.display = 'block';
+  const name = localStorage.getItem('userName') || 'User';
+  const coins = localStorage.getItem('zapCoins') || '0';
+  const gender = localStorage.getItem('gender') || 'other';
+  const photo = localStorage.getItem('userPhoto') || '';
+  document.getElementById('profileName').textContent = name;
+  document.getElementById('profileCoins').textContent = coins;
+  document.getElementById('profilePhoto').src = photo;
+  document.getElementById('profileGender').textContent =
+    gender === 'male' ? '👨 Male' :
+    gender === 'female' ? '👩 Female' : '🧑 Other';
+  const saved = localStorage.getItem('userLocation');
+  if (saved) {
+    document.getElementById('profileLocation').textContent = saved;
+  } else {
+    fetch('https://ipapi.co/json/')
+      .then(r => r.json())
+      .then(data => {
+        const loc = (data.city || '') + ', ' + (data.country_name || 'India');
+        document.getElementById('profileLocation').textContent = loc;
+        localStorage.setItem('userLocation', loc);
+      })
+      .catch(() => {
+        document.getElementById('profileLocation').textContent = 'India';
+      });
+  }
+};
+
+window.closeProfileModal = () => {
+  document.getElementById('profileModal').style.display = 'none';
+};
+
+window.copyProfileId = () => {
+  navigator.clipboard.writeText('300253152');
+  alert('✅ ID copied!');
+};
+
 </script>
 
 <script>
