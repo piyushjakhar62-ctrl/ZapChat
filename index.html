@@ -643,6 +643,11 @@
         document.getElementById('userPhoto').src = user.photoURL;
         localStorage.setItem('userName', user.displayName);
         localStorage.setItem('userPhoto', user.photoURL);
+        if (!localStorage.getItem('gender')) {
+  setTimeout(() => {
+    document.getElementById('genderPopup').classList.add('show');
+  }, 500);
+}
         updateGenderBadge(localStorage.getItem('gender') || 'any');
     } else {
         document.getElementById('loginScreen').style.display = 'block';
@@ -662,6 +667,47 @@
     localStorage.removeItem('gender');
     await signOut(auth);
   };
+  window.openProfileModal = () => {
+  document.getElementById('profileModal').style.display = 'block';
+
+  const name = localStorage.getItem('userName') || 'User';
+  const coins = localStorage.getItem('zapCoins') || '0';
+  const gender = localStorage.getItem('gender') || 'other';
+  const photo = localStorage.getItem('userPhoto') || '';
+
+  document.getElementById('profileName').textContent = name;
+  document.getElementById('profileCoins').textContent = coins;
+  document.getElementById('profilePhoto').src = photo;
+  document.getElementById('profileGender').textContent =
+    gender === 'male' ? '👨 Male' :
+    gender === 'female' ? '👩 Female' : '🧑 Other';
+
+  // Location auto detect
+  const saved = localStorage.getItem('userLocation');
+  if (saved) {
+    document.getElementById('profileLocation').textContent = saved;
+  } else {
+    fetch('https://ipapi.co/json/')
+      .then(r => r.json())
+      .then(data => {
+        const loc = (data.city || '') + ', ' + (data.country_name || 'India');
+        document.getElementById('profileLocation').textContent = loc;
+        localStorage.setItem('userLocation', loc);
+      })
+      .catch(() => {
+        document.getElementById('profileLocation').textContent = 'India';
+      });
+  }
+};
+
+window.closeProfileModal = () => {
+  document.getElementById('profileModal').style.display = 'none';
+};
+
+window.copyProfileId = () => {
+  navigator.clipboard.writeText('300253152');
+  alert('✅ ID copied!');
+};
 </script>
 
 <script>
@@ -877,6 +923,99 @@ document.addEventListener('click', (e) => {
   }
 });
 </script>
+cat > /mnt/user-data/outputs/profile-modal.html << 'ENDOFFILE'
+<!-- Full Page Profile Modal -->
+<div id="profileModal" style="display:none;position:fixed;inset:0;z-index:99999;background:#0a0a0f;overflow-y:auto;">
 
+  <!-- Header -->
+  <div style="display:flex;align-items:center;justify-content:center;padding:16px 20px;border-bottom:1px solid #222;position:relative;">
+    <span style="color:#fff;font-size:1.1rem;font-weight:700;">My Profile</span>
+    <button onclick="closeProfileModal()" style="position:absolute;right:16px;background:rgba(255,255,255,0.1);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:1.1rem;cursor:pointer;">✕</button>
+  </div>
+
+  <!-- Avatar + Name -->
+  <div style="padding:24px 20px 16px;display:flex;align-items:center;gap:16px;">
+    <img id="profilePhoto" src="" alt="P" style="width:72px;height:72px;border-radius:50%;border:3px solid #9b59b6;object-fit:cover;background:#9b59b6;"/>
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <span id="profileName" style="color:#fff;font-size:1.1rem;font-weight:800;">Loading...</span>
+        <button style="background:rgba(255,255,255,0.1);border:none;color:#aaa;padding:3px 10px;border-radius:6px;font-size:0.75rem;cursor:pointer;">Edit</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span id="profileId" style="color:#888;font-size:0.8rem;">ID: 300253152</span>
+        <button onclick="copyProfileId()" style="background:none;border:none;color:#4488ff;font-size:0.8rem;cursor:pointer;">📋</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Premium Banner -->
+  <div style="margin:0 16px 16px;background:linear-gradient(135deg,#1a237e,#283593);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+    <span style="font-size:1.8rem;">👑</span>
+    <div style="flex:1;">
+      <div style="color:#fff;font-size:0.9rem;font-weight:700;">ZapChat Premium</div>
+      <div style="color:#9fa8da;font-size:0.75rem;">Get More Gender Filters</div>
+    </div>
+    <a href="premium.html" onclick="closeProfileModal()" style="background:linear-gradient(135deg,#f9c846,#ff9500);color:#000;border:none;padding:7px 16px;border-radius:20px;font-size:0.8rem;font-weight:800;text-decoration:none;">Join</a>
+  </div>
+
+  <!-- Stats -->
+  <div style="margin:0 16px 16px;background:#12121e;border:1px solid #222;border-radius:12px;display:flex;">
+    <div style="flex:1;padding:16px;text-align:center;">
+      <div style="font-size:1.5rem;font-weight:900;color:#f9c846;" id="profileCoins">0</div>
+      <div style="color:#888;font-size:0.78rem;margin-top:4px;">🪙 Coins</div>
+    </div>
+    <div style="width:1px;background:#222;"></div>
+    <div style="flex:1;padding:16px;text-align:center;">
+      <div style="font-size:1.5rem;font-weight:900;color:#00f5d4;">50</div>
+      <div style="color:#888;font-size:0.78rem;margin-top:4px;">💎 Gems</div>
+    </div>
+  </div>
+
+  <!-- User Details -->
+  <div style="margin:0 16px 16px;background:#12121e;border:1px solid #222;border-radius:12px;overflow:hidden;">
+
+    <!-- Birthday -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #1e1e2e;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span>🎂</span>
+        <span style="color:#888;font-size:0.88rem;">Birthday</span>
+      </div>
+      <span style="color:#fff;font-size:0.88rem;" id="profileBirthday">Not set</span>
+    </div>
+
+    <!-- Gender -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #1e1e2e;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span>👤</span>
+        <span style="color:#888;font-size:0.88rem;">Gender</span>
+      </div>
+      <span style="color:#fff;font-size:0.88rem;" id="profileGender">Other</span>
+    </div>
+
+    <!-- Location — Auto detect -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #1e1e2e;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span>🌍</span>
+        <span style="color:#888;font-size:0.88rem;">Location</span>
+      </div>
+      <span style="color:#fff;font-size:0.88rem;" id="profileLocation">Detecting...</span>
+    </div>
+
+    <!-- More -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;" onclick="alert('More options coming soon!')">
+      <span style="color:#fff;font-size:0.88rem;">More</span>
+      <span style="color:#888;">›</span>
+    </div>
+
+  </div>
+
+  <!-- Logout Button -->
+  <div style="padding:0 16px 40px;">
+    <button onclick="logoutUser()" style="width:100%;background:linear-gradient(135deg,#ff3cac,#c0005f);color:#fff;border:none;padding:16px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">
+      🚪 Sign Out
+    </button>
+  </div>
+
+</div>
 </body>
 </html>
