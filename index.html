@@ -271,17 +271,18 @@
       </div>
 
 <div id="floatingProfile" onclick="openProfileModal()" 
-     style="position:fixed; top:20px; left:20px; z-index:99999; cursor:pointer;">
+     style="position:fixed; top:20px; left:20px; z-index:999999; cursor:pointer;">
     <img id="userPhoto" src="" alt="P" 
          style="width:45px; height:45px; border-radius:50%; border:2px solid #9b59b6; background:#9b59b6; object-fit:cover; display:block; box-shadow:0 4px 12px rgba(155,89,182,0.5);">
 </div>
 
-    <div id="profileDropdown" style="display:none; position:fixed; top:64px; right:16px; z-index:9999; background:rgba(20,20,28,0.95); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-radius:14px; padding:14px 16px; min-width:180px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 32px rgba(0,0,0,0.5);">
-        <div id="userName" style="color:#fff; font-size:0.95rem; font-weight:700; margin-bottom:8px;">Loading...</div>
-        <div id="userGenderBadge" style="background:rgba(155,89,182,0.25); color:#c38fff; padding:4px 10px; border-radius:20px; font-size:0.78rem; font-weight:700; display:inline-flex; align-items:center; gap:4px; border:1px solid rgba(155,89,182,0.4); margin-bottom:12px;">👦 Other</div>
-        <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin-bottom:10px;">
-        <button onclick="logoutUser()" style="background:none; border:none; color:#ff6b6b; font-size:0.88rem; font-weight:600; cursor:pointer; padding:0; display:flex; align-items:center; gap:6px;">Logout</button>
+<div id="profileModal" style="display:none; position:fixed; inset:0; z-index:9999999; background:rgba(0,0,0,0.9);">
+    <div style="padding:20px; color:white; text-align:center; margin-top:50px;">
+        <button onclick="document.getElementById('profileModal').style.display='none'" style="float:right; background:none; border:none; color:white; font-size:24px;">X</button>
+        <h2>My Profile</h2>
+        <p>Piyush Jakhar</p>
     </div>
+</div>
 
     <div class="online-box">
         <span class="green-dot"></span>
@@ -1015,7 +1016,15 @@ document.addEventListener('click', (e) => {
       🚪 Sign Out
     </button>
   </div>
-
+<script>
+    function openProfileModal() {
+        console.log("Profile button clicked!");
+        const modal = document.getElementById('profileModal');
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    }
+</script>
 </div>
 </body>
 </html>
