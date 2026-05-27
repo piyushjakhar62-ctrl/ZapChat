@@ -278,6 +278,7 @@
 
 <div id="profileModal" style="display:none; position:fixed; inset:0; z-index:9999999; background:rgba(10,10,15,0.95); padding:20px; overflow-y:auto; font-family: sans-serif;">
     <div style="max-width:420px; margin:auto; color:white;">
+        
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <h2 style="margin:0; font-size:20px; font-weight:bold;">My Profile</h2>
             <button onclick="document.getElementById('profileModal').style.display='none'" style="background:#2a2a35; border:none; color:white; font-size:22px; width:40px; height:40px; border-radius:50%; cursor:pointer;">&times;</button>
@@ -290,7 +291,7 @@
                     <h3 style="margin:0; font-size:24px; font-weight:bold;">Piyush Jakhar</h3>
                     <button style="background:#2a2a35; border:none; color:#aaa; padding:5px 12px; border-radius:20px; font-size:12px; cursor:pointer;">Edit</button>
                 </div>
-                <p style="color:#aaa; font-size:16px; margin:5px 0 0;">ID: 300253152 <span style="cursor:pointer; margin-left:5px;">📋</span></p>
+                <p style="color:#aaa; font-size:16px; margin:5px 0 0;">ID: 300253152 📋</p>
             </div>
         </div>
 
@@ -329,20 +330,17 @@
                 <div style="display:flex; align-items:center; gap:10px; color:#aaa;"><span style="font-size:20px;">👤</span> Gender</div>
                 <div style="display:flex; align-items:center; gap:8px;">Other <span style="font-size:20px;">🧑</span></div>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #252535;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:15px;">
                 <div style="display:flex; align-items:center; gap:10px; color:#aaa;"><span style="font-size:20px;">🌍</span> Location</div>
                 <div id="userLocation" style="color:white;">Jaipur, India</div>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; cursor:pointer;">
-                <div style="display:flex; align-items:center; gap:10px; color:#aaa;"><span style="font-size:20px;">📋</span> More</div>
-                <div style="color:#aaa; font-size:18px;">&rsaquo;</div>
-            </div>
         </div>
 
-        <button onclick="logoutUser()" style="width:100%; padding:18px; background:linear-gradient(135deg, #ff1a6f, #e0005a); border:none; border-radius:15px; color:white; font-size:18px; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;">
-            <span style="font-size:22px;">🚪</span> Sign Out
-        </div>
+        <button onclick="logoutUser()" style="width:100%; padding:18px; background:linear-gradient(135deg, #ff1a6f, #e0005a); border:none; border-radius:15px; color:white; font-size:18px; font-weight:bold; cursor:pointer;">
+            🚪 Sign Out
+        </button>
     </div>
+</div>
 
     <div class="online-box">
         <span class="green-dot"></span>
