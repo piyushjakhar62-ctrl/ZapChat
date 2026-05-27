@@ -266,52 +266,24 @@
   <div id="mainScreen" style="display:none;">
 
     <div class="header">
-      <h1>⚡ ZapChat</h1>
-      <p class="tagline">Duniya se milo, ek zap mein!</p>
+        <h1>⚡ ZapChat</h1>
+        <p class="tagline">Duniya se milo, ek zap mein!</p>
     </div>
 
-    <!-- User Profile -->
-    <!-- Floating Profile Circle -->
-<div id="floatingProfile" onclick="toggleProfileMenu()"
-  style="position:fixed;top:16px;right:16px;z-index:9999;cursor:pointer;">
-  <img id="userPhoto" src="" alt="P"
-    style="width:40px;height:40px;border-radius:50%;border:2px solid #9b59b6;
-    background:#9b59b6;object-fit:cover;display:block;
-    box-shadow:0 4px 12px rgba(155,89,182,0.5);"/>
-</div>
+    <div id="floatingProfile" onclick="toggleProfileMenu()" style="position:fixed; top:16px; right:16px; z-index:9999; cursor:pointer;">
+        <img id="userPhoto" src="" alt="P" style="width:40px; height:40px; border-radius:50%; background:#9b59b6; object-fit:cover; display:block; box-shadow:0 4px 12px rgba(155,89,182,0.5); border:2px solid #fff;">
+    </div>
 
-<!-- Dropdown Menu -->
-<div id="profileDropdown"
-  style="display:none;position:fixed;top:64px;right:16px;z-index:9999;
-  background:rgba(20,20,28,0.95);backdrop-filter:blur(10px);
-  border-radius:14px;padding:14px 16px;min-width:180px;
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 8px 32px rgba(0,0,0,0.5);">
-  <div id="userName"
-    style="color:#fff;font-size:0.95rem;font-weight:700;margin-bottom:8px;">
-    Loading...
-  </div>
-  <div id="userGenderBadge"
-    style="background:rgba(155,89,182,0.25);color:#c38fff;
-    padding:4px 10px;border-radius:20px;font-size:0.78rem;
-    font-weight:700;display:inline-flex;align-items:center;gap:4px;
-    border:1px solid rgba(155,89,182,0.4);margin-bottom:12px;">
-    🧑 Other
-  </div>
-  <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin-bottom:10px;"/>
-  <button onclick="logoutUser()"
-    style="background:none;border:none;color:#ff6b6b;
-    font-size:0.88rem;font-weight:600;cursor:pointer;padding:0;
-    display:flex;align-items:center;gap:6px;">
-    🚪 Logout
-  </button>
-</div>
-</div>
+    <div id="profileDropdown" style="display:none; position:fixed; top:64px; right:16px; z-index:9999; background:rgba(20,20,28,0.95); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-radius:14px; padding:14px 16px; min-width:180px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 32px rgba(0,0,0,0.5);">
+        <div id="userName" style="color:#fff; font-size:0.95rem; font-weight:700; margin-bottom:8px;">Loading...</div>
+        <div id="userGenderBadge" style="background:rgba(155,89,182,0.25); color:#c38fff; padding:4px 10px; border-radius:20px; font-size:0.78rem; font-weight:700; display:inline-flex; align-items:center; gap:4px; border:1px solid rgba(155,89,182,0.4); margin-bottom:12px;">👦 Other</div>
+        <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin-bottom:10px;">
+        <button onclick="logoutUser()" style="background:none; border:none; color:#ff6b6b; font-size:0.88rem; font-weight:600; cursor:pointer; padding:0; display:flex; align-items:center; gap:6px;">Logout</button>
+    </div>
 
-    <!-- Online Counter -->
     <div class="online-box">
-      <span class="green-dot"></span>
-      <span id="onlineCount2">0</span> log abhi online hain
+        <span class="green-dot"></span>
+        <span id="onlineCount2">0</span> log abhi online hain
     </div>
 
     <!-- Quick Links -->
