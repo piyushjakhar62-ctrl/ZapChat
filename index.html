@@ -271,12 +271,19 @@
     </div>
 
     <!-- User Profile -->
-    <div class="user-profile">
-      <img id="userPhoto" src="" alt="profile"/>
-      <span id="userName">Loading...</span>
-      <span id="userGenderBadge" class="gender-badge"></span>
-      <button class="btn-logout" onclick="logoutUser()">Logout</button>
+    <div style="position:relative;width:100%;max-width:390px;margin:0 auto 12px;">
+  <div style="width:92%;max-width:390px;background:rgba(20,20,28,0.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:20px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px 0 rgba(0,0,0,0.4);box-sizing:border-box;margin:0 auto;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <img id="userPhoto" src="" alt="P" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;box-shadow:0px 2px 5px rgba(0,0,0,0.2);object-fit:cover;background:#9b59b6;"/>
+      <div id="userName" style="color:#fff;font-size:14.5px;font-weight:600;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;">Loading...</div>
     </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div id="userGenderBadge" style="background:rgba(155,89,182,0.25);color:#c38fff;padding:4px 8px;border-radius:20px;font-size:11.5px;font-weight:bold;display:flex;align-items:center;gap:3px;border:1px solid rgba(155,89,182,0.4);">🧑 Other</div>
+      <div style="width:1px;height:14px;background:rgba(255,255,255,0.25);"></div>
+      <button onclick="logoutUser()" style="background:none;border:none;color:#b5b5c3;font-size:12px;font-weight:500;cursor:pointer;padding:0;">Logout</button>
+    </div>
+  </div>
+</div>
 
     <!-- Online Counter -->
     <div class="online-box">
@@ -689,9 +696,9 @@
   function updateGenderBadge(gender) {
     const badge = document.getElementById('userGenderBadge');
     if (!badge) return;
-    if (gender === 'male') badge.textContent = '👨 Male';
-    else if (gender === 'female') badge.textContent = '👩 Female';
-    else badge.textContent = '🧑 Other';
+    if (gender === 'male') badge.innerHTML = '👨 Male';
+    else if (gender === 'female') badge.innerHTML = '👩 Female';
+    else badge.innerHTML = '🧑 Other';
   }
 
   window.selectWantGender = (btn, gender) => {
