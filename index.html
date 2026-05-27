@@ -271,18 +271,41 @@
     </div>
 
     <!-- User Profile -->
-    <div style="position:relative;width:100%;max-width:390px;margin:0 auto 12px;">
-  <div style="width:92%;max-width:390px;background:rgba(20,20,28,0.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:20px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px 0 rgba(0,0,0,0.4);box-sizing:border-box;margin:0 auto;">
-    <div style="display:flex;align-items:center;gap:8px;">
-      <img id="userPhoto" src="" alt="P" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;box-shadow:0px 2px 5px rgba(0,0,0,0.2);object-fit:cover;background:#9b59b6;"/>
-      <div id="userName" style="color:#fff;font-size:14.5px;font-weight:600;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;">Loading...</div>
-    </div>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div id="userGenderBadge" style="background:rgba(155,89,182,0.25);color:#c38fff;padding:4px 8px;border-radius:20px;font-size:11.5px;font-weight:bold;display:flex;align-items:center;gap:3px;border:1px solid rgba(155,89,182,0.4);">🧑 Other</div>
-      <div style="width:1px;height:14px;background:rgba(255,255,255,0.25);"></div>
-      <button onclick="logoutUser()" style="background:none;border:none;color:#b5b5c3;font-size:12px;font-weight:500;cursor:pointer;padding:0;">Logout</button>
-    </div>
+    <!-- Floating Profile Circle -->
+<div id="floatingProfile" onclick="toggleProfileMenu()"
+  style="position:fixed;top:16px;right:16px;z-index:9999;cursor:pointer;">
+  <img id="userPhoto" src="" alt="P"
+    style="width:40px;height:40px;border-radius:50%;border:2px solid #9b59b6;
+    background:#9b59b6;object-fit:cover;display:block;
+    box-shadow:0 4px 12px rgba(155,89,182,0.5);"/>
+</div>
+
+<!-- Dropdown Menu -->
+<div id="profileDropdown"
+  style="display:none;position:fixed;top:64px;right:16px;z-index:9999;
+  background:rgba(20,20,28,0.95);backdrop-filter:blur(10px);
+  border-radius:14px;padding:14px 16px;min-width:180px;
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);">
+  <div id="userName"
+    style="color:#fff;font-size:0.95rem;font-weight:700;margin-bottom:8px;">
+    Loading...
   </div>
+  <div id="userGenderBadge"
+    style="background:rgba(155,89,182,0.25);color:#c38fff;
+    padding:4px 10px;border-radius:20px;font-size:0.78rem;
+    font-weight:700;display:inline-flex;align-items:center;gap:4px;
+    border:1px solid rgba(155,89,182,0.4);margin-bottom:12px;">
+    🧑 Other
+  </div>
+  <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin-bottom:10px;"/>
+  <button onclick="logoutUser()"
+    style="background:none;border:none;color:#ff6b6b;
+    font-size:0.88rem;font-weight:600;cursor:pointer;padding:0;
+    display:flex;align-items:center;gap:6px;">
+    🚪 Logout
+  </button>
+</div>
 </div>
 
     <!-- Online Counter -->
@@ -868,6 +891,19 @@ window.openTeamSupport = () => {
 window.closeTeamSupport = () => {
     document.getElementById('teamSupportModal').style.display = 'none';
 };
+window.toggleProfileMenu = () => {
+  const menu = document.getElementById('profileDropdown');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+};
+
+// Bahar click karne par band ho
+document.addEventListener('click', (e) => {
+  const profile = document.getElementById('floatingProfile');
+  const dropdown = document.getElementById('profileDropdown');
+  if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.style.display = 'none';
+  }
+});
 </script>
 
 </body>
