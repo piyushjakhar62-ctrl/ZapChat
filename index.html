@@ -694,12 +694,12 @@
   };
 
   function updateGenderBadge(gender) {
-    const badge = document.getElementById('userGenderBadge');
-    if (!badge) return;
-    if (gender === 'male') badge.innerHTML = '👨 Male';
-    else if (gender === 'female') badge.innerHTML = '👩 Female';
-    else badge.innerHTML = '🧑 Other';
-  }
+  const badge = document.getElementById('userGenderBadge');
+  if (!badge) return;
+  if (gender === 'male') badge.innerHTML = '👨 Male';
+  else if (gender === 'female') badge.innerHTML = '👩 Female';
+  else badge.innerHTML = '🧑 Other';
+}
 
   window.selectWantGender = (btn, gender) => {
     if (gender !== 'any' && !isPremium) {
