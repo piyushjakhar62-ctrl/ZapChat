@@ -764,12 +764,20 @@ function setProfileInitial(email) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainScreen').style.display = 'block';
       document.getElementById('userName').textContent = user.displayName;
-document.getElementById('userPhoto').src = user.photoURL;
 
-// फोटो लोड होने के लिए 1 सेकंड का इंतज़ार करें, फिर चेक करें
+// फोटो सेट करने का लॉजिक - अगर फोटो URL मौजूद है तो उसे सेट करें
+if (user.photoURL) {
+    document.getElementById('userPhoto').src = user.photoURL;
+}
+
+// 2 सेकंड का इंतज़ार करें ताकि ब्राउज़र फोटो लोड कर ले, फिर चेक करें कि फोटो है या नहीं
 setTimeout(() => {
-    setProfileInitial(user.email);
-}, 1000);
+    const photoElement = document.getElementById('userPhoto');
+    // अगर फोटो नहीं है (यानी 'src' खाली है), तभी इनिशियल लेटर दिखाएं
+    if (!photoElement.src || photoElement.src === "" || photoElement.src.includes('null')) {
+        setProfileInitial(user.email);
+    }
+}, 2000);
 
 localStorage.setItem('userName', user.displayName);
 localStorage.setItem('userPhoto', user.photoURL);
