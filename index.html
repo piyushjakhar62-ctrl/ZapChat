@@ -313,15 +313,15 @@
 </div>
 
 <script>
-// फोटो लगाने का लॉजिक
+// फोटो अपडेट लॉजिक
 document.getElementById('photoInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function(event) {
-            const imgHTML = `<img src="${event.target.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-            document.getElementById('floatingProfileCircle').innerHTML = imgHTML;
-            document.getElementById('mainProfileCircle').innerHTML = imgHTML;
+            const imgHTML = '<img src="' + event.target.result + '" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">';
+            if(document.getElementById('floatingProfileCircle')) document.getElementById('floatingProfileCircle').innerHTML = imgHTML;
+            if(document.getElementById('mainProfileCircle')) document.getElementById('mainProfileCircle').innerHTML = imgHTML;
             document.getElementById('avatarModal').style.display = 'none';
         }
         reader.readAsDataURL(file);
