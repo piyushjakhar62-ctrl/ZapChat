@@ -1119,15 +1119,15 @@ document.addEventListener('click', (e) => {
         }
     }
     getUserLocation();
- // --- फोटो अपलोड का कोड ---
-document.getElementById('photoInput').addEventListener('change', function(e) {
+ // --- फोटो अपलोड का नया कोड ---
+function handlePhoto(e) {
     const file = e.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function(event) {
             const imgHTML = `<img src="${event.target.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
             
-            // फोटो दोनों जगह अपडेट हो जाएगी
+            // दोनों जगह अपडेट करें
             const floatingCircle = document.getElementById('floatingProfileCircle');
             const mainCircle = document.getElementById('mainProfileCircle');
             
@@ -1139,7 +1139,11 @@ document.getElementById('photoInput').addEventListener('change', function(e) {
         }
         reader.readAsDataURL(file);
     }
-});  
+}
+
+// अपने इनपुट बटन से जोड़ें (ID चेक कर लें)
+document.getElementById('cameraInput').addEventListener('change', handlePhoto);
+document.getElementById('fileInput').addEventListener('change', handlePhoto);
 </script>
 </div>
 </body>
