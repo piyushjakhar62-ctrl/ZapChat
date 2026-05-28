@@ -1049,7 +1049,10 @@ window.openTeamSupport = () => {
 window.closeTeamSupport = () => {
     document.getElementById('teamSupportModal').style.display = 'none';
 };
-
+window.toggleProfileMenu = () => {
+  const menu = document.getElementById('profileDropdown');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+};
 
 // Bahar click karne par band ho
 document.addEventListener('click', (e) => {
@@ -1092,7 +1095,7 @@ document.addEventListener('click', (e) => {
       <div style="color:#fff;font-size:0.9rem;font-weight:700;">ZapChat Premium</div>
       <div style="color:#9fa8da;font-size:0.75rem;">Get More Gender Filters</div>
     </div>
-    <a href="premium.html" onclick="closeProfileModal()" style="background:linear-gradient(135deg,#f9c846,#ff9500);color:#000;border:none;padding:7px 16px;border-radius:20px;font-size:0.8rem;font-weight:800;text-decoration:none;">Join</a>
+    <a href="javascript:void(0)" onclick="window.location.href='premium.html'"
   </div>
 
   <!-- Stats -->
