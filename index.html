@@ -293,7 +293,7 @@
                     <h3 style="margin:0; font-size:24px; font-weight:bold;">Piyush Jakhar</h3>
                     <button onclick="document.getElementById('editProfileModal').style.display='flex'" style="background:#2a2a35; border:none; color:#aaa; padding:5px 12px; border-radius:20px; font-size:12px; cursor:pointer;">Edit</button>
                 </div>
-                <p style="color:#aaa; font-size:16px; margin:5px 0 0;">ID: 300253152 📋</p>
+                <p style="color:#aaa; font-size:16px; margin:5px 0 0;">ID: <span id="userIdDisplay">Loading...</span> 📋</p>
             </div>
         </div>
 
@@ -388,20 +388,20 @@ function handlePhoto(e) {
 document.getElementById('cameraInput').addEventListener('change', handlePhoto);
 document.getElementById('fileInput').addEventListener('change', handlePhoto);
 
-// पक्का करने वाला फंक्शन - यह फोटो हटाएगा नहीं
+// पक्का करने वाला फंक्शन
 function setProfileInitial(email) {
     if (!email) return;
     const initial = email.charAt(0).toUpperCase();
     const f = document.getElementById('floatingProfileCircle');
     const m = document.getElementById('mainProfileCircle');
-
-    // अगर पहले से फोटो मौजूद है, तो कुछ मत करो (Lock)
     if (f && f.querySelector('img')) return;
     if (m && m.querySelector('img')) return;
-
     if (f) f.innerText = initial;
     if (m) m.innerText = initial;
 }
+
+// यह कोड आपको अपने ऑन-लॉगिन फंक्शन में जोड़ना है (जो आपने कल फाइल में देखा था)
+// document.getElementById('userIdDisplay').textContent = user.uid.substring(0, 9);
 </script>
      
     <div class="online-box">
@@ -763,7 +763,7 @@ function setProfileInitial(email) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainScreen').style.display = 'block';
     document.getElementById('userName').textContent = user.displayName;
-
+document.getElementById('userIdDisplay').textContent = user.uid.substring(0, 9);
 // फोटो तभी सेट करें अगर फोटो टैग अभी खाली है
 const photoElement = document.getElementById('userPhoto');
 if (user.photoURL) {
