@@ -274,8 +274,8 @@
      style="position:fixed; top:20px; left:20px; z-index:999999; cursor:pointer; 
      width:55px; height:55px; border-radius:50%; background:#9b59b6; 
      display:flex; align-items:center; justify-content:center; 
-     color:white; font-size:30px; font-weight:bold; border:2px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.5);">
-    P
+     color:white; font-size:30px; font-weight:bold; border:2px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.5); overflow:hidden;">
+    <div id="floatingProfileCircle">P</div>
 </div>
 
 <div id="profileModal" style="display:none; position:fixed; inset:0; z-index:9999999; background:rgba(10,10,15,0.95); padding:20px; overflow-y:auto; font-family: sans-serif;">
@@ -286,7 +286,7 @@
         </div>
         
         <div style="display:flex; align-items:center; gap:20px; margin-bottom:25px; position:relative;">
-            <div style="width:100px; height:100px; background:#b055ff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:45px; border:4px solid #b055ff33;">P</div>
+            <div id="mainProfileCircle" style="width:100px; height:100px; background:#b055ff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:45px; border:4px solid #b055ff33; overflow:hidden;">P</div>
             <button onclick="document.getElementById('avatarModal').style.display='flex'" style="position:absolute; left:70px; bottom:0; background:#444; border:none; color:white; border-radius:50%; width:30px; height:30px; cursor:pointer; font-size:16px;">📷</button>
             
             <div>
@@ -368,6 +368,26 @@
         <button onclick="document.getElementById('avatarModal').style.display='none'" style="margin-top:15px; background:none; border:none; color:red; cursor:pointer;">Cancel</button>
     </div>
 </div>
+
+<script>
+function handlePhoto(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const imgHTML = `<img src="${event.target.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+            const f = document.getElementById('floatingProfileCircle');
+            const m = document.getElementById('mainProfileCircle');
+            if(f) f.innerHTML = imgHTML;
+            if(m) m.innerHTML = imgHTML;
+            document.getElementById('avatarModal').style.display = 'none';
+        }
+        reader.readAsDataURL(file);
+    }
+}
+document.getElementById('cameraInput').addEventListener('change', handlePhoto);
+document.getElementById('fileInput').addEventListener('change', handlePhoto);
+</script>
      
     <div class="online-box">
         <span class="green-dot"></span>
@@ -1119,31 +1139,7 @@ document.addEventListener('click', (e) => {
         }
     }
     getUserLocation();
- // --- फोटो अपलोड का नया कोड ---
-function handlePhoto(e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const imgHTML = `<img src="${event.target.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-            
-            // दोनों जगह अपडेट करें
-            const floatingCircle = document.getElementById('floatingProfileCircle');
-            const mainCircle = document.getElementById('mainProfileCircle');
-            
-            if(floatingCircle) floatingCircle.innerHTML = imgHTML;
-            if(mainCircle) mainCircle.innerHTML = imgHTML;
-            
-            // मोडल बंद करें
-            document.getElementById('avatarModal').style.display = 'none';
-        }
-        reader.readAsDataURL(file);
-    }
-}
-
-// अपने इनपुट बटन से जोड़ें (ID चेक कर लें)
-document.getElementById('cameraInput').addEventListener('change', handlePhoto);
-document.getElementById('fileInput').addEventListener('change', handlePhoto);
+ 
 </script>
 </div>
 </body>
