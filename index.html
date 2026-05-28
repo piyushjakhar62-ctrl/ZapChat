@@ -762,18 +762,23 @@ function setProfileInitial(email) {
     if (user) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainScreen').style.display = 'block';
-    document.getElementById('userName').textContent = user.displayName;
-// नई सुरक्षित लाइनें:
-const idElement = document.getElementById('userIdDisplay');
-if (idElement) {
-    idElement.textContent = user.uid.substring(0, 9);
-}
-// फोटो तभी सेट करें अगर फोटो टैग अभी खाली है
-const photoElement = document.getElementById('userPhoto');
-if (user.photoURL) {
-    photoElement.src = user.photoURL;
-}
 
+        const nameElement = document.getElementById('userName');
+        if (nameElement) {
+            nameElement.textContent = user.displayName;
+        }
+
+        const idElement = document.getElementById('userIdDisplay');
+        if (idElement) {
+            idElement.textContent = user.uid.substring(0, 9);
+        }
+
+        const photoElement = document.getElementById('userPhoto');
+        if (photoElement && user.photoURL) {
+            photoElement.src = user.photoURL;
+        }
+    }
+});
 // यह चेक करेगा कि फोटो है या नहीं, अगर फोटो नहीं है तभी 'P' दिखेगा
 setTimeout(() => {
     const photoElement = document.getElementById('userPhoto');
