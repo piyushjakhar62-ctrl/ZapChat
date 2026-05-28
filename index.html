@@ -269,7 +269,6 @@
         <h1>⚡ ZapChat</h1>
         <p class="tagline">Duniya se milo, ek zap mein!</p>
       </div>
-
 <div id="floatingProfile" onclick="document.getElementById('profileModal').style.display='block'" 
      style="position:fixed; top:20px; left:20px; z-index:999999; cursor:pointer; 
      width:55px; height:55px; border-radius:50%; background:#9b59b6; 
@@ -370,6 +369,7 @@
 </div>
 
 <script>
+// फोटो अपलोड का काम
 function handlePhoto(e) {
     const file = e.target.files[0];
     if (file) {
@@ -387,6 +387,20 @@ function handlePhoto(e) {
 }
 document.getElementById('cameraInput').addEventListener('change', handlePhoto);
 document.getElementById('fileInput').addEventListener('change', handlePhoto);
+
+// ईमेल का पहला अक्षर दिखाने का काम
+function setProfileInitial(email) {
+    if (!email) return;
+    const initial = email.charAt(0).toUpperCase();
+    const f = document.getElementById('floatingProfileCircle');
+    const m = document.getElementById('mainProfileCircle');
+    // सिर्फ तब बदलें जब फोटो न लगी हो
+    if (f && !f.querySelector('img')) f.innerText = initial;
+    if (m && !m.querySelector('img')) m.innerText = initial;
+}
+
+// उदाहरण: जब आपका लॉगिन सफल हो, तो इसे ऐसे चलाएं:
+// setProfileInitial('piyushjakhar@example.com');
 </script>
      
     <div class="online-box">
@@ -743,12 +757,17 @@ document.getElementById('fileInput').addEventListener('change', handlePhoto);
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  onAuthStateChanged(auth, (user) => {
+ onAuthStateChanged(auth, (user) => {
     if (user) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainScreen').style.display = 'block';
         document.getElementById('userName').textContent = user.displayName;
         document.getElementById('userPhoto').src = user.photoURL;
+        
+        // --- यहाँ जोड़ें नई लाइन ---
+        setProfileInitial(user.email); 
+        // ------------------------
+        
         localStorage.setItem('userName', user.displayName);
         localStorage.setItem('userPhoto', user.photoURL);
         if (!localStorage.getItem('gender')) {
