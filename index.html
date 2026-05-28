@@ -290,7 +290,7 @@
             
             <div>
                 <div style="display:flex; align-items:center; gap:10px;">
-                    <h3 style="margin:0; font-size:24px; font-weight:bold;">Piyush Jakhar</h3>
+                    <h3 id="userName" style="margin:0; font-size:24px; font-weight:bold;">Piyush Jakhar</h3>
                     <button onclick="document.getElementById('editProfileModal').style.display='flex'" style="background:#2a2a35; border:none; color:#aaa; padding:5px 12px; border-radius:20px; font-size:12px; cursor:pointer;">Edit</button>
                 </div>
                 <p style="color:#aaa; font-size:16px; margin:5px 0 0;">ID: <span id="userIdDisplay">Loading...</span> 📋</p>
@@ -763,7 +763,11 @@ function setProfileInitial(email) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainScreen').style.display = 'block';
     document.getElementById('userName').textContent = user.displayName;
-document.getElementById('userIdDisplay').textContent = user.uid.substring(0, 9);
+// नई सुरक्षित लाइनें:
+const idElement = document.getElementById('userIdDisplay');
+if (idElement) {
+    idElement.textContent = user.uid.substring(0, 9);
+}
 // फोटो तभी सेट करें अगर फोटो टैग अभी खाली है
 const photoElement = document.getElementById('userPhoto');
 if (user.photoURL) {
