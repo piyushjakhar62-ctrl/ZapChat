@@ -766,14 +766,15 @@ function setProfileInitial(email) {
 
 // फोटो तभी सेट करें अगर फोटो टैग अभी खाली है
 const photoElement = document.getElementById('userPhoto');
-if (user.photoURL && !photoElement.querySelector('img')) {
+if (user.photoURL) {
     photoElement.src = user.photoURL;
 }
 
-// यह फंक्शन सिर्फ तब चलेगा अगर फोटो नहीं है (initials के लिए)
+// यह चेक करेगा कि फोटो है या नहीं, अगर फोटो नहीं है तभी 'P' दिखेगा
 setTimeout(() => {
-    // अगर फोटो अभी भी नहीं आई है, तभी ईमेल का पहला अक्षर दिखाएं
-    if (!document.getElementById('userPhoto').src || document.getElementById('userPhoto').src === "" || document.getElementById('userPhoto').querySelector('img')) {
+    const photoElement = document.getElementById('userPhoto');
+    // चेक करो: क्या फोटो का src खाली है और क्या कोई फोटो टैग नहीं है?
+    if ((!photoElement.src || photoElement.src === "") && !document.getElementById('mainProfileCircle').querySelector('img')) {
         setProfileInitial(user.email);
     }
 }, 1500);
