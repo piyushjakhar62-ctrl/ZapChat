@@ -388,19 +388,21 @@ function handlePhoto(e) {
 document.getElementById('cameraInput').addEventListener('change', handlePhoto);
 document.getElementById('fileInput').addEventListener('change', handlePhoto);
 
-// ईमेल का पहला अक्षर दिखाने का काम
+// ईमेल का पहला अक्षर दिखाने का काम (फोटो चेक के साथ)
 function setProfileInitial(email) {
     if (!email) return;
     const initial = email.charAt(0).toUpperCase();
     const f = document.getElementById('floatingProfileCircle');
     const m = document.getElementById('mainProfileCircle');
-    // सिर्फ तब बदलें जब फोटो न लगी हो
-    if (f && !f.querySelector('img')) f.innerText = initial;
-    if (m && !m.querySelector('img')) m.innerText = initial;
-}
 
-// उदाहरण: जब आपका लॉगिन सफल हो, तो इसे ऐसे चलाएं:
-// setProfileInitial('piyushjakhar@example.com');
+    // चेक करें: क्या घेरे के अंदर <img> टैग है? अगर नहीं है, तभी अक्षर लिखें।
+    if (f && !f.querySelector('img')) {
+        f.innerText = initial;
+    }
+    if (m && !m.querySelector('img')) {
+        m.innerText = initial;
+    }
+}
 </script>
      
     <div class="online-box">
@@ -761,15 +763,16 @@ function setProfileInitial(email) {
     if (user) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainScreen').style.display = 'block';
-        document.getElementById('userName').textContent = user.displayName;
-        document.getElementById('userPhoto').src = user.photoURL;
-        
-        // --- यहाँ जोड़ें नई लाइन ---
-        setProfileInitial(user.email); 
-        // ------------------------
-        
-        localStorage.setItem('userName', user.displayName);
-        localStorage.setItem('userPhoto', user.photoURL);
+      document.getElementById('userName').textContent = user.displayName;
+document.getElementById('userPhoto').src = user.photoURL;
+
+// फोटो लोड होने के लिए 1 सेकंड का इंतज़ार करें, फिर चेक करें
+setTimeout(() => {
+    setProfileInitial(user.email);
+}, 1000);
+
+localStorage.setItem('userName', user.displayName);
+localStorage.setItem('userPhoto', user.photoURL);
         if (!localStorage.getItem('gender')) {
   setTimeout(() => {
     document.getElementById('genderPopup').classList.add('show');
