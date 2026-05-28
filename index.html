@@ -388,20 +388,19 @@ function handlePhoto(e) {
 document.getElementById('cameraInput').addEventListener('change', handlePhoto);
 document.getElementById('fileInput').addEventListener('change', handlePhoto);
 
-// ईमेल का पहला अक्षर दिखाने का काम (फोटो चेक के साथ)
+// पक्का करने वाला फंक्शन - यह फोटो हटाएगा नहीं
 function setProfileInitial(email) {
     if (!email) return;
     const initial = email.charAt(0).toUpperCase();
     const f = document.getElementById('floatingProfileCircle');
     const m = document.getElementById('mainProfileCircle');
 
-    // चेक करें: क्या घेरे के अंदर <img> टैग है? अगर नहीं है, तभी अक्षर लिखें।
-    if (f && !f.querySelector('img')) {
-        f.innerText = initial;
-    }
-    if (m && !m.querySelector('img')) {
-        m.innerText = initial;
-    }
+    // अगर पहले से फोटो मौजूद है, तो कुछ मत करो (Lock)
+    if (f && f.querySelector('img')) return;
+    if (m && m.querySelector('img')) return;
+
+    if (f) f.innerText = initial;
+    if (m) m.innerText = initial;
 }
 </script>
      
@@ -763,21 +762,21 @@ function setProfileInitial(email) {
     if (user) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainScreen').style.display = 'block';
-      document.getElementById('userName').textContent = user.displayName;
+    document.getElementById('userName').textContent = user.displayName;
 
-// फोटो सेट करने का लॉजिक - अगर फोटो URL मौजूद है तो उसे सेट करें
-if (user.photoURL) {
-    document.getElementById('userPhoto').src = user.photoURL;
+// फोटो तभी सेट करें अगर फोटो टैग अभी खाली है
+const photoElement = document.getElementById('userPhoto');
+if (user.photoURL && !photoElement.querySelector('img')) {
+    photoElement.src = user.photoURL;
 }
 
-// 2 सेकंड का इंतज़ार करें ताकि ब्राउज़र फोटो लोड कर ले, फिर चेक करें कि फोटो है या नहीं
+// यह फंक्शन सिर्फ तब चलेगा अगर फोटो नहीं है (initials के लिए)
 setTimeout(() => {
-    const photoElement = document.getElementById('userPhoto');
-    // अगर फोटो नहीं है (यानी 'src' खाली है), तभी इनिशियल लेटर दिखाएं
-    if (!photoElement.src || photoElement.src === "" || photoElement.src.includes('null')) {
+    // अगर फोटो अभी भी नहीं आई है, तभी ईमेल का पहला अक्षर दिखाएं
+    if (!document.getElementById('userPhoto').src || document.getElementById('userPhoto').src === "" || document.getElementById('userPhoto').querySelector('img')) {
         setProfileInitial(user.email);
     }
-}, 2000);
+}, 1500);
 
 localStorage.setItem('userName', user.displayName);
 localStorage.setItem('userPhoto', user.photoURL);
