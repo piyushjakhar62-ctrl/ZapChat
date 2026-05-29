@@ -813,8 +813,7 @@ localStorage.setItem('userPhoto', user.photoURL);
 window.openProfileModal = () => {
   document.getElementById('profileModal').style.display = 'block';
   const name = localStorage.getItem('userName') || 'User';
- const coins = parseInt(localStorage.getItem('zapCoins') || localStorage.getItem('wallet_coins') || '0');
-document.getElementById('profileCoins').textContent = coins;
+  const coins = localStorage.getItem('zapCoins') || '0';
   const gender = localStorage.getItem('gender') || 'other';
   const photo = localStorage.getItem('userPhoto') || '';
   document.getElementById('profileName').textContent = name;
@@ -839,7 +838,6 @@ document.getElementById('profileCoins').textContent = coins;
       });
   }
 };
-
 window.closeProfileModal = () => {
   document.getElementById('profileModal').style.display = 'none';
 };
