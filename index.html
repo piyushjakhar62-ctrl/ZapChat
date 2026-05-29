@@ -813,7 +813,8 @@ localStorage.setItem('userPhoto', user.photoURL);
 window.openProfileModal = () => {
   document.getElementById('profileModal').style.display = 'block';
   const name = localStorage.getItem('userName') || 'User';
- const coins = localStorage.getItem('zapCoins') || localStorage.getItem('coins') || '0';
+ const coins = parseInt(localStorage.getItem('zapCoins') || '0');
+document.getElementById('profileCoins').textContent = coins;
   const gender = localStorage.getItem('gender') || 'other';
   const photo = localStorage.getItem('userPhoto') || '';
   document.getElementById('profileName').textContent = name;
