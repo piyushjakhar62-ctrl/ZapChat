@@ -1156,6 +1156,12 @@ document.addEventListener('click', (e) => {
   </div>
 <script>
     function openProfileModal() {
+    // यह प्रोफाइल खुलते ही कॉइन्स अपडेट कर देगा
+    const wallet = document.getElementById('balanceAmount');
+    const profile = document.getElementById('profileCoins');
+    if (wallet && profile) {
+        profile.innerText = wallet.innerText;
+    }
         console.log("Profile button clicked!");
         const modal = document.getElementById('profileModal');
         if (modal) {
@@ -1177,14 +1183,13 @@ document.addEventListener('click', (e) => {
 </div>
 <script>
     // यह कोड हर 2 सेकंड में बैलेंस चेक करेगा और प्रोफाइल में डालेगा
-    setInterval(function() {
-        const wallet = document.getElementById('balanceAmount');
-        const profile = document.getElementById('profileCoins');
-        if (wallet && profile) {
-            profile.innerText = wallet.innerText;
-        }
-    }, 2000);
+   setInterval(function() {
+    const wallet = document.getElementById('balanceAmount');
+    const profile = document.getElementById('profileCoins');
+    if (wallet && profile) {
+        profile.innerText = wallet.innerText;
+    }
+}, 1000);
 </script>
 </body>
-<h1>TESTING 123</h1>
 </html>
