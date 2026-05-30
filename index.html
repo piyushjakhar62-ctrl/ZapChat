@@ -1176,16 +1176,15 @@ document.addEventListener('click', (e) => {
 </script>
 </div>
 <script>
-    // यह फंक्शन वॉलेट से बैलेंस उठाकर प्रोफाइल में डाल देगा
-    function syncBalance() {
+    // यह कोड हर 2 सेकंड में बैलेंस चेक करेगा और प्रोफाइल में डालेगा
+    setInterval(function() {
         const wallet = document.getElementById('balanceAmount');
         const profile = document.getElementById('profileCoins');
         if (wallet && profile) {
             profile.innerText = wallet.innerText;
         }
-    }
-    // पेज खुलते ही यह बैलेंस अपडेट कर देगा
-    syncBalance();
+    }, 2000);
 </script>
 </body>
+<h1>TESTING 123</h1>
 </html>
