@@ -1087,6 +1087,29 @@ document.addEventListener('click', (e) => {
     </div>
   </div>
 
+  <!-- Premium Banner -->
+  <div style="margin:0 16px 16px;background:linear-gradient(135deg,#1a237e,#283593);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+    <span style="font-size:1.8rem;">👑</span>
+    <div style="flex:1;">
+      <div style="color:#fff;font-size:0.9rem;font-weight:700;">ZapChat Premium</div>
+      <div style="color:#9fa8da;font-size:0.75rem;">Get More Gender Filters</div>
+    </div>
+    <a href="premium.html" onclick="closeProfileModal()" style="background:linear-gradient(135deg,#f9c846,#ff9500);color:#000;border:none;padding:7px 16px;border-radius:20px;font-size:0.8rem;font-weight:800;text-decoration:none;">Join</a>
+  </div>
+
+  <!-- Stats -->
+  <div style="margin:0 16px 16px;background:#12121e;border:1px solid #222;border-radius:12px;display:flex;">
+    <div style="flex:1;padding:16px;text-align:center;">
+      <div style="font-size:1.5rem;font-weight:900;color:#f9c846;" id="profileCoins"></div>
+      <div style="color:#888;font-size:0.78rem;margin-top:4px;">🪙 Coins</div>
+    </div>
+    <div style="width:1px;background:#222;"></div>
+    <div style="flex:1;padding:16px;text-align:center;">
+      <div style="font-size:1.5rem;font-weight:900;color:#00f5d4;">50</div>
+      <div style="color:#888;font-size:0.78rem;margin-top:4px;">💎 Gems</div>
+    </div>
+  </div>
+
   <!-- User Details -->
   <div style="margin:0 16px 16px;background:#12121e;border:1px solid #222;border-radius:12px;overflow:hidden;">
 
@@ -1152,5 +1175,17 @@ document.addEventListener('click', (e) => {
  
 </script>
 </div>
+<script>
+    // यह फंक्शन वॉलेट से बैलेंस उठाकर प्रोफाइल में डाल देगा
+    function syncBalance() {
+        const wallet = document.getElementById('balanceAmount');
+        const profile = document.getElementById('profileCoins');
+        if (wallet && profile) {
+            profile.innerText = wallet.innerText;
+        }
+    }
+    // पेज खुलते ही यह बैलेंस अपडेट कर देगा
+    syncBalance();
+</script>
 </body>
 </html>
