@@ -1097,6 +1097,19 @@ document.addEventListener('click', (e) => {
     <a href="premium.html" onclick="closeProfileModal()" style="background:linear-gradient(135deg,#f9c846,#ff9500);color:#000;border:none;padding:7px 16px;border-radius:20px;font-size:0.8rem;font-weight:800;text-decoration:none;">Join</a>
   </div>
 
+  <!-- Stats -->
+  <div style="margin:0 16px 16px;background:#12121e;border:1px solid #222;border-radius:12px;display:flex;">
+    <div style="flex:1;padding:16px;text-align:center;">
+      <div style="font-size:1.5rem;font-weight:900;color:#f9c846;" id="profileCoins">0</div>
+      <div style="color:#888;font-size:0.78rem;margin-top:4px;">🪙 Coins</div>
+    </div>
+    <div style="width:1px;background:#222;"></div>
+    <div style="flex:1;padding:16px;text-align:center;">
+      <div style="font-size:1.5rem;font-weight:900;color:#00f5d4;">50</div>
+      <div style="color:#888;font-size:0.78rem;margin-top:4px;">💎 Gems</div>
+    </div>
+  </div>
+
   <!-- User Details -->
   <div style="margin:0 16px 16px;background:#12121e;border:1px solid #222;border-radius:12px;overflow:hidden;">
 
@@ -1143,12 +1156,6 @@ document.addEventListener('click', (e) => {
   </div>
 <script>
     function openProfileModal() {
-    // यह प्रोफाइल खुलते ही कॉइन्स अपडेट कर देगा
-    const wallet = document.getElementById('balanceAmount');
-    const profile = document.getElementById('profileCoins');
-    if (wallet && profile) {
-        profile.innerText = wallet.innerText;
-    }
         console.log("Profile button clicked!");
         const modal = document.getElementById('profileModal');
         if (modal) {
@@ -1168,13 +1175,5 @@ document.addEventListener('click', (e) => {
  
 </script>
 </div>
-<script>
-  // यह कोड पेज लोड होते ही 'localStorage' से बैलेंस उठाकर प्रोफाइल में डाल देगा
-  const savedCoins = localStorage.getItem('myCoins') || '0';
-  const profileCoins = document.getElementById('profileCoins');
-  if (profileCoins) {
-      profileCoins.innerText = savedCoins;
-  }
-</script>
 </body>
 </html>
