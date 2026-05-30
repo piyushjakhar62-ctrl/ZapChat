@@ -116,7 +116,6 @@
 
 </div>
 
-<!-- UPI Payment Modal -->
 <div class="modal-overlay" id="upiModal">
   <div class="modal">
     <h3>💳 UPI Payment</h3>
@@ -150,6 +149,10 @@
   // Balance load
   const coins = parseInt(localStorage.getItem('zapCoins') || '0');
   document.getElementById('balanceAmount').textContent = coins;
+  
+  // --- यह लाइन मैंने जोड़ी है, इससे प्रोफाइल को बैलेंस पता चल जाएगा ---
+  localStorage.setItem('myCoins', coins); 
+  // -------------------------------------------------------------
 
   // Transactions load
   const transactions = JSON.parse(localStorage.getItem('zapTransactions') || '[]');
@@ -198,6 +201,10 @@
     let balance = parseInt(localStorage.getItem('zapCoins') || '0');
     balance += total;
     localStorage.setItem('zapCoins', balance);
+    
+    // --- यह लाइन भी जोड़ दी ताकि पेमेंट के तुरंत बाद प्रोफाइल अपडेट हो जाए ---
+    localStorage.setItem('myCoins', balance); 
+    // --------------------------------------------------------------------
 
     const transactions = JSON.parse(localStorage.getItem('zapTransactions') || '[]');
     transactions.unshift({
