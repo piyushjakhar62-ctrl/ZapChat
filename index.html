@@ -269,7 +269,7 @@
         <h1>⚡ ZapChat</h1>
         <p class="tagline">Duniya se milo, ek zap mein!</p>
       </div>
-<div id="floatingProfile" onclick="document.getElementById('profileModal').style.display='block'" 
+<div id="floatingProfile"onclick="openProfileModal()
      style="position:fixed; top:20px; left:20px; z-index:999999; cursor:pointer; 
      width:55px; height:55px; border-radius:50%; background:#9b59b6; 
      display:flex; align-items:center; justify-content:center; 
@@ -812,12 +812,10 @@ localStorage.setItem('userPhoto', user.photoURL);
   
 window.openProfileModal = () => {
   document.getElementById('profileModal').style.display = 'block';
-  const name = localStorage.getItem('userName') || 'User';
-  const coins = localStorage.getItem('zapCoins') || '0';
-  const gender = localStorage.getItem('gender') || 'other';
-  const photo = localStorage.getItem('userPhoto') || '';
-  document.getElementById('profileName').textContent = name;
-  document.getElementById('profileCoins').textContent = coins;
+  const coins = parseInt(localStorage.getItem('zapCoins') || '0');
+  const coinsEl = document.getElementById('profileCoins');
+  if (coinsEl) coinsEl.textContent = coins;
+  // ... baaki code same rahega
   document.getElementById('profilePhoto').src = photo;
   document.getElementById('profileGender').textContent =
     gender === 'male' ? '👨 Male' :
