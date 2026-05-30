@@ -815,7 +815,6 @@ window.openProfileModal = () => {
   const coins = parseInt(localStorage.getItem('zapCoins') || '0');
   const coinsEl = document.getElementById('profileCoins');
   if (coinsEl) coinsEl.textContent = coins;
-  // ... baaki code same rahega
   document.getElementById('profilePhoto').src = photo;
   document.getElementById('profileGender').textContent =
     gender === 'male' ? '👨 Male' :
