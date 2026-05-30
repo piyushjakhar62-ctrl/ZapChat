@@ -1182,14 +1182,12 @@ document.addEventListener('click', (e) => {
 </script>
 </div>
 <script>
-    // यह कोड हर 2 सेकंड में बैलेंस चेक करेगा और प्रोफाइल में डालेगा
-   setInterval(function() {
-    const wallet = document.getElementById('balanceAmount');
-    const profile = document.getElementById('profileCoins');
-    if (wallet && profile) {
-        profile.innerText = wallet.innerText;
-    }
-}, 1000);
+  // यह कोड पेज लोड होते ही 'localStorage' से बैलेंस उठाकर प्रोफाइल में डाल देगा
+  const savedCoins = localStorage.getItem('myCoins') || '0';
+  const profileCoins = document.getElementById('profileCoins');
+  if (profileCoins) {
+      profileCoins.innerText = savedCoins;
+  }
 </script>
 </body>
 </html>
